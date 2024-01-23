@@ -133,6 +133,12 @@ public final class Constants {
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
     }
+    
+    public static final class IntakeConstants {
+        public static final int INTAKE_MOTOR = 0; // TO DO FIX MOTOR
+        public static final int WRIST_MOTOR = 0; //TO DO FIX MOTOR
+        public static final int ABSOLUTE_ENCODER = 0; //TO DO FIX
+    }
 
     public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
         public static final double kMaxSpeedMetersPerSecond = 3;
@@ -149,4 +155,5 @@ public final class Constants {
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
+
 }

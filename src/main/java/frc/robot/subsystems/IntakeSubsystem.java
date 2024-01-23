@@ -10,15 +10,16 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IntakeConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
 
   public TalonFXConfiguration intakeMotorConfig= new TalonFXConfiguration();
   public TalonFXConfiguration wristMotorConfig= new TalonFXConfiguration();
-  /** Creates a new intakeSubsystem. */
-  private TalonFX intakeMotor=new TalonFX(0); //TO DO; fix id value
-  private TalonFX wristMotor=new TalonFX(0); // TO DO; fix id value
-  private DutyCycleEncoder encoder = new DutyCycleEncoder(0); // TO DO; fix value
+
+  private TalonFX intakeMotor=new TalonFX(IntakeConstants.INTAKE_MOTOR);
+  private TalonFX wristMotor=new TalonFX(IntakeConstants.WRIST_MOTOR);
+  private DutyCycleEncoder absoluteEncoder = new DutyCycleEncoder(0); // TO DO; fix value
 
   public IntakeSubsystem() {
     intakeMotor.getConfigurator().apply(intakeMotorConfig); 
@@ -35,21 +36,19 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void setIntakeSpeed(double speed){
-
     intakeMotor.set(speed);
   }
 
   public void setWristSpeed(double speed){
-
     wristMotor.set(speed);
   }
 
-  public double getEncoder(){
+  public double getWristEncoder(){
     return wristMotor.getPosition().refresh().getValue();
   }
 
-  public double getAbsoluteEncoder(){
-    return encoder.getAbsolutePosition();
+  public DutyCycleEncoder getAbsoluteEncoder(){
+    return absoluteEncoder;
+
   }
 }
-
