@@ -17,6 +17,7 @@ public final class Constants {
 
       public static final class topWristConstants {
         public static final int topWristID = 0; //need canID later
+        public static final int topWristAbsoluteEncoder = 0; 
      }   
 
     public static final class Swerve {

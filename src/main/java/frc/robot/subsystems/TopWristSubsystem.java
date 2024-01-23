@@ -6,16 +6,19 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.topWristConstants;
 
-public class topWrist extends SubsystemBase {
+public class TopWristSubsystem extends SubsystemBase {
   /** Creates a new topWrist. */
   
   private TalonFX topWrist = new TalonFX(topWristConstants.topWristID);  
+  DutyCycleEncoder encoder = new DutyCycleEncoder(topWristConstants.topWristAbsoluteEncoder); 
   
-  
-  public topWrist() {}
+  public TopWristSubsystem() {
+    
+  }
 
   @Override
   public void periodic() {
