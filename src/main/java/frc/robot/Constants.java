@@ -15,7 +15,7 @@ import frc.lib.util.SwerveModuleConstants;
 public final class Constants {
     public static final double stickDeadband = 0.1;
 
-      public static final class TOP_WRIST_CONSTANTS {
+      public static final class TopWristConstants {
         public static final int TOP_WRIST_ID = 0; //need canID later
         public static final int TOP_WRIST_ABSOLUTE_ENCODER = 0; 
      }   
