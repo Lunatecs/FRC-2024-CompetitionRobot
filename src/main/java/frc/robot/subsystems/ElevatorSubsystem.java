@@ -13,6 +13,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class ElevatorSubsystem extends SubsystemBase {
 
@@ -23,7 +24,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   PositionVoltage motorPosition = new PositionVoltage(0);
 
   public ElevatorSubsystem() {
-    elevatorMotor = new TalonFX(2);
+    elevatorMotor = new TalonFX(Constants.ElevatorConstants.elevatorMotorID);
     
     var slot0Configs = new Slot0Configs();
     slot0Configs.kP = 2;
@@ -32,7 +33,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorMotor.getConfigurator().apply(elevatorConfig, 0.050); // sets elevatorMotor to factory default config settings
     
     motorPosition.Slot = 0;
-    absoluteEncoder = new DutyCycleEncoder(new DigitalInput(0));
+    absoluteEncoder = new DutyCycleEncoder(new DigitalInput(Constants.ElevatorConstants.absoluteEncoderID));
     elevatorMotor.setNeutralMode(NeutralModeValue.Brake); 
     initializeEncoder();
   }

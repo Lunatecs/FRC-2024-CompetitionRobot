@@ -155,5 +155,10 @@ public final class Constants {
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
-
+    
+    public static final class ElevatorConstants {
+        public static final int elevatorMotorID = 0;
+        public static final int absoluteEncoderID = 0;
+    }
+    
 }
