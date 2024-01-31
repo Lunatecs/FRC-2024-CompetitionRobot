@@ -8,20 +8,15 @@ import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class BottomWristSubsytem extends SubsystemBase {
+public class ElevatorSubsytem extends SubsystemBase {
   
-  private TalonFX wristMotor1;
+  TalonFX elevatorMotor;
+  public ElevatorSubsytem() {
+    elevatorMotor = new TalonFX(2);
+  }
 
-  private TalonFX wristMotor2;
-
-  private DutyCycleEncoder absoluteEncoder;
-  
-  public BottomWristSubsytem() {
-    wristMotor1 = new TalonFX(0);
-
-    wristMotor2 = new TalonFX(1);
-
-    absoluteEncoder = new DutyCycleEncoder(new DigitalInput(0));
+  public void runElevator(double speed) {
+    elevatorMotor.set(speed);
   }
 
   @Override
