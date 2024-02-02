@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class BottomWristSubsystem extends SubsystemBase {
 
@@ -30,11 +31,11 @@ public class BottomWristSubsystem extends SubsystemBase {
 
   public BottomWristSubsystem() {
 
-    wristMotor1 = new TalonFX(0);
+    wristMotor1 = new TalonFX(Constants.BottomWristConstants.WRIST_MOTOR1);
 
-    wristMotor2 = new TalonFX(1);
+    wristMotor2 = new TalonFX(Constants.BottomWristConstants.WRIST_MOTOR2);
     
-    absoluteEncoder = new DutyCycleEncoder(new DigitalInput(0));
+    absoluteEncoder = new DutyCycleEncoder(new DigitalInput(Constants.BottomWristConstants.ABSOLUTE_ENCODER));
     
     wristMotor2.setControl(new Follower(wristMotor1.getDeviceID(), true));
     
@@ -42,11 +43,11 @@ public class BottomWristSubsystem extends SubsystemBase {
 
     var slot0configs = new Slot0Configs();
     
-    slot0configs.kP = 0.11;
+    slot0configs.kP = 1.0;
     
-    slot0configs.kI = 0.48;
+    slot0configs.kI = 0.0;
     
-    slot0configs.kD = 0.01;
+    slot0configs.kD = 0.00;
     
     wristMotor1.getConfigurator().apply(slot0configs, 0.05);
 
