@@ -154,6 +154,16 @@ public final class Constants {
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+
+    }
+
+    public static final class ShooterConstants {
+        public static final int SHOOTER_MOTOR1 = 0;
+        public static final int SHOOTER_MOTOR2 = 0;
+        public static final int FEEDER_MOTOR = 0;
+        public static final int PROXIMITY_SENSOR = 0;
+    
+        
     }
 
 }
