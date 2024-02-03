@@ -14,8 +14,8 @@ import frc.robot.Constants.IntakeConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
 
-  public TalonFXConfiguration intakeMotorConfig= new TalonFXConfiguration();
-  public TalonFXConfiguration wristMotorConfig= new TalonFXConfiguration();
+  private TalonFXConfiguration intakeMotorConfig= new TalonFXConfiguration();
+  private TalonFXConfiguration wristMotorConfig= new TalonFXConfiguration();
 
   private TalonFX intakeMotor=new TalonFX(IntakeConstants.INTAKE_MOTOR);
   private TalonFX wristMotor=new TalonFX(IntakeConstants.WRIST_MOTOR);
@@ -47,8 +47,8 @@ public class IntakeSubsystem extends SubsystemBase {
     return wristMotor.getPosition().refresh().getValue();
   }
 
-  public DutyCycleEncoder getAbsoluteEncoder(){
-    return absoluteEncoder;
+  public double getAbsoluteEncoder(){
+    return absoluteEncoder.getAbsolutePosition();
 
   }
 }
