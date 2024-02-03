@@ -21,10 +21,10 @@ public class ElevatorSubsystem extends SubsystemBase {
   private TalonFX elevatorMotor;
   private DutyCycleEncoder absoluteEncoder;
   private TalonFXConfiguration elevatorConfig = new TalonFXConfiguration();
-  PositionVoltage motorPosition = new PositionVoltage(0);
+  private PositionVoltage motorPosition = new PositionVoltage(0);
 
   public ElevatorSubsystem() {
-    elevatorMotor = new TalonFX(Constants.ElevatorConstants.elevatorMotorID);
+    elevatorMotor = new TalonFX(Constants.ElevatorConstants.ELEVATOR_MOTOR_ID);
     
     var slot0Configs = new Slot0Configs();
     slot0Configs.kP = 2;
@@ -33,7 +33,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorMotor.getConfigurator().apply(elevatorConfig, 0.050); // sets elevatorMotor to factory default config settings
     
     motorPosition.Slot = 0;
-    absoluteEncoder = new DutyCycleEncoder(new DigitalInput(Constants.ElevatorConstants.absoluteEncoderID));
+    absoluteEncoder = new DutyCycleEncoder(new DigitalInput(Constants.ElevatorConstants.ELEVATOR_MOTOR_ID));
     elevatorMotor.setNeutralMode(NeutralModeValue.Brake); 
     initializeEncoder();
   }
@@ -46,6 +46,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorMotor.setPosition(absoluteEncoder.getAbsolutePosition());
   }
 
-
+  @Override
+  public void periodic() {}
   
 }
