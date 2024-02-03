@@ -15,9 +15,9 @@ import frc.lib.util.SwerveModuleConstants;
 public final class Constants {
     public static final double stickDeadband = 0.1;
 
-      public static final class topWristConstants {
-        public static final int topWristID = 0; //need canID later
-        public static final int topWristAbsoluteEncoder = 0; 
+      public static final class TopWristConstants {
+        public static final int TOP_WRIST_ID = 0; //need canID later
+        public static final int TOP_WRIST_ABSOLUTE_ENCODER = 0; 
      }   
 
     public static final class Swerve {
@@ -155,5 +155,19 @@ public final class Constants {
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
+    
+    public static final class ElevatorConstants {
+        public static final int elevatorMotorID = 0;
+        public static final int absoluteEncoderID = 0;
+    }
 
+    public static final class BottomWristConstants {
+
+        public static final int WRIST_MOTOR1 = 0;
+
+        public static final int WRIST_MOTOR2 = 1;
+
+        public static final int ABSOLUTE_ENCODER = 0;
+    }
+    
 }
