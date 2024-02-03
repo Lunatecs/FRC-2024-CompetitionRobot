@@ -30,7 +30,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     slot0Configs.kP = 2;
     slot0Configs.kI = 0;
     slot0Configs.kD = 0;
-    elevatorMotor.getConfigurator().apply(elevatorConfig, 0.050); // sets elevatorMotor to factory default config settings
+    elevatorMotor.getConfigurator().apply(slot0Configs, 0.050); // replace with elevatorConfig if you intend to switch to factory default settings
     
     motorPosition.Slot = 0;
     absoluteEncoder = new DutyCycleEncoder(new DigitalInput(Constants.ElevatorConstants.ELEVATOR_MOTOR_ID));
@@ -48,7 +48,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    
+
   }
   
 }
