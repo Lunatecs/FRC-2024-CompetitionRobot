@@ -167,8 +167,8 @@ public final class Constants {
     }
     
     public static final class ElevatorConstants {
-        public static final int elevatorMotorID = 0;
-        public static final int absoluteEncoderID = 0;
+        public static final int ELEVATOR_MOTOR_ID = 0;
+        public static final int ABSOLUTE_ENCODER_ID = 0;
     }
 
     public static final class BottomWristConstants {

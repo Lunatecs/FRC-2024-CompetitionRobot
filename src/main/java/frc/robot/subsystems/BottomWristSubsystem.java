@@ -29,6 +29,7 @@ public class BottomWristSubsystem extends SubsystemBase {
     wristMotor1 = new TalonFX(Constants.BottomWristConstants.WRIST_MOTOR1);
     wristMotor1.getConfigurator().apply(new TalonFXConfiguration());
     wristMotor2 = new TalonFX(Constants.BottomWristConstants.WRIST_MOTOR2);
+    wristMotor2.getConfigurator().apply(new TalonFXConfiguration());
     absoluteEncoder = new DutyCycleEncoder(new DigitalInput(Constants.BottomWristConstants.ABSOLUTE_ENCODER));
     wristMotor2.setControl(new Follower(wristMotor1.getDeviceID(), true));
     
