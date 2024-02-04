@@ -19,7 +19,7 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
     /* Controllers */
-    private final Joystick driver = new Joystick(0);
+    private final Joystick driver = new Joystick(JoystickConstants.DRIVER_USB);
 
     /* Drive Controls */
     private final int translationAxis = JoystickConstants.LEFT_Y_AXIS;
