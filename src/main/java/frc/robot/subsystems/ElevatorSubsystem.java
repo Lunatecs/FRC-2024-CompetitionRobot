@@ -46,6 +46,10 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorMotor.setPosition(absoluteEncoder.getAbsolutePosition());
   }
 
+  public void setSpeed(double speed){
+    elevatorMotor.set(speed); 
+  }
+
   @Override
   public void periodic() {
 
