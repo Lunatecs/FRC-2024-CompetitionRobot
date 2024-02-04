@@ -179,5 +179,35 @@ public final class Constants {
 
         public static final int ABSOLUTE_ENCODER = 0;
     }
+
+    public final static class JoystickConstants{
+        public final static int DRIVER_USB = 0;
+        public final static int OPERATOR_USB = 1;
+        public final static int TEST_USB = 2;
+        
+        public final static int LEFT_Y_AXIS = 1;
+        public final static int LEFT_X_AXIS = 0;
+        public final static int RIGHT_X_AXIS = 4;
+    
+    
+        public final static int GREEN_BUTTON = 1;
+        public final static int RED_BUTTON = 2;
+        public final static int YELLOW_BUTTON = 4;
+        public final static int BLUE_BUTTON = 3;
+    
+        public final static int LEFT_TRIGGER = 2;
+        public final static int RIGHT_TRIGGER = 3;
+        public final static int LEFT_BUMPER = 5;
+        public final static int RIGHT_BUMPER = 6;
+    
+        public final static int BACK_BUTTON = 7;
+        public final static int START_BUTTON = 8;
+    
+        public final static int POV_UP = 0;
+        public final static int POV_RIGHT = 90;
+        public final static int POV_DOWN = 180;
+        public final static int POV_LEFT = 270;
+    }
+
     
 }
