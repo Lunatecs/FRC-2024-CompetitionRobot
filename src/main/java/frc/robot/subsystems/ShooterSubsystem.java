@@ -53,6 +53,10 @@ public class ShooterSubsystem extends SubsystemBase {
     feederMotor.set(speed);
   }
 
+  public void setshooterSpeed(double speed){
+    shooterMotor1.set(speed);
+  }
+
   public boolean getSensor(){
     return proximitySensor.get();
   }
