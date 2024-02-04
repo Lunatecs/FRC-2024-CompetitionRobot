@@ -10,7 +10,6 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -47,7 +46,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void setRPM(int rpm){
-    shooterMotor1.setControl(motorVelocity.withVelocity(50));
+    shooterMotor1.setControl(motorVelocity.withVelocity(rpm));
   }
 
   public void setFeederSpeed(double speed){
