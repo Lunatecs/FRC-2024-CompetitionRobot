@@ -16,11 +16,14 @@ public class RunIntakeCommand extends Command {
   private IntakeSubsystem intake;
   private ShooterSubsystem shooter;
   private double speed;
-  public RunIntakeCommand(IntakeSubsystem intake, ShooterSubsystem shooter, double speed) {
+  private double intakeSpeed;
+  private boolean isFinished;
+  public RunIntakeCommand(IntakeSubsystem intake, ShooterSubsystem shooter, double speed, double intakeSpeed) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intake = intake;
     this.shooter = shooter;
     this.speed = speed;
+    this.intakeSpeed = intakeSpeed;
 
     addRequirements(intake);
     addRequirements(shooter);
@@ -28,16 +31,21 @@ public class RunIntakeCommand extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    isFinished = false;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     double speed = this.speed;
+    double intakeSpeed = this.intakeSpeed;
     if (!shooter.getSensor()) {
       speed = 0;
+      intakeSpeed = 0;
+      isFinished = true;
     }
-    intake.setIntakeSpeed(speed);
+    intake.setIntakeSpeed(intakeSpeed);
     shooter.setFeederSpeed(speed);
     SmartDashboard.putBoolean("prox sensor", shooter.getSensor());
 
@@ -53,7 +61,7 @@ public class RunIntakeCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return isFinished;
   }
 }
 

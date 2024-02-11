@@ -13,6 +13,7 @@ import com.ctre.phoenix6.controls.PositionVoltage;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.GravityTypeValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
@@ -34,6 +35,7 @@ public class BottomWristSubsystem extends SubsystemBase {
 
     wristMotor1 = new TalonFX(Constants.BottomWristConstants.WRIST_MOTOR1);
     wristMotor1.getConfigurator().apply(new TalonFXConfiguration());
+    
     wristMotor2 = new TalonFX(Constants.BottomWristConstants.WRIST_MOTOR2);
     wristMotor2.getConfigurator().apply(new TalonFXConfiguration());
 
@@ -49,7 +51,7 @@ public class BottomWristSubsystem extends SubsystemBase {
     var slot0configs = talonFXConfigs.Slot0;
     slot0configs.kG = -.15; 
     slot0configs.kS = -.41;
-    slot0configs.kV =  .3178;//2.648;//31.78;//.25;
+    slot0configs.kV =  0.15;//.3178;//2.648;//31.78;//.25;
     slot0configs.kA = .02;
     slot0configs.kP = 0.00;
     slot0configs.kI = 0.0;
@@ -63,6 +65,9 @@ public class BottomWristSubsystem extends SubsystemBase {
     var feedbackConfig = talonFXConfigs.Feedback;
     feedbackConfig.SensorToMechanismRatio = 281.6;
     //feedbackConfig.RotorToSensorRatio = 195.555;
+
+    wristMotor1.setNeutralMode(NeutralModeValue.Brake);
+    wristMotor2.setNeutralMode(NeutralModeValue.Brake);
 
     wristMotor1.getConfigurator().apply(talonFXConfigs, 0.05);
 
@@ -98,6 +103,6 @@ public class BottomWristSubsystem extends SubsystemBase {
     if(Math.abs(vel) > max) {
       max=Math.abs(vel);
     }
-    System.out.println("Position: " + this.wristMotor1.getPosition().getValueAsDouble() * 281.6 + " Vel: " + vel + " Max: " + max + " Voltage: " + this.wristMotor1.getMotorVoltage());
+    System.out.println("Position: " + this.wristMotor1.getPosition().getValueAsDouble() * 281.6 + "Agnle:" + this.wristMotor1.getPosition().getValueAsDouble()*360 + "Vel: " + vel + " Max: " + max + " Voltage: " + this.wristMotor1.getMotorVoltage());
   }
 }
