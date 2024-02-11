@@ -28,10 +28,11 @@ public class SetIntakeWristPosition extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (intakeWristPid.calculate(intakeWrist.getWristEncoder()) > 0.25){
-      intakeWrist.setWristSpeed(0.25);
+    double speed = intakeWristPid.calculate(intakeWrist.getWristEncoder());
+    if (Math.abs(speed)> 0.25){
+      speed = speed/Math.abs(speed)*.25;
     }
-    intakeWrist.setWristSpeed(intakeWristPid.calculate(intakeWrist.getWristEncoder()));
+    intakeWrist.setWristSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
