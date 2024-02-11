@@ -75,7 +75,6 @@ public class BottomWristSubsystem extends SubsystemBase {
   }
 
   public double getEncoder() {
- 
     return absoluteEncoder.getAbsolutePosition();
   }
 

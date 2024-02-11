@@ -7,17 +7,18 @@ package frc.robot.commands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.BottomWristSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
-public class SetBottomWristPosition extends Command {
+public class SetIntakeWristPosition extends Command {
   /** Creates a new SetBottomWristPosition. */
-  BottomWristSubsystem bottomWrist = new BottomWristSubsystem(); 
-  PIDController bottomWristPid; 
-  public SetBottomWristPosition(double kp, double ki, double kd, double tolerance, double setpoint) {
+  IntakeSubsystem intakeWrist = new IntakeSubsystem(); 
+  PIDController intakeWristPid; 
+  public SetIntakeWristPosition(double kp, double ki, double kd, double tolerance, double setpoint) {
     // Use addRequirements() here to declare subsystem dependencies.
-    bottomWristPid = new PIDController(kp, ki, kd);
-    bottomWristPid.setTolerance(tolerance);
-    bottomWristPid.setSetpoint(setpoint);
-    addRequirements(bottomWrist);
+    intakeWristPid = new PIDController(kp, ki, kd);
+    intakeWristPid.setTolerance(tolerance);
+    intakeWristPid.setSetpoint(setpoint);
+    addRequirements(intakeWrist);
   }
 
   // Called when the command is initially scheduled.
@@ -27,10 +28,10 @@ public class SetBottomWristPosition extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (bottomWristPid.calculate(bottomWrist.getEncoder()) > 0.25){
-      bottomWrist.setSpeed(0.25);
+    if (intakeWristPid.calculate(intakeWrist.getWristEncoder()) > 0.25){
+      intakeWrist.setWristSpeed(0.25);
     }
-    bottomWrist.setSpeed(bottomWristPid.calculate(bottomWrist.getEncoder()));
+    intakeWrist.setWristSpeed(intakeWristPid.calculate(intakeWrist.getWristEncoder()));
   }
 
   // Called once the command ends or is interrupted.
