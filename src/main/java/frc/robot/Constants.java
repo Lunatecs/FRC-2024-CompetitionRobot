@@ -3,6 +3,9 @@ package frc.robot;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -132,6 +135,14 @@ public final class Constants {
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
+
+        public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
+            new PIDConstants(driveKP, 0, 0), // Translation constants 
+            new PIDConstants(chosenModule.angleKP, 0, 0), // Rotation constants 
+            maxSpeed, 
+            0.41, // Drive base radius (distance from center to furthest module) I put it in meters
+            new ReplanningConfig()
+        );
     }
     
     public static final class IntakeConstants {

@@ -3,7 +3,10 @@ package frc.robot.subsystems;
 import frc.robot.SwerveModule;
 import frc.robot.Constants;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.Kinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -14,7 +17,9 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -36,6 +41,27 @@ public class Swerve extends SubsystemBase {
         };
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
+
+
+        AutoBuilder.configureHolonomic(
+            this::getPose, 
+            this::resetPose, 
+            this::getSpeeds, 
+            this::driveRobotRelative, 
+            Constants.Swerve.pathFollowerConfig,
+            () -> {
+          // Boolean supplier that controls when the path will be mirrored for the red alliance
+          // This will flip the path being followed to the red side of the field.
+          // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+                var alliance = DriverStation.getAlliance();
+                if (alliance.isPresent()) {
+                    return alliance.get() == DriverStation.Alliance.Red;
+                }
+                return false;
+            },
+            this
+        );
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -92,6 +118,10 @@ public class Swerve extends SubsystemBase {
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), pose);
     }
 
+    public void resetPose(Pose2d pose) {
+        swerveOdometry.resetPosition(gyro.getRotation2d(), getModulePositions(), pose);
+    }
+
     public Rotation2d getHeading(){
         return getPose().getRotation();
     }
@@ -113,6 +143,20 @@ public class Swerve extends SubsystemBase {
             mod.resetToAbsolute();
         }
     }
+
+    public ChassisSpeeds getSpeeds() {
+        return Constants.Swerve.swerveKinematics.toChassisSpeeds(getModuleStates());
+    }
+
+    public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {
+        ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(robotRelativeSpeeds, 0.02);
+    
+        SwerveModuleState[] targetStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(targetSpeeds);
+        setModuleStates(targetStates);
+      }
+
+
+
 
     @Override
     public void periodic(){
