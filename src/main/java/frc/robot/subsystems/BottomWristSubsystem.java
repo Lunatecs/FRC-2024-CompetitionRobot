@@ -7,9 +7,13 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
 
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.GravityTypeValue;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
@@ -21,8 +25,10 @@ public class BottomWristSubsystem extends SubsystemBase {
   private TalonFX wristMotor1;
   private TalonFX wristMotor2;
   private DutyCycleEncoder absoluteEncoder;
+  private double max = -1;
   
   private final PositionVoltage motorPosition = new PositionVoltage(0);
+  final MotionMagicVoltage motionMagicV = new MotionMagicVoltage(0);
 
   public BottomWristSubsystem() {
 
@@ -30,20 +36,37 @@ public class BottomWristSubsystem extends SubsystemBase {
     wristMotor1.getConfigurator().apply(new TalonFXConfiguration());
     wristMotor2 = new TalonFX(Constants.BottomWristConstants.WRIST_MOTOR2);
     wristMotor2.getConfigurator().apply(new TalonFXConfiguration());
-    absoluteEncoder = new DutyCycleEncoder(new DigitalInput(Constants.BottomWristConstants.ABSOLUTE_ENCODER));
+
+    //absoluteEncoder = new DutyCycleEncoder(new DigitalInput(Constants.BottomWristConstants.ABSOLUTE_ENCODER));
+    
     wristMotor2.setControl(new Follower(wristMotor1.getDeviceID(), true));
 
     
     initializeEncoder();
 
-    var slot0configs = new Slot0Configs();
-    slot0configs.kP = 1.0;
+    var talonFXConfigs = new TalonFXConfiguration();
+
+    var slot0configs = talonFXConfigs.Slot0;
+    slot0configs.kG = -.15; 
+    slot0configs.kS = -.41;
+    slot0configs.kV =  .3178;//2.648;//31.78;//.25;
+    slot0configs.kA = .02;
+    slot0configs.kP = 0.00;
     slot0configs.kI = 0.0;
     slot0configs.kD = 0.00;
-    
-    wristMotor1.getConfigurator().apply(slot0configs, 0.05);
+    slot0configs.GravityType = GravityTypeValue.Arm_Cosine;
 
-    motorPosition.Slot = 0;
+    var motionMagicConfig = talonFXConfigs.MotionMagic;
+    motionMagicConfig.MotionMagicCruiseVelocity = 68;
+    motionMagicConfig.MotionMagicAcceleration = 68;
+
+    var feedbackConfig = talonFXConfigs.Feedback;
+    feedbackConfig.SensorToMechanismRatio = 281.6;
+    //feedbackConfig.RotorToSensorRatio = 195.555;
+
+    wristMotor1.getConfigurator().apply(talonFXConfigs, 0.05);
+
+    motionMagicV.Slot = 0;
   }
 
   public double getEncoder() {
@@ -53,12 +76,13 @@ public class BottomWristSubsystem extends SubsystemBase {
 
   public void initializeEncoder() {
 
-    wristMotor1.setPosition(getEncoder());
+    //wristMotor1.setPosition(getEncoder());
+    wristMotor1.setPosition(0.047222);
   }
 // Pass parameters through setPosition
-  public void setPosition() {
+  public void setPosition(double position) {
     
-    wristMotor1.setControl(motorPosition.withPosition(50));
+    wristMotor1.setControl(motionMagicV.withPosition(position));
   }
 
   public void setSpeed(double speed){
@@ -70,6 +94,10 @@ public class BottomWristSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    double vel = wristMotor1.getVelocity().getValue();
+    if(Math.abs(vel) > max) {
+      max=Math.abs(vel);
+    }
+    System.out.println("Position: " + this.wristMotor1.getPosition().getValueAsDouble() * 281.6 + " Vel: " + vel + " Max: " + max + " Voltage: " + this.wristMotor1.getMotorVoltage());
   }
 }

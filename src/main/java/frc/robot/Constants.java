@@ -135,8 +135,8 @@ public final class Constants {
     }
     
     public static final class IntakeConstants {
-        public static final int INTAKE_MOTOR = 0; // TO DO FIX MOTOR
-        public static final int WRIST_MOTOR = 0; //TO DO FIX MOTOR
+        public static final int INTAKE_MOTOR = 12; // TO DO FIX MOTOR
+        public static final int WRIST_MOTOR = 16; //TO DO FIX MOTOR
         public static final int ABSOLUTE_ENCODER = 0; //TO DO FIX
     }
 
@@ -158,24 +158,24 @@ public final class Constants {
     }
 
     public static final class ShooterConstants {
-        public static final int SHOOTER_MOTOR1 = 0;
-        public static final int SHOOTER_MOTOR2 = 0;
-        public static final int FEEDER_MOTOR = 0;
-        public static final int PROXIMITY_SENSOR = 0;
+        public static final int SHOOTER_MOTOR1 = 21;
+        public static final int SHOOTER_MOTOR2 = 29;
+        public static final int FEEDER_MOTOR = 26;
+        public static final int PROXIMITY_SENSOR = 9;
     
         
     }
     
     public static final class ElevatorConstants {
-        public static final int ELEVATOR_MOTOR_ID = 0;
+        public static final int ELEVATOR_MOTOR_ID = 17;
         public static final int ABSOLUTE_ENCODER_ID = 0;
     }
 
     public static final class BottomWristConstants {
 
-        public static final int WRIST_MOTOR1 = 0;
+        public static final int WRIST_MOTOR1 = 14;
 
-        public static final int WRIST_MOTOR2 = 1;
+        public static final int WRIST_MOTOR2 = 15;
 
         public static final int ABSOLUTE_ENCODER = 0;
     }
