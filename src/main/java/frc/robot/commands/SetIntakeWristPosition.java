@@ -11,14 +11,15 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 public class SetIntakeWristPosition extends Command {
   /** Creates a new SetBottomWristPosition. */
-  IntakeSubsystem intakeWrist = new IntakeSubsystem(); 
+  IntakeSubsystem intake;
   PIDController intakeWristPid; 
-  public SetIntakeWristPosition(double kp, double ki, double kd, double tolerance, double setpoint) {
+  public SetIntakeWristPosition(double kp, double ki, double kd, double tolerance, double setpoint, IntakeSubsystem intake) {
     // Use addRequirements() here to declare subsystem dependencies.
     intakeWristPid = new PIDController(kp, ki, kd);
     intakeWristPid.setTolerance(tolerance);
     intakeWristPid.setSetpoint(setpoint);
-    addRequirements(intakeWrist);
+    this.intake = intake;
+    addRequirements(intake);
   }
 
   // Called when the command is initially scheduled.
@@ -28,20 +29,22 @@ public class SetIntakeWristPosition extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speed = intakeWristPid.calculate(intakeWrist.getWristEncoder());
+    double speed = intakeWristPid.calculate(intake.getWristEncoder());
     if (Math.abs(speed)> 0.25){
       speed = speed/Math.abs(speed)*.25;
     }
-    intakeWrist.setWristSpeed(speed);
+    intake.setWristSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    intake.setWristSpeed(0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return intakeWristPid.atSetpoint();
   }
 }
