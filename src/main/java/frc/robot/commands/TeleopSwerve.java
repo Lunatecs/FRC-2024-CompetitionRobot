@@ -17,8 +17,11 @@ public class TeleopSwerve extends Command {
     private DoubleSupplier strafeSup;
     private DoubleSupplier rotationSup;
     private BooleanSupplier robotCentricSup;
+    private BooleanSupplier slowMode;
+    private final double slowSpeed = 0.3;
+    private final double slowRotation = 0.3;
 
-    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup) {
+    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, BooleanSupplier slowMode) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
 
@@ -26,10 +29,23 @@ public class TeleopSwerve extends Command {
         this.strafeSup = strafeSup;
         this.rotationSup = rotationSup;
         this.robotCentricSup = robotCentricSup;
+        this.slowMode = slowMode;
     }
 
     @Override
     public void execute() {
+        double speedMulti;
+        double rotMulti;
+
+        if (slowMode.getAsBoolean()) {
+            speedMulti = slowSpeed * Constants.Swerve.maxSpeed;
+            rotMulti = slowRotation * Constants.Swerve.maxAngularVelocity;
+        } else {
+            speedMulti = Constants.Swerve.maxSpeed;
+            rotMulti = Constants.Swerve.maxAngularVelocity;
+        }
+
+
         /* Get Values, Deadband*/
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
@@ -37,8 +53,8 @@ public class TeleopSwerve extends Command {
 
         /* Drive */
         s_Swerve.drive(
-            new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), 
-            rotationVal * Constants.Swerve.maxAngularVelocity, 
+            new Translation2d(translationVal, strafeVal).times(speedMulti), 
+            rotationVal * rotMulti, 
             !robotCentricSup.getAsBoolean(), 
             true
         );
