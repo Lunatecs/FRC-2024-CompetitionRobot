@@ -75,7 +75,6 @@ public class BottomWristSubsystem extends SubsystemBase {
   }
 
   public double getEncoder() {
- 
     return absoluteEncoder.getAbsolutePosition();
   }
 
@@ -103,6 +102,6 @@ public class BottomWristSubsystem extends SubsystemBase {
     if(Math.abs(vel) > max) {
       max=Math.abs(vel);
     }
-    System.out.println("Position: " + this.wristMotor1.getPosition().getValueAsDouble() * 281.6 + "Agnle:" + this.wristMotor1.getPosition().getValueAsDouble()*360 + "Vel: " + vel + " Max: " + max + " Voltage: " + this.wristMotor1.getMotorVoltage());
+   // System.out.println("Position: " + this.wristMotor1.getPosition().getValueAsDouble() * 281.6 + "Agnle:" + this.wristMotor1.getPosition().getValueAsDouble()*360 + "Vel: " + vel + " Max: " + max + " Voltage: " + this.wristMotor1.getMotorVoltage());
   }
 }

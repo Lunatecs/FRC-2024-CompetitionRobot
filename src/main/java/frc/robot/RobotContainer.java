@@ -87,6 +87,9 @@ public class RobotContainer {
         new JoystickButton(operator, JoystickConstants.RED_BUTTON).onTrue(new InstantCommand(() -> shooterSubsystem.setshooterSpeed(.75), shooterSubsystem));
         new JoystickButton(operator, JoystickConstants.RIGHT_BUMPER).onTrue(new InstantCommand(() -> {shooterSubsystem.setFeederSpeed(.5); shooterSubsystem.setshooterSpeed(.75);}, shooterSubsystem));
         
+       // new JoystickButton(operator, JoystickConstants.START_BUTTON).onTrue(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -0.4)); //Up Position
+        new JoystickButton(operator, JoystickConstants.BACK_BUTTON).onTrue(new SetIntakeWristPosition(.32, 0, 0, 0.5, -3.0, intakeSubsystem)); // Down Position
+        new JoystickButton(operator, JoystickConstants.START_BUTTON).onTrue(new RetractIntakeCommand(intakeSubsystem));
     }
 
 

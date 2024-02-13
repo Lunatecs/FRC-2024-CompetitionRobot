@@ -20,7 +20,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   private TalonFX intakeMotor=new TalonFX(IntakeConstants.INTAKE_MOTOR);
   private TalonFX wristMotor=new TalonFX(IntakeConstants.WRIST_MOTOR);
-  private DutyCycleEncoder absoluteEncoder = new DutyCycleEncoder(0); // TO DO; fix value
+  private DutyCycleEncoder absoluteEncoder = null;//new DutyCycleEncoder(0); // TO DO; fix value
 
   public IntakeSubsystem() {
     intakeMotor.getConfigurator().apply(intakeMotorConfig); 
