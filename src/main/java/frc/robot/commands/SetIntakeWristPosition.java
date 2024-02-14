@@ -6,19 +6,25 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.BottomWristSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 public class SetIntakeWristPosition extends Command {
   /** Creates a new SetBottomWristPosition. */
   IntakeSubsystem intake;
+  ShooterSubsystem shooter;
   PIDController intakeWristPid; 
+  double setpoint;
   public SetIntakeWristPosition(double kp, double ki, double kd, double tolerance, double setpoint, IntakeSubsystem intake) {
     // Use addRequirements() here to declare subsystem dependencies.
     intakeWristPid = new PIDController(kp, ki, kd);
     intakeWristPid.setTolerance(tolerance);
     intakeWristPid.setSetpoint(setpoint);
     this.intake = intake;
+    this.shooter = shooter;
+    this.setpoint = setpoint;
     addRequirements(intake);
   }
 
@@ -29,10 +35,10 @@ public class SetIntakeWristPosition extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speed = intakeWristPid.calculate(intake.getWristEncoder());
-    if (Math.abs(speed)> 0.25){
-      speed = speed/Math.abs(speed)*.25;
-    }
+      double speed = intakeWristPid.calculate(intake.getWristEncoder());
+      if (Math.abs(speed)> 0.25){
+        speed = speed/Math.abs(speed)*.25;
+      }
     intake.setWristSpeed(speed);
   }
 

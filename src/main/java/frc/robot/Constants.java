@@ -149,6 +149,9 @@ public final class Constants {
         public static final int INTAKE_MOTOR = 12; // TO DO FIX MOTOR
         public static final int WRIST_MOTOR = 16; //TO DO FIX MOTOR
         public static final int ABSOLUTE_ENCODER = 0; //TO DO FIX
+
+        public static final double BOTTOM_SETPOINT = -0.2;
+        public static final double TOP_SETPOINT = -0.3;
     }
 
     public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot

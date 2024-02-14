@@ -79,16 +79,17 @@ public class RobotContainer {
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
 
         //Intake
-        new Trigger(() -> {return Math.abs(driver.getRawAxis(JoystickConstants.RIGHT_TRIGGER)) > 0.1;}).onTrue(new RunIntakeCommand(intakeSubsystem, shooterSubsystem, 0.1, () -> driver.getRawAxis(JoystickConstants.RIGHT_TRIGGER))) 
-                                                                                                        .onFalse(new RunIntakeCommand(intakeSubsystem, shooterSubsystem, 0.0, () -> 0.0));
+                                                                                                   
+        new Trigger(() -> {return Math.abs(driver.getRawAxis(JoystickConstants.RIGHT_TRIGGER)) > 0.1;}).onTrue(new ExtendAndRunIntakeCommand(intakeSubsystem, shooterSubsystem))
+                                                                                                        .onFalse(new RetractIntakeCommand(intakeSubsystem));
                                 
         //Outtake
-        new Trigger(() -> {return Math.abs(driver.getRawAxis(JoystickConstants.LEFT_TRIGGER)) > 0.1;}).onTrue(new RunIntakeCommand(intakeSubsystem, shooterSubsystem, -0.1, () -> -driver.getRawAxis(JoystickConstants.LEFT_TRIGGER)))
-                                                                                                        .onFalse(new RunIntakeCommand(intakeSubsystem, shooterSubsystem, 0.0, () -> 0.0));
-
+                                                                                                      
+        //new Trigger(() -> {return Math.abs(driver.getRawAxis(JoystickConstants.RIGHT_TRIGGER)) > 0.1;}).onTrue(new ExtendAndRunIntakeCommand(intakeSubsystem, shooterSubsystem))
+        //                                                                                                .onFalse(new RetractIntakeCommand(intakeSubsystem, shooterSubsystem));
     
-        new JoystickButton(driver, JoystickConstants.GREEN_BUTTON).onTrue(new SetIntakeWristPosition(.32, 0, 0, 0.5, -3.0, intakeSubsystem)); // Down Position
-        new JoystickButton(driver, JoystickConstants.BLUE_BUTTON).onTrue(new RetractIntakeCommand(intakeSubsystem));
+        //new JoystickButton(driver, JoystickConstants.GREEN_BUTTON).onTrue(new SetIntakeWristPosition(.32, 0, 0, 0.5, -3.0, intakeSubsystem)); // Down Position
+        //new JoystickButton(driver, JoystickConstants.BLUE_BUTTON).onTrue(new RetractIntakeCommand(intakeSubsystem));
 
         new JoystickButton(operator, JoystickConstants.YELLOW_BUTTON).onTrue(new InstantCommand(()->bottomWristSubsystem.setPosition(-26),bottomWristSubsystem));
         new JoystickButton(operator, JoystickConstants.BLUE_BUTTON).onTrue(new InstantCommand(()->bottomWristSubsystem.setPosition(-10),bottomWristSubsystem));
@@ -99,7 +100,7 @@ public class RobotContainer {
         new JoystickButton(operator, JoystickConstants.RED_BUTTON).onTrue(new InstantCommand(() -> shooterSubsystem.setshooterSpeed(.75), shooterSubsystem));
         new JoystickButton(operator, JoystickConstants.RIGHT_BUMPER).onTrue(new InstantCommand(() -> {shooterSubsystem.setFeederSpeed(.5); shooterSubsystem.setshooterSpeed(.75);}, shooterSubsystem));
         
-       // new JoystickButton(operator, JoystickConstants.START_BUTTON).onTrue(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -0.4)); //Up Position
+       // new JoystickButton(operator, JoystickConstants.START_BUTTON).onTrue(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -0.3)); //Up Position
        
     }
 
