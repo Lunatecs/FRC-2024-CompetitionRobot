@@ -52,7 +52,7 @@ public class BottomWristSubsystem extends SubsystemBase {
     slot0configs.kG = -.15; 
     slot0configs.kS = -.41;
     slot0configs.kV =  0.15;//.3178;//2.648;//31.78;//.25;
-    slot0configs.kA = .02;
+    slot0configs.kA = 0.0; //.02
     slot0configs.kP = 0.00;
     slot0configs.kI = 0.0;
     slot0configs.kD = 0.00;
