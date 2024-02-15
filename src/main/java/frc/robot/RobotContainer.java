@@ -45,7 +45,8 @@ public class RobotContainer {
     private final BottomWristSubsystem bottomWristSubsystem = new BottomWristSubsystem();
     private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
     private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-
+    private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
+    private final TopWristSubsystem topWristSubsystem = new TopWristSubsystem();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -61,7 +62,7 @@ public class RobotContainer {
         );
 
         //bottomWristSubsystem.setDefaultCommand(new RunCommand(()->bottomWristSubsystem.setSpeed(operator.getRawAxis(JoystickConstants.LEFT_Y_AXIS)),bottomWristSubsystem));
-        intakeSubsystem.setDefaultCommand(new RunCommand(() -> intakeSubsystem.setWristSpeed(operator.getRawAxis(JoystickConstants.LEFT_Y_AXIS)*.25), intakeSubsystem));
+        //intakeSubsystem.setDefaultCommand(new RunCommand(() -> intakeSubsystem.setWristSpeed(operator.getRawAxis(JoystickConstants.LEFT_Y_AXIS)*.25), intakeSubsystem));
         // Configure the button bindings
         configureButtonBindings();
         autoChooser = AutoBuilder.buildAutoChooser();
@@ -102,7 +103,13 @@ public class RobotContainer {
         new JoystickButton(operator, JoystickConstants.RIGHT_BUMPER).onTrue(new ShootNoteCommand(shooterSubsystem));
         
        // new JoystickButton(operator, JoystickConstants.START_BUTTON).onTrue(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -0.3)); //Up Position
-       
+
+       //Elevator
+       new Trigger(() -> {return Math.abs(operator.getRawAxis(JoystickConstants.LEFT_Y_AXIS))> 0.1;}).onTrue(new InstantCommand(() -> elevatorSubsystem.setSpeed(0.3*Math.signum(JoystickConstants.LEFT_Y_AXIS)), elevatorSubsystem)).onFalse(new InstantCommand(()->elevatorSubsystem.setSpeed(0),elevatorSubsystem));
+
+       //Top Wrist
+       new Trigger(() ->  {return Math.abs(operator.getRawAxis(JoystickConstants.RIGHT_Y_AXIS))> 0.1;}).onTrue(new InstantCommand(() -> topWristSubsystem.setSpeed(0.5*Math.signum(JoystickConstants.RIGHT_Y_AXIS)), topWristSubsystem)).onFalse(new InstantCommand(()->topWristSubsystem.setSpeed(0),topWristSubsystem));
+
     }
 
 

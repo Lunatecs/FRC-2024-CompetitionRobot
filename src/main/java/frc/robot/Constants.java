@@ -19,7 +19,7 @@ public final class Constants {
     public static final double stickDeadband = 0.1;
 
       public static final class TopWristConstants {
-        public static final int TOP_WRIST_ID = 0; //need canID later
+        public static final int TOP_WRIST_ID = 27; //need canID later
         public static final int TOP_WRIST_ABSOLUTE_ENCODER = 0; 
      }   
 
@@ -202,7 +202,7 @@ public final class Constants {
         public final static int LEFT_Y_AXIS = 1;
         public final static int LEFT_X_AXIS = 0;
         public final static int RIGHT_X_AXIS = 4;
-    
+        public final static int RIGHT_Y_AXIS = 5;
     
         public final static int GREEN_BUTTON = 1;
         public final static int RED_BUTTON = 2;
