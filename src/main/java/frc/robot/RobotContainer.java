@@ -80,7 +80,7 @@ public class RobotContainer {
 
         //Intake
                                                                                                    
-        new Trigger(() -> {return Math.abs(driver.getRawAxis(JoystickConstants.RIGHT_TRIGGER)) > 0.1;}).onTrue(new ExtendAndRunIntakeCommand(intakeSubsystem, shooterSubsystem))
+        new Trigger(() -> {return shooterSubsystem.getSensor() && Math.abs(driver.getRawAxis(JoystickConstants.RIGHT_TRIGGER)) > 0.1;}).onTrue(new ExtendAndRunIntakeCommand(intakeSubsystem, shooterSubsystem))
                                                                                                         .onFalse(new RetractIntakeCommand(intakeSubsystem));
                                 
         //Outtake

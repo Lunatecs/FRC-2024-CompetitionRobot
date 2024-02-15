@@ -17,15 +17,20 @@ public class SetIntakeWristPosition extends Command {
   ShooterSubsystem shooter;
   PIDController intakeWristPid; 
   double setpoint;
-  public SetIntakeWristPosition(double kp, double ki, double kd, double tolerance, double setpoint, IntakeSubsystem intake) {
+  boolean outtake;
+  public SetIntakeWristPosition(double kp, double ki, double kd, double tolerance, double setpoint, boolean outtake, IntakeSubsystem intake) {
     // Use addRequirements() here to declare subsystem dependencies.
     intakeWristPid = new PIDController(kp, ki, kd);
     intakeWristPid.setTolerance(tolerance);
     intakeWristPid.setSetpoint(setpoint);
     this.intake = intake;
-    this.shooter = shooter;
     this.setpoint = setpoint;
+    this.outtake = outtake;
     addRequirements(intake);
+  }
+
+  public SetIntakeWristPosition(double kp, double ki, double kd, double tolerance, double setpoint, IntakeSubsystem intake) {
+    this(kp, ki, kd, tolerance, setpoint, false, intake);
   }
 
   // Called when the command is initially scheduled.
@@ -40,12 +45,16 @@ public class SetIntakeWristPosition extends Command {
         speed = speed/Math.abs(speed)*.25;
       }
     intake.setWristSpeed(speed);
+    if(outtake) {
+      intake.setIntakeSpeed(-.5);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     intake.setWristSpeed(0);
+    intake.setIntakeSpeed(0);
   }
 
   // Returns true when the command should end.
