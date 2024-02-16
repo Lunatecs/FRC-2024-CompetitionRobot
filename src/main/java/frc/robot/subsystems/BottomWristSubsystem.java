@@ -17,7 +17,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -75,7 +75,7 @@ public class BottomWristSubsystem extends SubsystemBase {
   }
 
   public double getEncoder() {
-    return absoluteEncoder.getAbsolutePosition();
+    return wristMotor1.getPosition().getValueAsDouble();
   }
 
   public void initializeEncoder() {
@@ -102,6 +102,8 @@ public class BottomWristSubsystem extends SubsystemBase {
     if(Math.abs(vel) > max) {
       max=Math.abs(vel);
     }
+    SmartDashboard.putNumber("BottomWrist", getEncoder());
    // System.out.println("Position: " + this.wristMotor1.getPosition().getValueAsDouble() * 281.6 + "Agnle:" + this.wristMotor1.getPosition().getValueAsDouble()*360 + "Vel: " + vel + " Max: " + max + " Voltage: " + this.wristMotor1.getMotorVoltage());
   }
+
 }

@@ -18,12 +18,15 @@ public class RunIntakeCommand extends Command {
   private double feederSpeed;
   private double intakeSpeed;
   private boolean isFinished;
-  public RunIntakeCommand(IntakeSubsystem intake, ShooterSubsystem shooter, double feederSpeed, double intakeSpeed) {
+  private boolean outtake;
+
+  public RunIntakeCommand(IntakeSubsystem intake, ShooterSubsystem shooter, double feederSpeed, double intakeSpeed, boolean outtake) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intake = intake;
     this.shooter = shooter;
     this.feederSpeed = feederSpeed;
     this.intakeSpeed = intakeSpeed;
+    this.outtake = outtake;
 
     addRequirements(intake);
     addRequirements(shooter);
@@ -43,7 +46,12 @@ public class RunIntakeCommand extends Command {
       feederSpeed = 0;
       isFinished = true;
     }
-    intake.setIntakeSpeed(intakeSpeed);
+    if (outtake) {
+      intake.setIntakeSpeed(-intakeSpeed);
+    } else {
+      intake.setIntakeSpeed(intakeSpeed);
+    }
+    
     shooter.setFeederSpeed(feederSpeed);
     SmartDashboard.putBoolean("prox sensor", shooter.getSensor());
 

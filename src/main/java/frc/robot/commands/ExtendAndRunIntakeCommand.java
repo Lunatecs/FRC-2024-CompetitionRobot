@@ -20,7 +20,7 @@ public class ExtendAndRunIntakeCommand extends SequentialCommandGroup {
     // addCommands().
     addCommands(
       new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intake),
-      new RunIntakeCommand(intake, shooter, 0.2, 1),
+      new RunIntakeCommand(intake, shooter, 0.2, 1, false),
       new RetractIntakeCommand(intake)
       );
     addRequirements(intake, shooter);
