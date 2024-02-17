@@ -34,6 +34,6 @@ public class CheckPivotCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(bottomWristSubsystem.getEncoder()) > Math.abs(position);
+    return Math.abs(bottomWristSubsystem.getEncoder()) > Math.abs(position) - 0.01;
   }
 }

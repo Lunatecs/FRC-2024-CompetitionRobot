@@ -68,13 +68,7 @@
         {
           "type": "named",
           "data": {
-            "name": "shootNote"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "SetPivot0"
+            "name": "ZeroPower"
           }
         }
       ]
