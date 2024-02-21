@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -67,8 +68,7 @@ public class RobotContainer {
         //intakeSubsystem.setDefaultCommand(new RunCommand(() -> intakeSubsystem.setWristSpeed(operator.getRawAxis(JoystickConstants.LEFT_Y_AXIS)*.25), intakeSubsystem));
         // Configure the button bindings
         configureButtonBindings();
-        autoChooser = AutoBuilder.buildAutoChooser();
-        SmartDashboard.putData("Auto Chooser", autoChooser);
+        
 
         NamedCommands.registerCommand("shootNote", new ShootNoteCommand(shooterSubsystem));
         NamedCommands.registerCommand("raisePivot26", new InstantCommand(()->bottomWristSubsystem.setPosition(-26),bottomWristSubsystem));
@@ -78,8 +78,18 @@ public class RobotContainer {
         NamedCommands.registerCommand("SetPivot0", new InstantCommand(()->bottomWristSubsystem.setPosition(-2),bottomWristSubsystem));
         NamedCommands.registerCommand("ZeroPower", new InstantCommand(() -> bottomWristSubsystem.setSpeed(0.0), bottomWristSubsystem));
 
-        
+        autoChooser = AutoBuilder.buildAutoChooser();
+        SmartDashboard.putData("Auto Chooser", autoChooser);
+        autoChooser.addOption("Do Nothing", new AutoDoNothing());
+        autoChooser.addOption("Four Piece in Front", new PathPlannerAuto("FourPiece"));
 
+    }
+
+    public void teleopInit() {
+        bottomWristSubsystem.setSpeed(0);
+        shooterSubsystem.setFeederSpeed(0.0);
+        shooterSubsystem.setshooterSpeed(0.0);
+        intakeSubsystem.setIntakeSpeed(0.0);
     }
 
     /**
@@ -96,8 +106,8 @@ public class RobotContainer {
                                                                                                    
         new Trigger(() -> {return shooterSubsystem.getSensor() && Math.abs(driver.getRawAxis(JoystickConstants.RIGHT_TRIGGER)) > 0.1;}).onTrue(new ExtendAndRunIntakeCommand(intakeSubsystem, shooterSubsystem))
                                                                                                         .onFalse(new RetractIntakeCommand(intakeSubsystem));
-       //new Trigger(() -> {return Math.abs(driver.getRawAxis(JoystickConstants.LEFT_TRIGGER)) > 0.1;}).onTrue(new RunIntakeCommand(intakeSubsystem, shooterSubsystem, 0.2, 1, true))  
-           //                                                                                 .onFalse(new SequentialCommandGroup(new InstantCommand(() -> intakeSubsystem.setIntakeSpeed(0), intakeSubsystem), new RetractIntakeCommand(intakeSubsystem)));
+        new Trigger(() -> {return Math.abs(driver.getRawAxis(JoystickConstants.LEFT_TRIGGER)) > 0.1;}).onTrue(new RunIntakeCommand(intakeSubsystem, shooterSubsystem, 0.2, 1, true))  
+                                                                                                .onFalse(new SequentialCommandGroup(new InstantCommand(() -> intakeSubsystem.setIntakeSpeed(0), intakeSubsystem), new RetractIntakeCommand(intakeSubsystem)));
                                 
         //Outtake
                                                                                                       
@@ -106,10 +116,15 @@ public class RobotContainer {
     
         //new JoystickButton(driver, JoystickConstants.GREEN_BUTTON).onTrue(new SetIntakeWristPosition(.32, 0, 0, 0.5, -3.0, intakeSubsystem)); // Down Position
         //new JoystickButton(driver, JoystickConstants.BLUE_BUTTON).onTrue(new RetractIntakeCommand(intakeSubsystem));
+        
+        new JoystickButton(driver, JoystickConstants.GREEN_BUTTON).onTrue(new InstantCommand(() -> shooterSubsystem.setFeederSpeed(-.25), shooterSubsystem))
+                                                                    .onFalse(new InstantCommand(() -> shooterSubsystem.setFeederSpeed(0.0), shooterSubsystem));
 
         new JoystickButton(operator, JoystickConstants.YELLOW_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem));
         new JoystickButton(operator, JoystickConstants.BLUE_BUTTON).onTrue(new InstantCommand(()->bottomWristSubsystem.setPosition(-10),bottomWristSubsystem));
         new JoystickButton(operator, JoystickConstants.GREEN_BUTTON).onTrue(new SetPivotBottomCommand(bottomWristSubsystem, intakeSubsystem));
+        new JoystickButton(operator, JoystickConstants.RED_BUTTON).onTrue(new SetPivotBaseCommand(bottomWristSubsystem))
+                                                                    .onFalse(new InstantCommand(() -> bottomWristSubsystem.setSpeed(0),bottomWristSubsystem));
         //new JoystickButton(driver, JoystickConstants.RIGHT_BUMPER).onTrue(new RunIntakeCommand(intakeSubsystem, shooterSubsystem, 0.1, 0.5))
                                                                // .onFalse(new RunIntakeCommand(intakeSubsystem, shooterSubsystem, 0, 0));
     
@@ -120,10 +135,15 @@ public class RobotContainer {
        // new JoystickButton(operator, JoystickConstants.START_BUTTON).onTrue(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -0.3)); //Up Position
 
        //Elevator
-       new Trigger(() -> {return Math.abs(operator.getRawAxis(JoystickConstants.LEFT_Y_AXIS))> 0.1;}).onTrue(new InstantCommand(() -> elevatorSubsystem.setSpeed(0.3*Math.signum(JoystickConstants.LEFT_Y_AXIS)), elevatorSubsystem)).onFalse(new InstantCommand(()->elevatorSubsystem.setSpeed(0),elevatorSubsystem));
+       new Trigger(() -> {return Math.abs(operator.getRawAxis(JoystickConstants.LEFT_Y_AXIS))> 0.1;}).onTrue(new InstantCommand(() -> elevatorSubsystem.setSpeed(0.3*Math.signum(operator.getRawAxis(JoystickConstants.LEFT_Y_AXIS))), elevatorSubsystem)).onFalse(new InstantCommand(()->elevatorSubsystem.setSpeed(0),elevatorSubsystem));
 
        //Top Wrist
-       new Trigger(() ->  {return Math.abs(operator.getRawAxis(JoystickConstants.RIGHT_Y_AXIS))> 0.1;}).onTrue(new InstantCommand(() -> topWristSubsystem.setSpeed(0.5*Math.signum(JoystickConstants.RIGHT_Y_AXIS)), topWristSubsystem)).onFalse(new InstantCommand(()->topWristSubsystem.setSpeed(0),topWristSubsystem));
+       //new Trigger(() ->  {return Math.abs(operator.getRawAxis(JoystickConstants.RIGHT_Y_AXIS))> 0.1;}).onTrue(new InstantCommand(() -> topWristSubsystem.setSpeed(0.9*Math.signum(operator.getRawAxis(JoystickConstants.RIGHT_Y_AXIS))), topWristSubsystem)).onFalse(new InstantCommand(()->topWristSubsystem.setSpeed(0),topWristSubsystem));
+
+       new Trigger(() -> {return Math.abs(operator.getRawAxis(JoystickConstants.RIGHT_Y_AXIS))> 0.1;}).onTrue(new SequentialCommandGroup(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem), new InstantCommand(() -> topWristSubsystem.setSpeed(0.5*Math.signum(operator.getRawAxis(JoystickConstants.RIGHT_Y_AXIS))), topWristSubsystem)))
+                                                                                                    .onFalse(new ParallelCommandGroup(new RetractIntakeCommand(intakeSubsystem), new InstantCommand(()->topWristSubsystem.setSpeed(0),topWristSubsystem)));
+
+        
 
     }
 
@@ -135,6 +155,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new PathPlannerAuto("FourPiece");
+        return autoChooser.getSelected();
     }
 }

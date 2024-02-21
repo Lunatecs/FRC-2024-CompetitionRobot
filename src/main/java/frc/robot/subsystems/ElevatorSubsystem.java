@@ -12,6 +12,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -50,9 +51,13 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorMotor.set(speed); 
   }
 
+  public double getEncoder() {
+    return elevatorMotor.getPosition().getValueAsDouble();
+  }
+
   @Override
   public void periodic() {
-
+    SmartDashboard.putNumber("Elevator Encoder", getEncoder());
   }
   
 }

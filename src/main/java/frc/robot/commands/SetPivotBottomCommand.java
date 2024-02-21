@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.BottomWristSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
@@ -21,6 +22,7 @@ public class SetPivotBottomCommand extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new InstantCommand(()->bottomWristSubsystem.setPosition(-2),bottomWristSubsystem),
+      new WaitCommand(0.25),
       new RetractIntakeCommand(intakeSubsystem)
     );
 
