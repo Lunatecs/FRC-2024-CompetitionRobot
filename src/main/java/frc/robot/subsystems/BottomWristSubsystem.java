@@ -79,21 +79,18 @@ public class BottomWristSubsystem extends SubsystemBase {
   }
 
   public void initializeEncoder() {
-
     //wristMotor1.setPosition(getEncoder());
     wristMotor1.setPosition(0.047222);
   }
+
 // Pass parameters through setPosition
   public void setPosition(double position) {
-    
     wristMotor1.setControl(motionMagicV.withPosition(position));
   }
 
   public void setSpeed(double speed){
-
     wristMotor1.set(speed);
   }
-
 
 
   @Override
@@ -103,7 +100,7 @@ public class BottomWristSubsystem extends SubsystemBase {
       max=Math.abs(vel);
     }
     SmartDashboard.putNumber("BottomWrist", getEncoder());
-   // System.out.println("Position: " + this.wristMotor1.getPosition().getValueAsDouble() * 281.6 + "Agnle:" + this.wristMotor1.getPosition().getValueAsDouble()*360 + "Vel: " + vel + " Max: " + max + " Voltage: " + this.wristMotor1.getMotorVoltage());
+   // System.out.println("Position: " + this.wristMotor1.getPosition().getValueAsDouble() * 281.6 + "Angle:" + this.wristMotor1.getPosition().getValueAsDouble()*360 + "Vel: " + vel + " Max: " + max + " Voltage: " + this.wristMotor1.getMotorVoltage());
   }
-
+  
 }

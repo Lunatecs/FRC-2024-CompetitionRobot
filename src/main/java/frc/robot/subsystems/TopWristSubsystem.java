@@ -17,26 +17,27 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TopWristConstants; 
 
 public class TopWristSubsystem extends SubsystemBase {
-  /** Creates a new topWrist. */
-  
-  //private TalonFXConfiguration topWristConfig = new TalonFXConfiguration(); 
-  private TalonFX topWrist = new TalonFX(TopWristConstants.TOP_WRIST_ID);  
-  private DutyCycleEncoder encoder = new DutyCycleEncoder(TopWristConstants.TOP_WRIST_ABSOLUTE_ENCODER); 
 
-  private final PositionVoltage motorPosition = new PositionVoltage(0);
+  private TalonFX topWrist;
+  
+  //private TalonFXConfiguration topWristConfig = new TalonFXConfiguration();  
+  //private DutyCycleEncoder encoder = new DutyCycleEncoder(TopWristConstants.TOP_WRIST_ABSOLUTE_ENCODER); 
+
+  //private final PositionVoltage motorPosition = new PositionVoltage(0);
   final MotionMagicVoltage motionMagicV = new MotionMagicVoltage(0);
 
   public TopWristSubsystem() {
+    topWrist = new TalonFX(TopWristConstants.TOP_WRIST_ID);
     topWrist.getConfigurator().apply(new TalonFXConfiguration()); 
-    topWrist.setNeutralMode(NeutralModeValue.Brake);
 
     initializeEncoder();
+
     var topWristConfig = new TalonFXConfiguration(); 
 
     var slot0configs = topWristConfig.Slot0;
     slot0configs.kG = 0.25; 
     slot0configs.kS = 0.3;
-    slot0configs.kV =  0.1;//.3178;//2.648;//31.78;//.25;
+    slot0configs.kV = 0.1;//.3178;//2.648;//31.78;//.25;
     slot0configs.kA = 0.0; //.02
     slot0configs.kP = 0.00;
     slot0configs.kI = 0.0;
@@ -50,11 +51,11 @@ public class TopWristSubsystem extends SubsystemBase {
     var feedbackConfig = topWristConfig.Feedback;
     feedbackConfig.SensorToMechanismRatio = 99.9771;
 
+    topWrist.setNeutralMode(NeutralModeValue.Brake);
+
     //topWrist.getConfigurator().apply(topWristConfig, 0.05);
 
     motionMagicV.Slot = 0;
-
-
   }
 
   @Override
@@ -64,9 +65,7 @@ public class TopWristSubsystem extends SubsystemBase {
   }
 
   public void setSpeed(double speed){
-
     topWrist.set(speed);
-
   }
 
   public void resetEncoder(){
@@ -74,7 +73,6 @@ public class TopWristSubsystem extends SubsystemBase {
   }
 
   public void initializeEncoder() {
-
     //wristMotor1.setPosition(getEncoder());
     topWrist.setPosition(-0.038);
   }
@@ -86,6 +84,4 @@ public class TopWristSubsystem extends SubsystemBase {
   public void setPosition(double position) {
     topWrist.setControl(motionMagicV.withPosition(position));
   }
-
-
 }
