@@ -26,16 +26,15 @@ public final class Constants {
     public static final class Swerve {
         public static final int pigeonID = 1;
 
-        public static final COTSTalonFXSwerveConstants chosenModule =  //TODO: This must be tuned to specific robot
-        COTSTalonFXSwerveConstants.SDS.MK4i.KrakenX60(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L3);
+        public static final COTSTalonFXSwerveConstants chosenModule =
+        COTSTalonFXSwerveConstants.SDS.MK4i.KrakenX60(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L3_5);
 
         /* Drivetrain Constants */
-        public static final double trackWidth = Units.inchesToMeters(22.70); //TODO: This must be tuned to specific robot
-        public static final double wheelBase = Units.inchesToMeters(22.70); //TODO: This must be tuned to specific robot
+        public static final double trackWidth = Units.inchesToMeters(22.70);
+        public static final double wheelBase = Units.inchesToMeters(22.70);
         public static final double wheelCircumference = chosenModule.wheelCircumference;
 
-        /* Swerve Kinematics 
-         * No need to ever change this unless you are not doing a traditional rectangular/square 4 module swerve */
+        /* Swerve Kinematics */
          public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
             new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
             new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
@@ -75,7 +74,7 @@ public final class Constants {
         public static final double angleKD = chosenModule.angleKD;
 
         /* Drive Motor PID Values */
-        public static final double driveKP = 0.2;//0.12; //TODO: This must be tuned to specific robot
+        public static final double driveKP = 0.2;//0.12; 
         public static final double driveKI = 0.0;
         public static final double driveKD = 0.0;
         public static final double driveKF = 0.0;
@@ -87,9 +86,9 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 4.5; //TODO: This must be tuned to specific robot
+        public static final double maxSpeed = 4.5;
         /** Radians per Second */
-        public static final double maxAngularVelocity = 5.0;//10 //TODO: This must be tuned to specific robot
+        public static final double maxAngularVelocity = 5.0; //10
 
         /* Neutral Modes */
         public static final NeutralModeValue angleNeutralMode = NeutralModeValue.Brake;
@@ -168,30 +167,24 @@ public final class Constants {
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
-
     }
 
     public static final class ShooterConstants {
         public static final int SHOOTER_MOTOR1 = 21;
         public static final int SHOOTER_MOTOR2 = 29;
         public static final int FEEDER_MOTOR = 26;
-        public static final int PROXIMITY_SENSOR = 9;
-    
-        
+        public static final int PROXIMITY_SENSOR = 9; 
     }
     
     public static final class ElevatorConstants {
         public static final int ELEVATOR_MOTOR_ID = 17;
-        public static final int ABSOLUTE_ENCODER_ID = 0;
+        public static final int ABSOLUTE_ENCODER_ID = 0; //TODO: CHANGE VALUE
     }
 
     public static final class BottomWristConstants {
-
         public static final int WRIST_MOTOR1 = 14;
-
         public static final int WRIST_MOTOR2 = 15;
-
-        public static final int ABSOLUTE_ENCODER = 0;
+        public static final int ABSOLUTE_ENCODER = 0; //TODO: CHANGE VALUE
     }
 
     public final static class JoystickConstants{
@@ -222,6 +215,4 @@ public final class Constants {
         public final static int POV_DOWN = 180;
         public final static int POV_LEFT = 270;
     }
-
-    
 }
