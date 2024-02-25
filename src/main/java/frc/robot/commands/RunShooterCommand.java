@@ -12,9 +12,11 @@ public class RunShooterCommand extends Command {
   /** Creates a new ShootNote. */
   private ShooterSubsystem shooter;
   private boolean isFinished;
-  public RunShooterCommand(ShooterSubsystem shooter) {
+  private int velocity;
+  public RunShooterCommand(ShooterSubsystem shooter, int velocity) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooter = shooter;
+    this.velocity = velocity;
     addRequirements(shooter);
   }
 
@@ -27,10 +29,12 @@ public class RunShooterCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setshooterSpeed(.9);
+    //shooter.setshooterSpeed(.9);
+
+    shooter.setRPM(velocity);
   
-    if (shooter.getVelocity() > 80) {
-      isFinished = true;
+    if (shooter.getVelocity() >= (velocity)) {
+      isFinished = true; //was true
     }
   }
 

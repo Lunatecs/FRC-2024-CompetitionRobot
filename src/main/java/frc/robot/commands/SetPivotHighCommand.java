@@ -16,12 +16,12 @@ public class SetPivotHighCommand extends SequentialCommandGroup {
   /** Creates a new SetPivotHighCommand. */
   BottomWristSubsystem bottomWristSubsystem;
   IntakeSubsystem intakeSubsystem;
-  public SetPivotHighCommand(BottomWristSubsystem bottomWristSubsystem, IntakeSubsystem intakeSubsystem) {
+  public SetPivotHighCommand(BottomWristSubsystem bottomWristSubsystem, IntakeSubsystem intakeSubsystem, double position) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem),
-      new InstantCommand(()->bottomWristSubsystem.setPosition(-26),bottomWristSubsystem)
+      new InstantCommand(()->bottomWristSubsystem.setPosition(position),bottomWristSubsystem)
     );
 
     addRequirements(bottomWristSubsystem, intakeSubsystem);

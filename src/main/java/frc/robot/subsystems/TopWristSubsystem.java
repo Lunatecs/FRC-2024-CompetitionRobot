@@ -36,7 +36,7 @@ public class TopWristSubsystem extends SubsystemBase {
 
     var slot0configs = topWristConfig.Slot0;
     slot0configs.kG = 0.25; 
-    slot0configs.kS = 0.3;
+    slot0configs.kS = 0.3525;
     slot0configs.kV = 0.1;//.3178;//2.648;//31.78;//.25;
     slot0configs.kA = 0.0; //.02
     slot0configs.kP = 0.00;
@@ -49,7 +49,7 @@ public class TopWristSubsystem extends SubsystemBase {
     motionMagicConfig.MotionMagicAcceleration = 40;
 
     var feedbackConfig = topWristConfig.Feedback;
-    feedbackConfig.SensorToMechanismRatio = 99.9771;
+    feedbackConfig.SensorToMechanismRatio = 77.76;
 
     topWrist.setNeutralMode(NeutralModeValue.Brake);
 
