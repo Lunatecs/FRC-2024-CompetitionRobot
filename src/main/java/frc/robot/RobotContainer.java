@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.autos.*;
@@ -59,7 +60,7 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(translationAxis), 
                 () -> -driver.getRawAxis(strafeAxis), 
                 () -> -driver.getRawAxis(rotationAxis), 
-                () -> driver.getRawButton(Constants.JoystickConstants.RIGHT_BUMPER), //false for field centric
+                () -> false, //driver.getRawButton(Constants.JoystickConstants.RIGHT_BUMPER), //false for field centric
                 () -> driver.getRawButton(JoystickConstants.LEFT_BUMPER) // slowMode
             )
         );
@@ -68,7 +69,7 @@ public class RobotContainer {
         configureButtonBindings();
         
         // Auto Configurations
-        NamedCommands.registerCommand("shootNote", new ShootNoteCommand(shooterSubsystem));
+        NamedCommands.registerCommand("shootNote", new ShootNoteCommand(shooterSubsystem, 60));
         NamedCommands.registerCommand("raisePivot26", new InstantCommand(()->bottomWristSubsystem.setPosition(-26),bottomWristSubsystem));
         NamedCommands.registerCommand("checkPivot26", new CheckPivotCommand(bottomWristSubsystem, .1));
         NamedCommands.registerCommand("RunIntake", new RunIntakeCommand(intakeSubsystem, shooterSubsystem, 0.2, 1, false));
@@ -101,8 +102,9 @@ public class RobotContainer {
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
 
         //Intake                                                                          
-        new Trigger(() -> {return shooterSubsystem.getSensor() && Math.abs(driver.getRawAxis(JoystickConstants.RIGHT_TRIGGER)) > 0.1;}).onTrue(new ExtendAndRunIntakeCommand(intakeSubsystem, shooterSubsystem))
-                                                                                                        .onFalse(new RetractIntakeCommand(intakeSubsystem));
+        new Trigger(() -> {return shooterSubsystem.getSensor() && Math.abs(driver.getRawAxis(JoystickConstants.RIGHT_TRIGGER)) > 0.1;}).onTrue(new ExtendAndRunIntakeCommand(intakeSubsystem, shooterSubsystem));
+                                                                                                       // .onFalse(new RetractIntakeCommand(intakeSubsystem));
+        new JoystickButton(driver, JoystickConstants.RIGHT_BUMPER).onTrue(new RetractIntakeCommand(intakeSubsystem));
         new Trigger(() -> {return Math.abs(driver.getRawAxis(JoystickConstants.LEFT_TRIGGER)) > 0.1;}).onTrue(new RunIntakeCommand(intakeSubsystem, shooterSubsystem, 0.2, 1, true))  
                                                                                                 .onFalse(new SequentialCommandGroup(new InstantCommand(() -> intakeSubsystem.setIntakeSpeed(0), intakeSubsystem), new RetractIntakeCommand(intakeSubsystem)));
                                 
@@ -118,15 +120,17 @@ public class RobotContainer {
 
 
         /* Operator Controls */
-        new JoystickButton(operator, JoystickConstants.YELLOW_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -26));
-        new JoystickButton(operator, JoystickConstants.BLUE_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -10));
+        new JoystickButton(operator, JoystickConstants.YELLOW_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -5.5));
+        new JoystickButton(operator, JoystickConstants.BLUE_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -14));
         //new JoystickButton(operator, JoystickConstants.BLUE_BUTTON).onTrue(new InstantCommand(()->bottomWristSubsystem.setPosition(-10),bottomWristSubsystem));
         new JoystickButton(operator, JoystickConstants.GREEN_BUTTON).onTrue(new SetPivotBottomCommand(bottomWristSubsystem, intakeSubsystem));
-        new JoystickButton(operator, JoystickConstants.RED_BUTTON).onTrue(new SetPivotBaseCommand(bottomWristSubsystem))
-                                                                    .onFalse(new InstantCommand(() -> bottomWristSubsystem.setSpeed(0),bottomWristSubsystem));
+        new JoystickButton(operator, JoystickConstants.RED_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -26));
+
+        new POVButton(operator, JoystickConstants.POV_DOWN).onTrue(new SetPivotBaseCommand(bottomWristSubsystem))
+                                                            .onFalse(new InstantCommand(() -> bottomWristSubsystem.setSpeed(0),bottomWristSubsystem));
     
-        new JoystickButton(operator, JoystickConstants.RIGHT_BUMPER).onTrue(new ShootNoteCommand(shooterSubsystem));
-        
+        new JoystickButton(operator, JoystickConstants.RIGHT_BUMPER).onTrue(new ShootNoteCommand(shooterSubsystem, 60));
+        new JoystickButton(operator, JoystickConstants.LEFT_BUMPER).onTrue(new ShootNoteCommand(shooterSubsystem, 90));
        // new JoystickButton(operator, JoystickConstants.START_BUTTON).onTrue(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -0.3)); //Up Position
 
        //Elevator

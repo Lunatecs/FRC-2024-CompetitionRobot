@@ -14,11 +14,11 @@ import frc.robot.subsystems.ShooterSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ShootNoteCommand extends SequentialCommandGroup {
   /** Creates a new ShootNoteCommand. */
-  public ShootNoteCommand(ShooterSubsystem shooter) {
+  public ShootNoteCommand(ShooterSubsystem shooter, int velocity) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new RunShooterCommand(shooter, 80),
+      new RunShooterCommand(shooter, velocity),
       new InstantCommand(() -> shooter.setFeederSpeed(0.75), shooter),
       new WaitCommand(0.5),
       new InstantCommand(() -> shooter.setFeederSpeed(0.0), shooter),
