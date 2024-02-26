@@ -81,6 +81,7 @@ public class RobotContainer {
         SmartDashboard.putData("Auto Chooser", autoChooser);
         autoChooser.addOption("Do Nothing", new AutoDoNothing());
         autoChooser.addOption("Four Piece in Front", new PathPlannerAuto("FourPiece"));
+        autoChooser.addOption("Move 1 Meter", new PathPlannerAuto("1 Meter Forward"));
 
     }
 

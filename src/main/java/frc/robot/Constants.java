@@ -53,13 +53,13 @@ public final class Constants {
         public static final SensorDirectionValue cancoderInvert = chosenModule.cancoderInvert;
 
         /* Swerve Current Limiting */
-        public static final int angleCurrentLimit = 25;
-        public static final int angleCurrentThreshold = 40;
+        public static final int angleCurrentLimit = 15; //25
+        public static final int angleCurrentThreshold = 27; //40
         public static final double angleCurrentThresholdTime = 0.1;
         public static final boolean angleEnableCurrentLimit = true;
 
-        public static final int driveCurrentLimit = 35;
-        public static final int driveCurrentThreshold = 60;
+        public static final int driveCurrentLimit = 25; //35
+        public static final int driveCurrentThreshold = 40; //60
         public static final double driveCurrentThresholdTime = 0.1;
         public static final boolean driveEnableCurrentLimit = true;
 
@@ -74,8 +74,8 @@ public final class Constants {
         public static final double angleKD = chosenModule.angleKD;
 
         /* Drive Motor PID Values */
-        public static final double driveKP = 0.2;//0.12; 
-        public static final double driveKI = 0.0;
+        public static final double driveKP = 0.9;//.2//0.12; 
+        public static final double driveKI = 0.005;
         public static final double driveKD = 0.0;
         public static final double driveKF = 0.0;
 
@@ -88,7 +88,7 @@ public final class Constants {
         /** Meters per Second */
         public static final double maxSpeed = 4.5;
         /** Radians per Second */
-        public static final double maxAngularVelocity = 5.0; //10
+        public static final double maxAngularVelocity = 4.296; //5.0; //10
 
         /* Neutral Modes */
         public static final NeutralModeValue angleNeutralMode = NeutralModeValue.Brake;
