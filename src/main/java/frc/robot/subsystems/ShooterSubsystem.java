@@ -44,6 +44,8 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterMotor2.setPosition(0);
     feederMotor.setPosition(0);
 
+    shooterMotor1.setInverted(true);
+
   }
 
   public void setRPM(int rpm){
@@ -75,5 +77,6 @@ public class ShooterSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Shooter Voltage", getVoltage());
     SmartDashboard.putNumber("Shooter Velocity", getVelocity());
+    SmartDashboard.putBoolean("prox sensor", getSensor());
   }
 }

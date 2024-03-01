@@ -56,7 +56,7 @@ public class TeleopSwerve extends Command {
             new Translation2d(translationVal, strafeVal).times(speedMulti), 
             rotationVal * rotMulti, 
             !robotCentricSup.getAsBoolean(), 
-            true
+            false  //true before
         );
     }
 }

@@ -89,4 +89,8 @@ public class SwerveModule {
             Rotation2d.fromRotations(mAngleMotor.getPosition().getValue())
         );
     }
+
+    public VelocityVoltage getDrivingVelocity() {
+        return driveVelocity;
+    }
 }

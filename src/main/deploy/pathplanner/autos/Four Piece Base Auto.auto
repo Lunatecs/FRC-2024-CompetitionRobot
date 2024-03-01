@@ -12,9 +12,39 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "DropIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "raisePivot26"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "checkPivot26"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootNote"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Four Piece Base_Center Left Path"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootNote"
           }
         },
         {
@@ -24,9 +54,27 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "shootNote"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Four Piece Base_Center Path Right"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootNote"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ZeroPower"
           }
         }
       ]

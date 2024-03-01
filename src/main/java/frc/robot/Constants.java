@@ -27,7 +27,7 @@ public final class Constants {
         public static final int pigeonID = 1;
 
         public static final COTSTalonFXSwerveConstants chosenModule =
-        COTSTalonFXSwerveConstants.SDS.MK4i.KrakenX60(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L3_5);
+        COTSTalonFXSwerveConstants.SDS.MK4i.KrakenX60(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L3);
 
         /* Drivetrain Constants */
         public static final double trackWidth = Units.inchesToMeters(22.70);
@@ -53,16 +53,16 @@ public final class Constants {
         public static final SensorDirectionValue cancoderInvert = chosenModule.cancoderInvert;
 
         /* Swerve Current Limiting */
-        public static final int angleCurrentLimit = 25; //25
-        public static final int angleCurrentThreshold = 40; //40
+        public static final int angleCurrentLimit = 25;
+        public static final int angleCurrentThreshold = 40; 
         public static final double angleCurrentThresholdTime = 0.1;
         public static final boolean angleEnableCurrentLimit = true;
 
-        public static final int driveCurrentLimit = 35; //35
-        public static final int driveCurrentThreshold = 60; //60
+        public static final int driveCurrentLimit = 60; //35
+        public static final int driveCurrentThreshold = 80; //60
         public static final double driveCurrentThresholdTime = 0.1;
         public static final boolean driveEnableCurrentLimit = true;
-        public static final int driveStatorCurrentLimit = 80;
+        public static final int driveStatorCurrentLimit = 150;
         public static final boolean driveEnableStatorCurrentLimit = true;
 
         /* These values are used by the drive falcon to ramp in open loop and closed loop driving.
@@ -76,14 +76,14 @@ public final class Constants {
         public static final double angleKD = chosenModule.angleKD;
 
         /* Drive Motor PID Values */
-        public static final double driveKP = 0.9;//.2//0.12; 
+        public static final double driveKP = 2.2;//.2//0.12; 
         public static final double driveKI = 0.005;
-        public static final double driveKD = 0.0;
+        public static final double driveKD = 0.001;
         public static final double driveKF = 0.0;
 
         /* Drive Motor Characterization Values From SYSID */
-        public static final double driveKS = 0.15;//0.32; //TODO: This must be tuned to specific robot
-        public static final double driveKV = 1.5;//1.51;
+        public static final double driveKS = 0.15;//0.32;     
+        public static final double driveKV = 0.734; //1.5;//1.51;   //kV in (1/rps): 0.734 Need to test
         public static final double driveKA = 0.2;//0.27;
 
         /* Swerve Profiling Values */
@@ -98,7 +98,7 @@ public final class Constants {
 
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
-        public static final class Mod0 { //TODO: This must be tuned to specific robot
+        public static final class Mod0 { 
             public static final int driveMotorID = 2;
             public static final int angleMotorID = 3;
             public static final int canCoderID = 10;
@@ -108,7 +108,7 @@ public final class Constants {
         }
 
         /* Front Right Module - Module 1 */
-        public static final class Mod1 { //TODO: This must be tuned to specific robot
+        public static final class Mod1 { 
             public static final int driveMotorID = 4;
             public static final int angleMotorID = 5;
             public static final int canCoderID = 11;
@@ -118,7 +118,7 @@ public final class Constants {
         }
         
         /* Back Left Module - Module 2 */
-        public static final class Mod2 { //TODO: This must be tuned to specific robot
+        public static final class Mod2 { 
             public static final int driveMotorID = 8;
             public static final int angleMotorID = 9;
             public static final int canCoderID = 13;
@@ -128,7 +128,7 @@ public final class Constants {
         }
 
         /* Back Right Module - Module 3 */
-        public static final class Mod3 { //TODO: This must be tuned to specific robot
+        public static final class Mod3 { 
             public static final int driveMotorID = 6;
             public static final int angleMotorID = 7;
             public static final int canCoderID = 12;
@@ -148,7 +148,7 @@ public final class Constants {
     
     public static final class IntakeConstants {
         public static final int INTAKE_MOTOR = 12; // TO DO FIX MOTOR
-        public static final int WRIST_MOTOR = 16; //TO DO FIX MOTOR
+        public static final int WRIST_MOTOR = 20; //TO DO FIX MOTOR
         public static final int ABSOLUTE_ENCODER = 0; //TO DO FIX
 
         public static final double BOTTOM_SETPOINT = -0.2;

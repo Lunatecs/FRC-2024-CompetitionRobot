@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.0,
-      "y": 5.59
+      "x": 1.33,
+      "y": 5.54
     },
     "rotation": 0
   },
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "1 Meter Forward"
+            "pathName": "New New New New New New Path"
           }
         }
       ]

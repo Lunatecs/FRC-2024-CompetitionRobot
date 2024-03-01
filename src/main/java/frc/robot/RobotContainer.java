@@ -80,7 +80,7 @@ public class RobotContainer {
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
         autoChooser.addOption("Do Nothing", new AutoDoNothing());
-        autoChooser.addOption("Four Piece in Front", new PathPlannerAuto("FourPiece"));
+        autoChooser.addOption("Four Piece in Front", new PathPlannerAuto("Four Piece Base Auto"));
         autoChooser.addOption("Move 1 Meter", new PathPlannerAuto("1 Meter Forward"));
 
     }
@@ -131,7 +131,7 @@ public class RobotContainer {
                                                             .onFalse(new InstantCommand(() -> bottomWristSubsystem.setSpeed(0),bottomWristSubsystem));
     
         new JoystickButton(operator, JoystickConstants.RIGHT_BUMPER).onTrue(new ShootNoteCommand(shooterSubsystem, 60));
-        new JoystickButton(operator, JoystickConstants.LEFT_BUMPER).onTrue(new ShootNoteCommand(shooterSubsystem, 90));
+        new JoystickButton(operator, JoystickConstants.LEFT_BUMPER).onTrue(new ShootNoteCommand(shooterSubsystem, 95));
        // new JoystickButton(operator, JoystickConstants.START_BUTTON).onTrue(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -0.3)); //Up Position
 
        //Elevator
