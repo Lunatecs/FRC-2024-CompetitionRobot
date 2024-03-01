@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2782342053414837,
-      "y": 5.55076982040085
+      "x": 1.39,
+      "y": 5.63
     },
     "rotation": 0
   },
@@ -12,27 +12,33 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Pivot26"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "checkPivot26"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shootNote"
+            "pathName": "6 Piece Path 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "New New New New Path"
+            "pathName": "6 Piece Path 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "6 Piece Path 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "6 Piece Path 4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "6 Piece Path 5"
           }
         }
       ]
