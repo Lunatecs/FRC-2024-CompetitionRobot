@@ -53,6 +53,7 @@ public class RobotContainer {
     private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
     private final TopWristSubsystem topWristSubsystem = new TopWristSubsystem();
     private final LimelightSubsystem limelightSubsystem = new LimelightSubsystem();
+    private final LEDSubsystem ledSubsystem = new LEDSubsystem(); 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -112,6 +113,8 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Controls */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
+
+        new JoystickButton(operator, JoystickConstants.BACK_BUTTON).onTrue(new InstantCommand(()->ledSubsystem.set(0, 0, 255))).onFalse(new InstantCommand(()->ledSubsystem.set(255, 0, 0)));
 
         //Intake                                                                          
         new Trigger(() -> {return shooterSubsystem.getSensor() && Math.abs(driver.getRawAxis(JoystickConstants.RIGHT_TRIGGER)) > 0.1;}).onTrue(new ExtendAndRunIntakeCommand(intakeSubsystem, shooterSubsystem));
