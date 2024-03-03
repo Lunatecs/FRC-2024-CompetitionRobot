@@ -74,7 +74,7 @@ public class RobotContainer {
         
         // Auto Configurations
         NamedCommands.registerCommand("shootNote", new ShootNoteCommand(shooterSubsystem, 60));
-        NamedCommands.registerCommand("raisePivot26", new InstantCommand(()->bottomWristSubsystem.setPosition(-26),bottomWristSubsystem));
+        NamedCommands.registerCommand("raisePivot26", new InstantCommand(()->bottomWristSubsystem.setPosition(-25),bottomWristSubsystem));
         NamedCommands.registerCommand("checkPivot26", new CheckPivotCommand(bottomWristSubsystem, .1));
         NamedCommands.registerCommand("RunIntake", new RunIntakeCommand(intakeSubsystem, shooterSubsystem, 0.2, 1, false));
         NamedCommands.registerCommand("DropIntake", new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem));
