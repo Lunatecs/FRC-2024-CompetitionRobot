@@ -23,6 +23,7 @@ import frc.robot.Constants.JoystickConstants;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.robot.utils.TargetingUtil;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -51,6 +52,7 @@ public class RobotContainer {
     private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
     private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
     private final TopWristSubsystem topWristSubsystem = new TopWristSubsystem();
+    private final LimelightSubsystem limelightSubsystem = new LimelightSubsystem();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -61,7 +63,9 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(strafeAxis), 
                 () -> -driver.getRawAxis(rotationAxis), 
                 () -> false, //driver.getRawButton(Constants.JoystickConstants.RIGHT_BUMPER), //false for field centric
-                () -> driver.getRawButton(JoystickConstants.LEFT_BUMPER) // slowMode
+                () -> driver.getRawButton(JoystickConstants.LEFT_BUMPER), // slowMode
+                () -> driver.getRawButton(JoystickConstants.GREEN_BUTTON),  // auto targeting
+                new TargetingUtil(limelightSubsystem)
             )
         );
 
@@ -116,12 +120,13 @@ public class RobotContainer {
         //new JoystickButton(driver, JoystickConstants.GREEN_BUTTON).onTrue(new SetIntakeWristPosition(.32, 0, 0, 0.5, -3.0, intakeSubsystem)); // Down Position
         //new JoystickButton(driver, JoystickConstants.BLUE_BUTTON).onTrue(new RetractIntakeCommand(intakeSubsystem));
         
-        new JoystickButton(driver, JoystickConstants.GREEN_BUTTON).onTrue(new InstantCommand(() -> shooterSubsystem.setFeederSpeed(-.25), shooterSubsystem))
+        new JoystickButton(driver, JoystickConstants.YELLOW_BUTTON).onTrue(new InstantCommand(() -> shooterSubsystem.setFeederSpeed(-.25), shooterSubsystem))
                                                                     .onFalse(new InstantCommand(() -> shooterSubsystem.setFeederSpeed(0.0), shooterSubsystem));
 
 
+
         /* Operator Controls */
-        new JoystickButton(operator, JoystickConstants.YELLOW_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -5.5));
+        new JoystickButton(operator, JoystickConstants.YELLOW_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -5.25));
         new JoystickButton(operator, JoystickConstants.BLUE_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -14));
         //new JoystickButton(operator, JoystickConstants.BLUE_BUTTON).onTrue(new InstantCommand(()->bottomWristSubsystem.setPosition(-10),bottomWristSubsystem));
         new JoystickButton(operator, JoystickConstants.GREEN_BUTTON).onTrue(new SetPivotBottomCommand(bottomWristSubsystem, intakeSubsystem));
@@ -133,7 +138,7 @@ public class RobotContainer {
         new JoystickButton(operator, JoystickConstants.RIGHT_BUMPER).onTrue(new ShootNoteCommand(shooterSubsystem, 60));
         new JoystickButton(operator, JoystickConstants.LEFT_BUMPER).onTrue(new ShootNoteCommand(shooterSubsystem, 95));
        // new JoystickButton(operator, JoystickConstants.START_BUTTON).onTrue(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -0.3)); //Up Position
-
+        new JoystickButton(operator, JoystickConstants.START_BUTTON).onTrue(new SequentialCommandGroup(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem), new AutoRangeCommand(limelightSubsystem, bottomWristSubsystem)));
        //Elevator
        new Trigger(() -> {return Math.abs(operator.getRawAxis(JoystickConstants.LEFT_Y_AXIS))> 0.1;}).onTrue(new InstantCommand(() -> elevatorSubsystem.setSpeed(0.3*Math.signum(operator.getRawAxis(JoystickConstants.LEFT_Y_AXIS))), elevatorSubsystem)).onFalse(new InstantCommand(()->elevatorSubsystem.setSpeed(0),elevatorSubsystem));
 

@@ -99,7 +99,7 @@ public class BottomWristSubsystem extends SubsystemBase {
     if(Math.abs(vel) > max) {
       max=Math.abs(vel);
     }
-    SmartDashboard.putNumber("BottomWrist", getEncoder());
+    SmartDashboard.putNumber("BottomWrist", getEncoder()*281.6);
    // System.out.println("Position: " + this.wristMotor1.getPosition().getValueAsDouble() * 281.6 + "Angle:" + this.wristMotor1.getPosition().getValueAsDouble()*360 + "Vel: " + vel + " Max: " + max + " Voltage: " + this.wristMotor1.getMotorVoltage());
   }
   

@@ -22,7 +22,8 @@ public class SetPivotBottomCommand extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new InstantCommand(()->bottomWristSubsystem.setPosition(-2),bottomWristSubsystem),
-      new WaitCommand(0.25),
+      new WaitCommand(.25),
+      new InstantCommand(() ->bottomWristSubsystem.setSpeed(0)),
       new RetractIntakeCommand(intakeSubsystem)
     );
 

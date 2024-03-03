@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
+import frc.robot.utils.TargetingUtil;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
@@ -18,10 +19,12 @@ public class TeleopSwerve extends Command {
     private DoubleSupplier rotationSup;
     private BooleanSupplier robotCentricSup;
     private BooleanSupplier slowMode;
+    private BooleanSupplier autoTargeting; 
+    private TargetingUtil targetingUtil; 
     private final double slowSpeed = 0.3;
     private final double slowRotation = 0.3;
 
-    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, BooleanSupplier slowMode) {
+    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, BooleanSupplier slowMode, BooleanSupplier autoTargeting, TargetingUtil targetingUtil) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
 
@@ -30,6 +33,8 @@ public class TeleopSwerve extends Command {
         this.rotationSup = rotationSup;
         this.robotCentricSup = robotCentricSup;
         this.slowMode = slowMode;
+        this.autoTargeting = autoTargeting; 
+        this.targetingUtil = targetingUtil; 
     }
 
     @Override
@@ -50,6 +55,12 @@ public class TeleopSwerve extends Command {
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
         double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
+
+        if(autoTargeting.getAsBoolean()) {
+            rotationVal = targetingUtil.calculateRotation();
+            rotMulti = Constants.Swerve.maxAngularVelocity;
+        }
+
 
         /* Drive */
         s_Swerve.drive(
