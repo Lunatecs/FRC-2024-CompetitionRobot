@@ -36,6 +36,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "RunIntake"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Four Piece Base_Center Left Path"
@@ -48,6 +54,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "RunIntake"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Four Piece Base_Center Middle Path"
@@ -57,6 +69,12 @@
           "type": "named",
           "data": {
             "name": "shootNote"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "RunIntake"
           }
         },
         {
