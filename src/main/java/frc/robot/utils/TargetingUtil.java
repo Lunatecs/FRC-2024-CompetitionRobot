@@ -17,7 +17,7 @@ public class TargetingUtil {
     public TargetingUtil(LimelightSubsystem limelightSubsystem){
         this.limelightSubsystem = limelightSubsystem;
         pidController = new PIDController(0.02, 0, 0.0005); 
-        pidController.setSetpoint(0);
+        pidController.setSetpoint(-3.25);
         pidController.setTolerance(0.25);
     }
 

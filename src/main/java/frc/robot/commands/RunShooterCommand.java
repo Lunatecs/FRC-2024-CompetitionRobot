@@ -33,7 +33,7 @@ public class RunShooterCommand extends Command {
 
     shooter.setRPM(velocity);
   
-    if (shooter.getVelocity() >= (velocity)) {
+    if (shooter.getVelocity() >= (velocity-4)) {
       isFinished = true; //was true
     }
   }

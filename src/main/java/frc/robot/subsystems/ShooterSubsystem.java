@@ -33,7 +33,7 @@ public class ShooterSubsystem extends SubsystemBase {
     proximitySensor = new DigitalInput(Constants.ShooterConstants.PROXIMITY_SENSOR);
 
     var slot0Configs = new Slot0Configs();
-    slot0Configs.kV = 0.1214;
+    slot0Configs.kV = 0.1214;  //.0598
     slot0Configs.kP = 0.0;
     slot0Configs.kI = 0.0;
     slot0Configs.kD = 0.0;
