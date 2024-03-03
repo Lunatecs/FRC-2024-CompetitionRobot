@@ -12,9 +12,45 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "DropIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "raisePivot26"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "checkPivot26"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "runShooter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootNoteLine"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "6 Piece Path 1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootNote"
           }
         },
         {
@@ -24,9 +60,21 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "shootNote"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "6 Piece Path 3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootNote"
           }
         },
         {
@@ -36,9 +84,27 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "shootNote"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "6 Piece Path 5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootNote"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ZeroPower"
           }
         }
       ]
