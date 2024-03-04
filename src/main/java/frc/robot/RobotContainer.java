@@ -150,8 +150,11 @@ public class RobotContainer {
        new Trigger(() -> {return Math.abs(operator.getRawAxis(JoystickConstants.LEFT_Y_AXIS))> 0.1;}).onTrue(new InstantCommand(() -> elevatorSubsystem.setSpeed(0.3*Math.signum(operator.getRawAxis(JoystickConstants.LEFT_Y_AXIS))), elevatorSubsystem)).onFalse(new InstantCommand(()->elevatorSubsystem.setSpeed(0),elevatorSubsystem));
 
        //Top Wrist
-       new Trigger(() -> {return Math.abs(operator.getRawAxis(JoystickConstants.RIGHT_Y_AXIS))> 0.1;}).onTrue(new SequentialCommandGroup(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem), new InstantCommand(() -> topWristSubsystem.setSpeed(0.5*Math.signum(operator.getRawAxis(JoystickConstants.RIGHT_Y_AXIS))), topWristSubsystem)))
-                                                                                                    .onFalse(new ParallelCommandGroup(new RetractIntakeCommand(intakeSubsystem), new InstantCommand(()->topWristSubsystem.setSpeed(0),topWristSubsystem)));
+      // new Trigger(() -> {return Math.abs(operator.getRawAxis(JoystickConstants.RIGHT_Y_AXIS))> 0.1;}).onTrue(new SequentialCommandGroup(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem), new InstantCommand(() -> topWristSubsystem.setSpeed(0.5*Math.signum(operator.getRawAxis(JoystickConstants.RIGHT_Y_AXIS))), topWristSubsystem)))
+      //                                                                                              .onFalse(new ParallelCommandGroup(new RetractIntakeCommand(intakeSubsystem), new InstantCommand(()->topWristSubsystem.setSpeed(0),topWristSubsystem)));
+
+      new Trigger(() -> {return Math.abs(operator.getRawAxis(JoystickConstants.RIGHT_Y_AXIS))> 0.1;}).onTrue(new InstantCommand(() -> topWristSubsystem.setSpeed(0.5*Math.signum(operator.getRawAxis(JoystickConstants.RIGHT_Y_AXIS))), topWristSubsystem))
+                                                                                                    .onFalse(new InstantCommand(()->topWristSubsystem.setSpeed(0),topWristSubsystem));   
 
     }
 
