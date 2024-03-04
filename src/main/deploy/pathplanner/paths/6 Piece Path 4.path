@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.55,
-        "y": 6.71
+        "x": 3.274563702152316,
+        "y": 7.147833417849517
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3884804019666346,
-        "y": 7.254931753082779
+        "x": 4.113044104118952,
+        "y": 7.692765170932296
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.9683725678246144,
-        "y": 7.439979197870614
+        "x": 8.28973292584782,
+        "y": 8.092438106584398
       },
       "prevControl": {
-        "x": 6.9683725678246144,
-        "y": 7.439979197870614
+        "x": 7.2897329258478205,
+        "y": 8.092438106584398
       },
       "nextControl": {
-        "x": 8.968372567824614,
-        "y": 7.439979197870614
+        "x": 9.289732925847822,
+        "y": 8.092438106584398
       },
       "isLocked": false,
       "linkedName": null
@@ -57,7 +57,44 @@
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "sequential",
+              "data": {
+                "commands": [
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "raisePivot8"
+                    }
+                  },
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "checkPivot8"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "RunIntake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.826,
     "maxAcceleration": 4.0,

@@ -12,33 +12,113 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "6 Piece Path 1"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "6 Piece Path 2"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "6 Piece Path 3"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "6 Piece Path 4"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "6 Piece Path 5"
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "DropIntake"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "raisePivot26"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "checkPivot26"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "runShooter"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "shootNoteLine"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "6 Piece Path 1"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "shootNoteLine"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "6 Piece Path 2"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "shootNoteLine"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "6 Piece Path 3"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "shootNoteLine"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "6 Piece Path 4"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "shootNoteLine"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "6 Piece Path 5"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "shootNoteLine"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ZeroPower"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         }
       ]

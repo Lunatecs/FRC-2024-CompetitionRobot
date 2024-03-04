@@ -29,7 +29,7 @@ public class AutoRangeCommand extends Command {
   @Override
   public void execute() {
     double limelightY = limelightSubsystem.GetTy();
-    double preClamp = 0.56 * limelightY-19.15;
+    double preClamp = 0.56 * limelightY-20.15; //-19.65  //-19.15
     double setpoint = MathUtil.clamp(preClamp, -26, -2);
 
     bottomWristSubsystem.setPosition(setpoint);

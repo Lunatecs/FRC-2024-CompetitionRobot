@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.385354324682554,
-        "y": 5.62867536173981
+        "x": 1.8820021507184186,
+        "y": 5.112551150369205
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.4370791327585035,
-        "y": 4.099779112962734
+        "x": 2.6123666007711623,
+        "y": 3.817371525609006
       },
       "prevControl": {
-        "x": 1.6482855267015404,
-        "y": 4.421139470985942
+        "x": 1.8722639580510494,
+        "y": 3.7881569476068964
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +30,44 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "sequential",
+              "data": {
+                "commands": [
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "raisePivotNoteLine"
+                    }
+                  },
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "checkPivotNoteLine"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "RunIntake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.826,
     "maxAcceleration": 4.0,
