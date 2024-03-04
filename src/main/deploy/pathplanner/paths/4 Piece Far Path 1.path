@@ -4,40 +4,40 @@
     {
       "anchor": {
         "x": 0.7231572233013988,
-        "y": 4.401663085651201
+        "y": 4.411401278318571
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.4115350579455615,
-        "y": 2.7753849102004264
+        "x": 2.0962423893956883,
+        "y": 2.970148763552692
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.046278109163573,
-        "y": 0.7108880647180038
+        "x": 8.27025654051308,
+        "y": 0.25319300935161854
       },
       "prevControl": {
-        "x": 6.234974273032768,
-        "y": 1.2075358907538694
+        "x": 6.458952704382274,
+        "y": 0.7498408353874841
       },
       "nextControl": {
-        "x": 9.857581945294378,
-        "y": 0.21424023868213826
+        "x": 10.081560376643884,
+        "y": -0.243454816684247
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.5667094821734135,
-        "y": 2.142402386821381
+        "x": 2.5149846740974624,
+        "y": 2.872766836874125
       },
       "prevControl": {
-        "x": 6.41026174104543,
-        "y": 0.8666991473959225
+        "x": 5.358536932969477,
+        "y": 1.5970635974486667
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,12 +47,47 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1.0,
-      "rotationDegrees": 0,
+      "rotationDegrees": -10.0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.65,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "RunIntake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.25,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "raisePivot8"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.826,
     "maxAcceleration": 4.0,
@@ -61,13 +96,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -38.41805534482181,
+    "rotation": -44.144902603733264,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": -60.64224645720873,
+    "rotation": -60.25511870305777,
     "velocity": 0
   },
   "useDefaultConstraints": true
