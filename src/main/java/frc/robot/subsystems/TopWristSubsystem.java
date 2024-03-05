@@ -30,13 +30,13 @@ public class TopWristSubsystem extends SubsystemBase {
     topWrist = new TalonFX(TopWristConstants.TOP_WRIST_ID);
     topWrist.getConfigurator().apply(new TalonFXConfiguration()); 
 
-    initializeEncoder();
+    
 
     var topWristConfig = new TalonFXConfiguration(); 
 
     var slot0configs = topWristConfig.Slot0;
-    slot0configs.kG = 0.25; 
-    slot0configs.kS = 0.3525;
+    slot0configs.kG = -0.25; 
+    slot0configs.kS = -0.295;//-0.3525;
     slot0configs.kV = 0.1;//.3178;//2.648;//31.78;//.25;
     slot0configs.kA = 0.0; //.02
     slot0configs.kP = 0.00;
@@ -51,11 +51,13 @@ public class TopWristSubsystem extends SubsystemBase {
     var feedbackConfig = topWristConfig.Feedback;
     feedbackConfig.SensorToMechanismRatio = 77.76;
 
-    topWrist.setNeutralMode(NeutralModeValue.Brake);
+    
 
-    //topWrist.getConfigurator().apply(topWristConfig, 0.05);
+    topWrist.getConfigurator().apply(topWristConfig, 0.05);
 
     motionMagicV.Slot = 0;
+    initializeEncoder();
+    topWrist.setNeutralMode(NeutralModeValue.Brake);
   }
 
   @Override
@@ -74,7 +76,9 @@ public class TopWristSubsystem extends SubsystemBase {
 
   public void initializeEncoder() {
     //wristMotor1.setPosition(getEncoder());
-    topWrist.setPosition(-0.038);
+    //topWrist.setPosition(-0.038);
+    //topWrist.setPosition(-.103);
+    topWrist.setPosition(0);
   }
 
   public double getEncoder() {

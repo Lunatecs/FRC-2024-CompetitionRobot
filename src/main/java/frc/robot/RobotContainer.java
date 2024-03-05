@@ -14,8 +14,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -148,6 +150,10 @@ public class RobotContainer {
 
         new POVButton(operator, JoystickConstants.POV_DOWN).onTrue(new SequentialCommandGroup(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem), new AutoRangeCommand(limelightSubsystem, bottomWristSubsystem)));
     
+        new POVButton(operator, JoystickConstants.POV_UP).onTrue(new ParallelCommandGroup( new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem), new SetTopWristCommand(topWristSubsystem, -.369), new SetBottomWristCommand(bottomWristSubsystem, -.11),new SetElevatorCommand(elevatorSubsystem, 30)))
+                                                        .onFalse(new ParallelRaceGroup( new WaitCommand(2),new RetractIntakeCommand(intakeSubsystem), new SetTopWristCommand(topWristSubsystem, -.1), new SetBottomWristCommand(bottomWristSubsystem, 0),new SetElevatorCommand(elevatorSubsystem, 3)));                     
+                                                        //.onFalse(new SequentialCommandGroup(new InstantCommand(() -> topWristSubsystem.setPosition(0)),new WaitCommand(1),new InstantCommand(() -> topWristSubsystem.setSpeed(0))));
+
         new JoystickButton(operator, JoystickConstants.RIGHT_BUMPER).onTrue(new ShootNoteCommand(shooterSubsystem, 60));
         new JoystickButton(operator, JoystickConstants.LEFT_BUMPER).onTrue(new ShootNoteCommand(shooterSubsystem, 90));
        // new JoystickButton(operator, JoystickConstants.START_BUTTON).onTrue(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -0.3)); //Up Position
@@ -155,7 +161,8 @@ public class RobotContainer {
        new JoystickButton(operator, JoystickConstants.START_BUTTON).onTrue(new SetPivotBaseCommand(bottomWristSubsystem))
                                                                     .onFalse(new InstantCommand(() -> bottomWristSubsystem.setSpeed(0),bottomWristSubsystem));
        //Elevator
-       new Trigger(() -> {return Math.abs(operator.getRawAxis(JoystickConstants.LEFT_Y_AXIS))> 0.1;}).onTrue(new InstantCommand(() -> elevatorSubsystem.setSpeed(0.3*Math.signum(operator.getRawAxis(JoystickConstants.LEFT_Y_AXIS))), elevatorSubsystem)).onFalse(new InstantCommand(()->elevatorSubsystem.setSpeed(0),elevatorSubsystem));
+       new Trigger(() -> {return Math.abs(operator.getRawAxis(JoystickConstants.LEFT_Y_AXIS))> 0.1;}).onTrue(new InstantCommand(() -> elevatorSubsystem.setSpeed(0.3*Math.signum(operator.getRawAxis(JoystickConstants.LEFT_Y_AXIS))), elevatorSubsystem))
+                                                                                                    .onFalse(new InstantCommand(()->elevatorSubsystem.setSpeed(0),elevatorSubsystem));
 
        //Top Wrist
       // new Trigger(() -> {return Math.abs(operator.getRawAxis(JoystickConstants.RIGHT_Y_AXIS))> 0.1;}).onTrue(new SequentialCommandGroup(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem), new InstantCommand(() -> topWristSubsystem.setSpeed(0.5*Math.signum(operator.getRawAxis(JoystickConstants.RIGHT_Y_AXIS))), topWristSubsystem)))
