@@ -12,11 +12,14 @@ import frc.robot.subsystems.TopWristSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SetTopWristCommand extends PIDCommand {
+
+  private boolean end;
+
   /** Creates a new SetTopWristCommand. */
-  public SetTopWristCommand(TopWristSubsystem topWrist, final double postion) {
+  public SetTopWristCommand(TopWristSubsystem topWrist, final double postion, boolean end) {
     super(
         // The controller that the command will use
-        new PIDController(1.25, 0, 0),
+        new PIDController(2.25, 0, 0),
         // This should return the measurement
         () -> topWrist.getEncoder(),
         // This should return the setpoint (can also be a constant)
@@ -24,22 +27,34 @@ public class SetTopWristCommand extends PIDCommand {
         // This uses the output
         output -> {
           // Use the output here
-          if(Math.abs(output) > .5) {
-            output = Math.signum(output) * .5;
+          if(Math.abs(output) > .6) {
+            output = Math.signum(output) * .6;
           }
 
           topWrist.setSpeed(output);
 
         });
-
+        this.end = end;
         addRequirements(topWrist);
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
   }
 
+  @Override
+  public void initialize() {
+    super.initialize();
+    if(end) {
+      this.m_controller.setTolerance(0.01);
+    }
+  }
+
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if(end) {
+      return this.m_controller.atSetpoint();
+    } else {
+      return false;
+    }
   }
 }

@@ -13,10 +13,11 @@ import frc.robot.subsystems.ElevatorSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SetElevatorCommand extends PIDCommand {
   /** Creates a new SetElevatorCommand. */
-  public SetElevatorCommand(ElevatorSubsystem elevator, final double position) {
+  private boolean end;
+  public SetElevatorCommand(ElevatorSubsystem elevator, final double position, boolean end) {
     super(
         // The controller that the command will use
-        new PIDController(.013, 0, 0),
+        new PIDController(.05, 0, 0),
         // This should return the measurement
         () -> elevator.getEncoder(),
         // This should return the setpoint (can also be a constant)
@@ -24,19 +25,32 @@ public class SetElevatorCommand extends PIDCommand {
         // This uses the output
         output -> {
           // Use the output here
-          if(Math.abs(output) > .3) {
-            output = Math.signum(output) * .3;
+          if(Math.abs(output) > .5) {
+            output = Math.signum(output) * .5;
           }
           elevator.setSpeed(output);
         });
         addRequirements(elevator);
+        this.end = end;
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
+  }
+
+  @Override
+  public void initialize() {
+    super.initialize();
+    if(end) {
+      this.m_controller.setTolerance(.01);
+    }
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if(end) {
+      return  this.m_controller.atSetpoint();
+     } else {
+       return false;
+     }
   }
 }

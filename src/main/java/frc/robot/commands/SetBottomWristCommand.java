@@ -13,7 +13,10 @@ import frc.robot.subsystems.BottomWristSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SetBottomWristCommand extends PIDCommand {
   /** Creates a new SetBottomWristCommand. */
-  public SetBottomWristCommand(BottomWristSubsystem bottomWrist, final double position) {
+
+  private boolean end;
+
+  public SetBottomWristCommand(BottomWristSubsystem bottomWrist, final double position, boolean end) {
     super(
         // The controller that the command will use
         new PIDController(70, 0, 0),
@@ -30,14 +33,28 @@ public class SetBottomWristCommand extends PIDCommand {
           bottomWrist.setSpeed(output);
         });
 
+        this.end = end;
+
         addRequirements(bottomWrist);
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
   }
 
+  @Override
+  public void initialize() {
+    super.initialize();
+    if(end) {
+      this.m_controller.setTolerance(.005);
+    }
+  }
+
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if(end) {
+     return  this.m_controller.atSetpoint();
+    } else {
+      return false;
+    }
   }
 }
