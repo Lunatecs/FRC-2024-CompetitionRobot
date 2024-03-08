@@ -65,11 +65,14 @@ public class BottomWristSubsystem extends SubsystemBase {
     var feedbackConfig = talonFXConfigs.Feedback;
     feedbackConfig.SensorToMechanismRatio = 281.6;
     //feedbackConfig.RotorToSensorRatio = 195.555;
-
+    
     wristMotor1.setNeutralMode(NeutralModeValue.Brake);
     wristMotor2.setNeutralMode(NeutralModeValue.Brake);
 
+
     wristMotor1.getConfigurator().apply(talonFXConfigs, 0.05);
+
+
 
     motionMagicV.Slot = 0;
   }
