@@ -58,6 +58,18 @@
           "data": {
             "name": "shootNote"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ZeroPower"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Move Far Right Path"
+          }
         }
       ]
     }

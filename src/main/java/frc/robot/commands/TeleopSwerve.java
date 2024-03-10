@@ -45,21 +45,20 @@ public class TeleopSwerve extends Command {
     public void execute() {
         double speedMulti;
         double rotMulti;
+        double teleOpMaxSpeed = Constants.Swerve.maxSpeed * 0.80;
+        double teleOpMaxAngularVelocity = Constants.Swerve.maxAngularVelocity * 0.80;
+
+        speedMulti = teleOpMaxSpeed;
+        rotMulti = teleOpMaxAngularVelocity;
 
         if (slowMode.getAsBoolean()) {
-            speedMulti = slowSpeed * Constants.Swerve.maxSpeed;
-            rotMulti = slowRotation * Constants.Swerve.maxAngularVelocity;
-        } else {
-            speedMulti = Constants.Swerve.maxSpeed *.8;
-            rotMulti = Constants.Swerve.maxAngularVelocity *.8;
+            speedMulti = slowSpeed * teleOpMaxSpeed;
+            rotMulti = slowRotation * teleOpMaxAngularVelocity;
         }
 
         if (middleMode.getAsBoolean()) {
-            speedMulti = middleSpeed * Constants.Swerve.maxSpeed;
-            rotMulti = middleRotation * Constants.Swerve.maxAngularVelocity;
-        } else {
-            speedMulti = Constants.Swerve.maxSpeed *.8;
-            rotMulti = Constants.Swerve.maxAngularVelocity *.8;
+            speedMulti = middleSpeed * teleOpMaxSpeed;
+            rotMulti = middleRotation * teleOpMaxAngularVelocity;
         }
 
 
@@ -70,7 +69,7 @@ public class TeleopSwerve extends Command {
 
         if(autoTargeting.getAsBoolean()) {
             rotationVal = targetingUtil.calculateRotation();
-            rotMulti = Constants.Swerve.maxAngularVelocity *.8;
+            rotMulti = teleOpMaxAngularVelocity;
         }
 
 
@@ -79,7 +78,7 @@ public class TeleopSwerve extends Command {
             new Translation2d(translationVal, strafeVal).times(speedMulti), 
             rotationVal * rotMulti, 
             !robotCentricSup.getAsBoolean(), 
-            true  //true before
+            true
         );
     }
 }
