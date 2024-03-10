@@ -21,10 +21,13 @@ public class TeleopSwerve extends Command {
     private BooleanSupplier slowMode;
     private BooleanSupplier autoTargeting; 
     private TargetingUtil targetingUtil; 
+    private BooleanSupplier middleMode;
     private final double slowSpeed = 0.3;
     private final double slowRotation = 0.3;
+    private final double middleSpeed = 0.65;
+    private final double middleRotation = 0.65;
 
-    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, BooleanSupplier slowMode, BooleanSupplier autoTargeting, TargetingUtil targetingUtil) {
+    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, BooleanSupplier slowMode, BooleanSupplier autoTargeting, TargetingUtil targetingUtil, BooleanSupplier middleMode) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
 
@@ -35,6 +38,7 @@ public class TeleopSwerve extends Command {
         this.slowMode = slowMode;
         this.autoTargeting = autoTargeting; 
         this.targetingUtil = targetingUtil; 
+        this.middleMode = middleMode;
     }
 
     @Override
@@ -46,8 +50,16 @@ public class TeleopSwerve extends Command {
             speedMulti = slowSpeed * Constants.Swerve.maxSpeed;
             rotMulti = slowRotation * Constants.Swerve.maxAngularVelocity;
         } else {
-            speedMulti = Constants.Swerve.maxSpeed;
-            rotMulti = Constants.Swerve.maxAngularVelocity;
+            speedMulti = Constants.Swerve.maxSpeed *.8;
+            rotMulti = Constants.Swerve.maxAngularVelocity *.8;
+        }
+
+        if (middleMode.getAsBoolean()) {
+            speedMulti = middleSpeed * Constants.Swerve.maxSpeed;
+            rotMulti = middleRotation * Constants.Swerve.maxAngularVelocity;
+        } else {
+            speedMulti = Constants.Swerve.maxSpeed *.8;
+            rotMulti = Constants.Swerve.maxAngularVelocity *.8;
         }
 
 
@@ -58,7 +70,7 @@ public class TeleopSwerve extends Command {
 
         if(autoTargeting.getAsBoolean()) {
             rotationVal = targetingUtil.calculateRotation();
-            rotMulti = Constants.Swerve.maxAngularVelocity;
+            rotMulti = Constants.Swerve.maxAngularVelocity *.8;
         }
 
 

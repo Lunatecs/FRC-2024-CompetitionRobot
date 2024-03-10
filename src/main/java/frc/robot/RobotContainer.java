@@ -68,7 +68,8 @@ public class RobotContainer {
                 () -> false, //driver.getRawButton(Constants.JoystickConstants.RIGHT_BUMPER), //false for field centric
                 () -> driver.getRawButton(JoystickConstants.LEFT_BUMPER), // slowMode
                 () -> driver.getRawButton(JoystickConstants.GREEN_BUTTON),  // auto targeting
-                new TargetingUtil(limelightSubsystem)
+                new TargetingUtil(limelightSubsystem),
+                () -> driver.getRawButton(JoystickConstants.RIGHT_BUMPER) // middleMode
             )
         );
 
@@ -117,12 +118,15 @@ public class RobotContainer {
         /* Driver Controls */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
 
+        new POVButton(driver, JoystickConstants.POV_UP).onTrue(new RunIntakeFromShooterCommand(shooterSubsystem, -0.1, -.5))
+                                                      .onFalse(new SequentialCommandGroup(new InstantCommand(() -> shooterSubsystem.setshooterSpeed(0)), new InstantCommand(() -> shooterSubsystem.setFeederSpeed(0))));
+
         new JoystickButton(operator, JoystickConstants.BACK_BUTTON).onTrue(new InstantCommand(()->ledSubsystem.set(0, 0, 255))).onFalse(new InstantCommand(()->ledSubsystem.set(255, 0, 0)));
 
         //Intake                                                                          
         new Trigger(() -> {return shooterSubsystem.getSensor() && Math.abs(driver.getRawAxis(JoystickConstants.RIGHT_TRIGGER)) > 0.1;}).onTrue(new ExtendAndRunIntakeCommand(intakeSubsystem, shooterSubsystem));
                                                                                                        // .onFalse(new RetractIntakeCommand(intakeSubsystem));
-        new JoystickButton(driver, JoystickConstants.RIGHT_BUMPER).onTrue(new RetractIntakeCommand(intakeSubsystem));
+        new JoystickButton(driver, JoystickConstants.RED_BUTTON).onTrue(new RetractIntakeCommand(intakeSubsystem));
         new Trigger(() -> {return Math.abs(driver.getRawAxis(JoystickConstants.LEFT_TRIGGER)) > 0.1;}).onTrue(new RunIntakeCommand(intakeSubsystem, shooterSubsystem, 0.2, 1, true))  
                                                                                                 .onFalse(new SequentialCommandGroup(new InstantCommand(() -> intakeSubsystem.setIntakeSpeed(0), intakeSubsystem), new RetractIntakeCommand(intakeSubsystem)));
                                 
@@ -153,6 +157,9 @@ public class RobotContainer {
         new POVButton(operator, JoystickConstants.POV_UP).onTrue(new AmpShootCommand(elevatorSubsystem, intakeSubsystem, topWristSubsystem, bottomWristSubsystem))
                                                         .onFalse(new AmpRetractCommand(intakeSubsystem, topWristSubsystem, bottomWristSubsystem, elevatorSubsystem));                     
                                                         //.onFalse(new SequentialCommandGroup(new InstantCommand(() -> topWristSubsystem.setPosition(0)),new WaitCommand(1),new InstantCommand(() -> topWristSubsystem.setSpeed(0))));
+        
+        //new POVButton(operator, JoystickConstants.POV_LEFT).onTrue(new SetClimbPositionCommand(intakeSubsystem, bottomWristSubsystem, elevatorSubsystem));
+        //new POVButton(operator, JoystickConstants.POV_RIGHT).onTrue(new ClimbCommand(intakeSubsystem, bottomWristSubsystem, elevatorSubsystem));
 
         new Trigger(() -> {return Math.abs(operator.getRawAxis(JoystickConstants.LEFT_TRIGGER))> 0.1;}).onTrue(new ShootNoteCommand(shooterSubsystem, 20));
         new JoystickButton(operator, JoystickConstants.RIGHT_BUMPER).onTrue(new ShootNoteCommand(shooterSubsystem, 60));

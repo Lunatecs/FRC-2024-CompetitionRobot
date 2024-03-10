@@ -95,6 +95,11 @@ public class BottomWristSubsystem extends SubsystemBase {
     wristMotor1.set(speed);
   }
 
+  public void setNeutralMode(NeutralModeValue value) {
+    wristMotor1.setNeutralMode(value);
+    wristMotor2.setNeutralMode(value);
+  }
+
 
   @Override
   public void periodic() {

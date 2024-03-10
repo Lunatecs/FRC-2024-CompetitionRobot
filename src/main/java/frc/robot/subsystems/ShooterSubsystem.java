@@ -46,6 +46,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
     shooterMotor1.setInverted(true);
 
+    feederMotor.setInverted(true);
+
   }
 
   public void setRPM(int rpm){
