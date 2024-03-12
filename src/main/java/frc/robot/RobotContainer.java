@@ -118,8 +118,10 @@ public class RobotContainer {
         /* Driver Controls */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
 
-        new POVButton(driver, JoystickConstants.POV_UP).onTrue(new RunIntakeFromShooterCommand(shooterSubsystem, -0.1, -.5))
-                                                      .onFalse(new SequentialCommandGroup(new InstantCommand(() -> shooterSubsystem.setshooterSpeed(0)), new InstantCommand(() -> shooterSubsystem.setFeederSpeed(0))));
+       // new POVButton(driver, JoystickConstants.POV_UP).onTrue(new RunIntakeFromShooterCommand(shooterSubsystem, -0.1, -.5))
+                       //                               .onFalse(new SequentialCommandGroup(new InstantCommand(() -> shooterSubsystem.setshooterSpeed(0)), new InstantCommand(() -> shooterSubsystem.setFeederSpeed(0))));
+        
+        new POVButton(driver, JoystickConstants.POV_UP).onTrue(new HumanIntakeCommand(bottomWristSubsystem, intakeSubsystem, shooterSubsystem, elevatorSubsystem));
 
         new JoystickButton(operator, JoystickConstants.BACK_BUTTON).onTrue(new InstantCommand(()->ledSubsystem.set(0, 0, 255))).onFalse(new InstantCommand(()->ledSubsystem.set(255, 0, 0)));
 
