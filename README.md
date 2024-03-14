@@ -11,4 +11,4 @@ Team 316's FRC robot code for the 2024 Crescendo season. </br>
 
 **Autonomous Modes**
 ----
-1. 4 Note Wing Area Auto
+  * 4 Note Wing Area Auto
