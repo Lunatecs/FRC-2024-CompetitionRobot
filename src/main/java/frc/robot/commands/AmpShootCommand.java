@@ -33,7 +33,7 @@ public class AmpShootCommand extends ParallelCommandGroup {
     addCommands(
       new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem), 
       new SetTopWristCommand(topWristSubsystem, -.275,false), //-.369
-      new SetBottomWristCommand(bottomWristSubsystem, -.11,false),
+      new SetBottomWristCommand(bottomWristSubsystem, -.076,false), //-.11 old set point with old gearing
       new SetElevatorCommand(elevatorSubsystem, 30, false)
     );
   }

@@ -7,8 +7,11 @@ import frc.robot.utils.TargetingUtil;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
+import javax.swing.text.StyleContext.SmallAttributeSet;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 
@@ -22,8 +25,8 @@ public class TeleopSwerve extends Command {
     private BooleanSupplier autoTargeting; 
     private TargetingUtil targetingUtil; 
     private BooleanSupplier middleMode;
-    private final double slowSpeed = 0.3;
-    private final double slowRotation = 0.3;
+    private final double slowSpeed = 0.2;
+    private final double slowRotation = 0.2;
     private final double middleSpeed = 0.65;
     private final double middleRotation = 0.65;
 
@@ -43,22 +46,25 @@ public class TeleopSwerve extends Command {
 
     @Override
     public void execute() {
+        String mode = "normal";
         double speedMulti;
         double rotMulti;
-        double teleOpMaxSpeed = Constants.Swerve.maxSpeed * 0.80;
-        double teleOpMaxAngularVelocity = Constants.Swerve.maxAngularVelocity * 0.80;
+        double teleOpMaxSpeed = Constants.Swerve.maxSpeed;
+        double teleOpMaxAngularVelocity = Constants.Swerve.maxAngularVelocity;
 
-        speedMulti = teleOpMaxSpeed;
-        rotMulti = teleOpMaxAngularVelocity;
+        speedMulti = teleOpMaxSpeed * .8;
+        rotMulti = teleOpMaxAngularVelocity * .8;
 
         if (slowMode.getAsBoolean()) {
             speedMulti = slowSpeed * teleOpMaxSpeed;
             rotMulti = slowRotation * teleOpMaxAngularVelocity;
+            mode="slow";
         }
 
         if (middleMode.getAsBoolean()) {
             speedMulti = middleSpeed * teleOpMaxSpeed;
             rotMulti = middleRotation * teleOpMaxAngularVelocity;
+            mode="middle";
         }
 
 
@@ -70,6 +76,7 @@ public class TeleopSwerve extends Command {
         if(autoTargeting.getAsBoolean()) {
             rotationVal = targetingUtil.calculateRotation();
             rotMulti = teleOpMaxAngularVelocity;
+            mode="auto";
         }
 
 
@@ -80,5 +87,6 @@ public class TeleopSwerve extends Command {
             !robotCentricSup.getAsBoolean(), 
             true
         );
+        SmartDashboard.putString("swerve mode", mode);
     }
 }
