@@ -29,9 +29,9 @@ public class AmpRetractCommand extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
 
     addCommands(
-      new ParallelRaceGroup(new SetTopWristCommand(topWristSubsystem, -.02,true),new SetElevatorCommand(elevatorSubsystem, 0, false),new SetBottomWristCommand(bottomWristSubsystem, -.11, false)),
+      new ParallelRaceGroup(new SetTopWristCommand(topWristSubsystem, -.02,true),new SetElevatorCommand(elevatorSubsystem, 0, false),new SetBottomWristCommand(bottomWristSubsystem, -.076, false)),//-.11 old position for old bottom wrist gearing
       new InstantCommand(() -> topWristSubsystem.setSpeed(0), topWristSubsystem),
-      new ParallelRaceGroup(new SetElevatorCommand(elevatorSubsystem, 0, true),new SetBottomWristCommand(bottomWristSubsystem, -.11, false)),
+      new ParallelRaceGroup(new SetElevatorCommand(elevatorSubsystem, 0, true),new SetBottomWristCommand(bottomWristSubsystem, -.076, false)),//-.11 old position for old bottom wrist gearing
       new InstantCommand(() -> elevatorSubsystem.setSpeed(0), elevatorSubsystem),
       new SetBottomWristCommand(bottomWristSubsystem, 0,true),
       new InstantCommand(() -> bottomWristSubsystem.setSpeed(0), bottomWristSubsystem),

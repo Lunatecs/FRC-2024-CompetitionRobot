@@ -49,9 +49,9 @@ public class BottomWristSubsystem extends SubsystemBase {
     var talonFXConfigs = new TalonFXConfiguration();
 
     var slot0configs = talonFXConfigs.Slot0;
-    slot0configs.kG = -.15; 
-    slot0configs.kS = -.3; //-.41;
-    slot0configs.kV =  0.15;//.3178;//2.648;//31.78;//.25;
+    slot0configs.kG = -.19; //-.15;
+    slot0configs.kS = -.35; //-.41;//-.3;
+    slot0configs.kV =  .104;//0.15  -old gear ratio  ;//.3178;//2.648;//31.78;//.25;
     slot0configs.kA = 0.0; //.02
     slot0configs.kP = 0.00;
     slot0configs.kI = 0.0;
@@ -63,7 +63,7 @@ public class BottomWristSubsystem extends SubsystemBase {
     motionMagicConfig.MotionMagicAcceleration = 68;
 
     var feedbackConfig = talonFXConfigs.Feedback;
-    feedbackConfig.SensorToMechanismRatio = 281.6;
+    feedbackConfig.SensorToMechanismRatio = 195.556;//281.6 old gearing ratio for bottom wrist
     //feedbackConfig.RotorToSensorRatio = 195.555;
     
     wristMotor1.setNeutralMode(NeutralModeValue.Brake);
@@ -107,7 +107,7 @@ public class BottomWristSubsystem extends SubsystemBase {
     if(Math.abs(vel) > max) {
       max=Math.abs(vel);
     }
-    SmartDashboard.putNumber("BottomWrist", getEncoder()*281.6);
+    SmartDashboard.putNumber("BottomWrist", getEncoder());
    // System.out.println("Position: " + this.wristMotor1.getPosition().getValueAsDouble() * 281.6 + "Angle:" + this.wristMotor1.getPosition().getValueAsDouble()*360 + "Vel: " + vel + " Max: " + max + " Voltage: " + this.wristMotor1.getMotorVoltage());
   }
   

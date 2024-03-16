@@ -145,16 +145,17 @@ public class RobotContainer {
 
 
         /* Operator Controls */
-        new JoystickButton(operator, JoystickConstants.YELLOW_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -5.25));
-        new JoystickButton(operator, JoystickConstants.BLUE_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -14));
+        new JoystickButton(operator, JoystickConstants.YELLOW_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -3.646));//-5.25 old position for old bottom wrist gearing
+        new JoystickButton(operator, JoystickConstants.BLUE_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -9.722));//-14 old position for old bottom wrist gearing
         //new JoystickButton(operator, JoystickConstants.BLUE_BUTTON).onTrue(new InstantCommand(()->bottomWristSubsystem.setPosition(-10),bottomWristSubsystem));
         new JoystickButton(operator, JoystickConstants.GREEN_BUTTON).onTrue(new SetPivotBottomCommand(bottomWristSubsystem, intakeSubsystem));
-        new JoystickButton(operator, JoystickConstants.RED_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -26));
+        new JoystickButton(operator, JoystickConstants.RED_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -18.056));//-26 old position for old bottom wrist gearing
 
         //new POVButton(operator, JoystickConstants.POV_DOWN).onTrue(new SetPivotBaseCommand(bottomWristSubsystem))
                                          //                   .onFalse(new InstantCommand(() -> bottomWristSubsystem.setSpeed(0),bottomWristSubsystem));
 
         new POVButton(operator, JoystickConstants.POV_DOWN).onTrue(new SequentialCommandGroup(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem), new AutoRangeCommand(limelightSubsystem, bottomWristSubsystem)));
+       // new POVButton(operator, JoystickConstants.POV_DOWN).onTrue(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem)).whileTrue(new AutoRangeCommand(limelightSubsystem, bottomWristSubsystem));
     
         new POVButton(operator, JoystickConstants.POV_UP).onTrue(new AmpShootCommand(elevatorSubsystem, intakeSubsystem, topWristSubsystem, bottomWristSubsystem))
                                                         .onFalse(new AmpRetractCommand(intakeSubsystem, topWristSubsystem, bottomWristSubsystem, elevatorSubsystem));                     
