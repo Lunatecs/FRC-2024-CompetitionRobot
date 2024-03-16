@@ -81,11 +81,11 @@ public class RobotContainer {
         NamedCommands.registerCommand("shootNoteFar", new ShootNoteCommand(shooterSubsystem, 80));
         NamedCommands.registerCommand("runShooter", new InstantCommand(() -> shooterSubsystem.setRPM(80), shooterSubsystem));
         NamedCommands.registerCommand("shootNoteLine", new AutoShootNoteLineCommand(shooterSubsystem, 80));
-        NamedCommands.registerCommand("raisePivot26", new InstantCommand(()->bottomWristSubsystem.setPosition(-25),bottomWristSubsystem));
-        NamedCommands.registerCommand("raisePivotNoteLine", new InstantCommand(()->bottomWristSubsystem.setPosition(-14),bottomWristSubsystem));
-        NamedCommands.registerCommand("raisePivot8", new InstantCommand(()->bottomWristSubsystem.setPosition(-8),bottomWristSubsystem));
+        NamedCommands.registerCommand("raisePivot26", new InstantCommand(()->bottomWristSubsystem.setPosition(-18.056),bottomWristSubsystem));
+        NamedCommands.registerCommand("raisePivotNoteLine", new InstantCommand(()->bottomWristSubsystem.setPosition(-9.722),bottomWristSubsystem));
+        NamedCommands.registerCommand("raisePivot8", new InstantCommand(()->bottomWristSubsystem.setPosition(-3.646),bottomWristSubsystem));
         NamedCommands.registerCommand("checkPivot8", new CheckPivotCommand(bottomWristSubsystem, .01));
-        NamedCommands.registerCommand("checkPivot26", new CheckPivotCommand(bottomWristSubsystem, .1));
+        NamedCommands.registerCommand("checkPivot26", new CheckPivotCommand(bottomWristSubsystem, .06));
         NamedCommands.registerCommand("checkPivotNoteLine", new CheckPivotCommand(bottomWristSubsystem, .04)); //needs to be checked
 
         NamedCommands.registerCommand("RunIntake", new RunIntakeCommand(intakeSubsystem, shooterSubsystem, 0.2, 1, false));

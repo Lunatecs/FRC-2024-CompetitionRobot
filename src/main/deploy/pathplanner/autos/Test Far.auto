@@ -1,0 +1,67 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7134190306388977,
+      "y": 4.40166308565607
+    },
+    "rotation": -60.39554925476689
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "DropIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "raisePivot26"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "checkPivot26"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "4 Piece Far Path 1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootNoteLine"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "4 Piece Far Path 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootNoteLine"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
