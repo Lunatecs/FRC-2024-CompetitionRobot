@@ -4,7 +4,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.BottomWristSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
@@ -18,6 +20,8 @@ public class AutoRangePIDCommand extends Command {
   public AutoRangePIDCommand(BottomWristSubsystem bottomWrist, LimelightSubsystem limelight) {
     this.bottomWrist=bottomWrist;
     this.limelight=limelight;
+    pid = new PIDController(10, 0, 0);
+    addRequirements(bottomWrist);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -28,14 +32,31 @@ public class AutoRangePIDCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   // double setpoint
+   double y = limelight.GetTy();
+   double preSetpoint = .000054 * y -.0568;
+   double setpoint = MathUtil.clamp(preSetpoint, -.09, 0);
+
+   pid.setSetpoint(setpoint);
+   double speed = pid.calculate(bottomWrist.getEncoder());
+
+   SmartDashboard.putString("AUTO:Y pre set speed", y + " " + preSetpoint + " " + setpoint + " " + speed);
+
+
+   if(Math.abs(speed) > .5) {
+    speed = Math.signum(speed) * .5;
+   }
+
+
+   bottomWrist.setSpeed(speed);
 
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    bottomWrist.setSpeed(0);
+  }
 
   // Returns true when the command should end.
   @Override

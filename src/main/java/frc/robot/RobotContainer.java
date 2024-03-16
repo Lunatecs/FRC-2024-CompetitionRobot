@@ -154,7 +154,7 @@ public class RobotContainer {
         //new POVButton(operator, JoystickConstants.POV_DOWN).onTrue(new SetPivotBaseCommand(bottomWristSubsystem))
                                          //                   .onFalse(new InstantCommand(() -> bottomWristSubsystem.setSpeed(0),bottomWristSubsystem));
 
-        new POVButton(operator, JoystickConstants.POV_DOWN).onTrue(new SequentialCommandGroup(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem), new AutoRangeCommand(limelightSubsystem, bottomWristSubsystem)));
+        new POVButton(operator, JoystickConstants.POV_DOWN).onTrue(new SequentialCommandGroup(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem), new AutoRangePIDCommand(bottomWristSubsystem, limelightSubsystem)));
        // new POVButton(operator, JoystickConstants.POV_DOWN).onTrue(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem)).whileTrue(new AutoRangeCommand(limelightSubsystem, bottomWristSubsystem));
     
         new POVButton(operator, JoystickConstants.POV_UP).onTrue(new AmpShootCommand(elevatorSubsystem, intakeSubsystem, topWristSubsystem, bottomWristSubsystem))
