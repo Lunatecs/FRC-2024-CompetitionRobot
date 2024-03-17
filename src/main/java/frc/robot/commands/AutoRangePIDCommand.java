@@ -9,18 +9,29 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.BottomWristSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.utils.TargetingUtil;
 
 public class AutoRangePIDCommand extends Command {
 
   BottomWristSubsystem bottomWrist;
   LimelightSubsystem limelight;
+  LEDSubsystem ledSubsystem;
+  ShooterSubsystem shooter;
   PIDController pid;
+  TargetingUtil targeting;
+  
+
   /** Creates a new AutoRangePIDCommand. */
-  public AutoRangePIDCommand(BottomWristSubsystem bottomWrist, LimelightSubsystem limelight) {
+  public AutoRangePIDCommand(BottomWristSubsystem bottomWrist, LimelightSubsystem limelight, LEDSubsystem ledSubsystem, ShooterSubsystem shooter) {
     this.bottomWrist=bottomWrist;
     this.limelight=limelight;
+    this.ledSubsystem = ledSubsystem;
+    this.shooter = shooter;
     pid = new PIDController(10, 0, 0);
+    targeting = new TargetingUtil(limelight);
     addRequirements(bottomWrist);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -54,6 +65,15 @@ public class AutoRangePIDCommand extends Command {
 
    bottomWrist.setSpeed(speed);
 
+   targeting.calculateRotation();
+
+   if(targeting.onTarget() && pid.atSetpoint()) {
+    ledSubsystem.set(ledSubsystem.GREEN);
+   } else if(shooter.getSensor()) {
+    ledSubsystem.set(ledSubsystem.BLUE);
+   } else {
+    ledSubsystem.set(ledSubsystem.GOLDEN);
+   }
 
   }
 

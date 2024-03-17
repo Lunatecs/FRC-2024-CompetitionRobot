@@ -20,6 +20,10 @@ public class LEDSubsystem extends SubsystemBase {
   private CANdleConfiguration config = new CANdleConfiguration();
   /** Creates a new LEDSubsystem. */
   
+  public final Color GOLDEN = new Color(170, 170, 0); 
+  public final Color BLUE = new Color(0,0,255);
+  public final Color GREEN = new Color(0,255,0);
+
   public LEDSubsystem() {
    
     
@@ -27,18 +31,24 @@ public class LEDSubsystem extends SubsystemBase {
     config.stripType = LEDStripType.RGB; // set the strip type to RGB
     config.brightnessScalar = 1.0; // dim the LEDs to half brightness
     candle.configAllSettings(config);
+    set(GOLDEN);
     
   }
 
   public void set(int R, int G, int B){
     //candle.setLEDs(R,G,B);
   
-    candle.setLEDs(R, G, B, 0, 0, 14);
+    //candle.setLEDs(R, G, B, 0, 0, 14);
+    candle.setLEDs(R, G, B);
     //RainbowAnimation rainbowAnim = new RainbowAnimation(1, 0.5, 16);
 
     //candle.animate(rainbowAnim);
     
   } 
+
+  public void set(Color color) {
+    set(color.red,color.green,color.blue);
+  }
 
 
   
@@ -54,4 +64,19 @@ public class LEDSubsystem extends SubsystemBase {
     SmartDashboard.putString("Errors", error.toString());
     SmartDashboard.putString("Faults",faultsError.toString());
   }
+
+  public class Color {
+
+    public final int red;
+    public final int green;
+    public final int blue;
+
+    public Color(int red, int green, int blue) {
+      this.red = red;
+      this.green = green;
+      this.blue = blue;
+    }
+
+  }
+
 }

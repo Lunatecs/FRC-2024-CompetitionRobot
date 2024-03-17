@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -15,12 +17,13 @@ import frc.robot.subsystems.ShooterSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ExtendAndRunIntakeCommand extends SequentialCommandGroup {
   /** Creates a new ExtendAndRunIntakeCommand. */
-  public ExtendAndRunIntakeCommand(IntakeSubsystem intake, ShooterSubsystem shooter) {
+  public ExtendAndRunIntakeCommand(IntakeSubsystem intake, ShooterSubsystem shooter, LEDSubsystem led) {
     // Add the deadline command in the super() call. Add other commands using
     // addCommands().
     addCommands(
       new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intake),
       new RunIntakeCommand(intake, shooter, 0.2, 1, false),
+      new InstantCommand(() -> led.set(led.BLUE)),
       new RetractIntakeCommand(intake)
       );
     addRequirements(intake, shooter);

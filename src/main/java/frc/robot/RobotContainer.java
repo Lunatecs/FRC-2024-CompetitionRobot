@@ -77,8 +77,8 @@ public class RobotContainer {
         configureButtonBindings();
         
         // Auto Configurations
-        NamedCommands.registerCommand("shootNote", new ShootNoteCommand(shooterSubsystem, 60));
-        NamedCommands.registerCommand("shootNoteFar", new ShootNoteCommand(shooterSubsystem, 80));
+        NamedCommands.registerCommand("shootNote", new ShootNoteCommand(shooterSubsystem, ledSubsystem, 60));
+        NamedCommands.registerCommand("shootNoteFar", new ShootNoteCommand(shooterSubsystem, ledSubsystem, 80));
         NamedCommands.registerCommand("runShooter", new InstantCommand(() -> shooterSubsystem.setRPM(80), shooterSubsystem));
         NamedCommands.registerCommand("shootNoteLine", new AutoShootNoteLineCommand(shooterSubsystem, 80));
         NamedCommands.registerCommand("raisePivot26", new InstantCommand(()->bottomWristSubsystem.setPosition(-18.056),bottomWristSubsystem));
@@ -126,7 +126,7 @@ public class RobotContainer {
         new JoystickButton(operator, JoystickConstants.BACK_BUTTON).onTrue(new InstantCommand(()->ledSubsystem.set(0, 0, 255))).onFalse(new InstantCommand(()->ledSubsystem.set(255, 0, 0)));
 
         //Intake                                                                          
-        new Trigger(() -> {return shooterSubsystem.getSensor() && Math.abs(driver.getRawAxis(JoystickConstants.RIGHT_TRIGGER)) > 0.1;}).onTrue(new ExtendAndRunIntakeCommand(intakeSubsystem, shooterSubsystem));
+        new Trigger(() -> {return shooterSubsystem.getSensor() && Math.abs(driver.getRawAxis(JoystickConstants.RIGHT_TRIGGER)) > 0.1;}).onTrue(new ExtendAndRunIntakeCommand(intakeSubsystem, shooterSubsystem, ledSubsystem));
                                                                                                        // .onFalse(new RetractIntakeCommand(intakeSubsystem));
         new JoystickButton(driver, JoystickConstants.RED_BUTTON).onTrue(new RetractIntakeCommand(intakeSubsystem));
         new Trigger(() -> {return Math.abs(driver.getRawAxis(JoystickConstants.LEFT_TRIGGER)) > 0.1;}).onTrue(new RunIntakeCommand(intakeSubsystem, shooterSubsystem, 0.2, 1, true))  
@@ -142,7 +142,7 @@ public class RobotContainer {
         new JoystickButton(driver, JoystickConstants.YELLOW_BUTTON).onTrue(new InstantCommand(() -> shooterSubsystem.setFeederSpeed(-.25), shooterSubsystem))
                                                                     .onFalse(new InstantCommand(() -> shooterSubsystem.setFeederSpeed(0.0), shooterSubsystem));
 
-        new JoystickButton(driver, JoystickConstants.GREEN_BUTTON).onTrue(new SequentialCommandGroup(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem), new AutoRangePIDCommand(bottomWristSubsystem, limelightSubsystem))).onFalse(new SetPivotBottomCommand(bottomWristSubsystem, intakeSubsystem));;
+        new JoystickButton(driver, JoystickConstants.GREEN_BUTTON).onTrue(new SequentialCommandGroup(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem), new AutoRangePIDCommand(bottomWristSubsystem, limelightSubsystem, ledSubsystem, shooterSubsystem))).onFalse(new SetPivotBottomCommand(bottomWristSubsystem, intakeSubsystem));;
 
         /* Operator Controls */
         new JoystickButton(operator, JoystickConstants.YELLOW_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -3.646));//-5.25 old position for old bottom wrist gearing
@@ -154,7 +154,7 @@ public class RobotContainer {
         //new POVButton(operator, JoystickConstants.POV_DOWN).onTrue(new SetPivotBaseCommand(bottomWristSubsystem))
                                          //                   .onFalse(new InstantCommand(() -> bottomWristSubsystem.setSpeed(0),bottomWristSubsystem));
 
-        new POVButton(operator, JoystickConstants.POV_DOWN).onTrue(new SequentialCommandGroup(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem), new AutoRangePIDCommand(bottomWristSubsystem, limelightSubsystem)));
+        //new POVButton(operator, JoystickConstants.POV_DOWN).onTrue(new SequentialCommandGroup(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem), new AutoRangePIDCommand(bottomWristSubsystem, limelightSubsystem)));
        // new POVButton(operator, JoystickConstants.POV_DOWN).onTrue(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem)).whileTrue(new AutoRangeCommand(limelightSubsystem, bottomWristSubsystem));
     
         new POVButton(operator, JoystickConstants.POV_UP).onTrue(new AmpShootCommand(elevatorSubsystem, intakeSubsystem, topWristSubsystem, bottomWristSubsystem))
@@ -164,9 +164,9 @@ public class RobotContainer {
         //new POVButton(operator, JoystickConstants.POV_LEFT).onTrue(new SetClimbPositionCommand(intakeSubsystem, bottomWristSubsystem, elevatorSubsystem));
         //new POVButton(operator, JoystickConstants.POV_RIGHT).onTrue(new ClimbCommand(intakeSubsystem, bottomWristSubsystem, elevatorSubsystem));
 
-        new Trigger(() -> {return Math.abs(operator.getRawAxis(JoystickConstants.LEFT_TRIGGER))> 0.1;}).onTrue(new ShootNoteCommand(shooterSubsystem, 20));
-        new JoystickButton(operator, JoystickConstants.RIGHT_BUMPER).onTrue(new ShootNoteCommand(shooterSubsystem, 60));
-        new JoystickButton(operator, JoystickConstants.LEFT_BUMPER).onTrue(new ShootNoteCommand(shooterSubsystem, 90));
+        new Trigger(() -> {return Math.abs(operator.getRawAxis(JoystickConstants.LEFT_TRIGGER))> 0.1;}).onTrue(new ShootNoteCommand(shooterSubsystem, ledSubsystem, 20));
+        new JoystickButton(operator, JoystickConstants.RIGHT_BUMPER).onTrue(new ShootNoteCommand(shooterSubsystem, ledSubsystem, 60));
+        new JoystickButton(operator, JoystickConstants.LEFT_BUMPER).onTrue(new ShootNoteCommand(shooterSubsystem, ledSubsystem, 90));
        // new JoystickButton(operator, JoystickConstants.START_BUTTON).onTrue(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -0.3)); //Up Position
        // new JoystickButton(operator, JoystickConstants.START_BUTTON).onTrue(new SequentialCommandGroup(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem), new AutoRangeCommand(limelightSubsystem, bottomWristSubsystem)));
        new JoystickButton(operator, JoystickConstants.START_BUTTON).onTrue(new SetPivotBaseCommand(bottomWristSubsystem))
