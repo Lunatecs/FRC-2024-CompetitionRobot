@@ -51,7 +51,7 @@ public class BottomWristSubsystem extends SubsystemBase {
     var slot0configs = talonFXConfigs.Slot0;
     slot0configs.kG = -.19; //-.15;
     slot0configs.kS = -.35; //-.41;//-.3;
-    slot0configs.kV =  .104;//0.15  -old gear ratio  ;//.3178;//2.648;//31.78;//.25;
+    slot0configs.kV =  .14;//0.15  -old gear ratio  ;//.3178;//2.648;//31.78;//.25;
     slot0configs.kA = 0.0; //.02
     slot0configs.kP = 0.00;
     slot0configs.kI = 0.0;
@@ -86,6 +86,11 @@ public class BottomWristSubsystem extends SubsystemBase {
     wristMotor1.setPosition(0.047222);
   }
 
+  public void initializeEncoderToZero() {
+    //wristMotor1.setPosition(getEncoder());
+    wristMotor1.setPosition(0.0,.1);
+  }
+
 // Pass parameters through setPosition
   public void setPosition(double position) {
     wristMotor1.setControl(motionMagicV.withPosition(position));
@@ -100,6 +105,9 @@ public class BottomWristSubsystem extends SubsystemBase {
     wristMotor2.setNeutralMode(value);
   }
 
+  public double getCurrent() {
+    return wristMotor1.getSupplyCurrent().getValueAsDouble();
+  }
 
   @Override
   public void periodic() {
@@ -108,6 +116,8 @@ public class BottomWristSubsystem extends SubsystemBase {
       max=Math.abs(vel);
     }
     SmartDashboard.putNumber("BottomWrist", getEncoder());
+    SmartDashboard.putNumber("BottomWrist Rotations", getEncoder()*195.556);
+    SmartDashboard.putNumber("Bottom Current", getCurrent());
    // System.out.println("Position: " + this.wristMotor1.getPosition().getValueAsDouble() * 281.6 + "Angle:" + this.wristMotor1.getPosition().getValueAsDouble()*360 + "Vel: " + vel + " Max: " + max + " Voltage: " + this.wristMotor1.getMotorVoltage());
   }
   

@@ -142,7 +142,7 @@ public class RobotContainer {
         new JoystickButton(driver, JoystickConstants.YELLOW_BUTTON).onTrue(new InstantCommand(() -> shooterSubsystem.setFeederSpeed(-.25), shooterSubsystem))
                                                                     .onFalse(new InstantCommand(() -> shooterSubsystem.setFeederSpeed(0.0), shooterSubsystem));
 
-
+        new JoystickButton(driver, JoystickConstants.GREEN_BUTTON).onTrue(new SequentialCommandGroup(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem), new AutoRangePIDCommand(bottomWristSubsystem, limelightSubsystem))).onFalse(new SetPivotBottomCommand(bottomWristSubsystem, intakeSubsystem));;
 
         /* Operator Controls */
         new JoystickButton(operator, JoystickConstants.YELLOW_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -3.646));//-5.25 old position for old bottom wrist gearing

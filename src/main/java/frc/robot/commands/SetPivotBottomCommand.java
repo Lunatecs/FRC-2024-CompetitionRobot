@@ -24,8 +24,10 @@ public class SetPivotBottomCommand extends SequentialCommandGroup {
       new InstantCommand(()->bottomWristSubsystem.setPosition(-1.389),bottomWristSubsystem),//-2 old position for old bottom wrist gearing
       new WaitCommand(.25),
       //new CheckPivotCommand(bottomWristSubsystem, -.01),
-      new InstantCommand(() ->bottomWristSubsystem.setSpeed(0)),
-      new RetractIntakeCommand(intakeSubsystem)
+      new ResetBottomWrist(bottomWristSubsystem),
+      new InstantCommand(() ->bottomWristSubsystem.setSpeed(0), bottomWristSubsystem),
+      new RetractIntakeCommand(intakeSubsystem),
+      new InstantCommand(() -> bottomWristSubsystem.initializeEncoderToZero(), bottomWristSubsystem)
     );
 
     addRequirements(intakeSubsystem, bottomWristSubsystem);

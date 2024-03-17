@@ -27,19 +27,24 @@ public class AutoRangePIDCommand extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    pid.setSetpoint(0);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
    double y = limelight.GetTy();
-   double preSetpoint = .000054 * y -.0568;
+   //double preSetpoint = .000054 * y -.0568;
+   //double preSetpoint = .002419 * y - .0778;
+   double preSetpoint = 0.0019 * y - 0.07915;//0.09;//0.0683;
+   
    double setpoint = MathUtil.clamp(preSetpoint, -.09, 0);
 
-   pid.setSetpoint(setpoint);
-   double speed = pid.calculate(bottomWrist.getEncoder());
+   
+   double speed = pid.calculate(bottomWrist.getEncoder()-setpoint);
 
-   SmartDashboard.putString("AUTO:Y pre set speed", y + " " + preSetpoint + " " + setpoint + " " + speed);
+   SmartDashboard.putString("AUTO:Y error set speed", y + " " + (bottomWrist.getEncoder()-setpoint) + " " + setpoint + " " + speed);
 
 
    if(Math.abs(speed) > .5) {
