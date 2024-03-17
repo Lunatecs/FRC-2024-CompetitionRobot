@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7134190306388977,
-      "y": 4.40166308565607
+      "x": 0.6744662599645491,
+      "y": 4.3140193516448715
     },
     "rotation": -60.39554925476689
   },
@@ -32,13 +32,25 @@
         {
           "type": "named",
           "data": {
-            "name": "shootNote"
+            "name": "shootNoteLine"
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "4 Piece Far Path 1"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.02
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoTargeting"
           }
         },
         {
@@ -51,6 +63,12 @@
           "type": "path",
           "data": {
             "pathName": "4 Piece Far Path 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoTargeting"
           }
         },
         {

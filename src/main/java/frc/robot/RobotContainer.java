@@ -80,18 +80,20 @@ public class RobotContainer {
         NamedCommands.registerCommand("shootNote", new ShootNoteCommand(shooterSubsystem, ledSubsystem, 60));
         NamedCommands.registerCommand("shootNoteFar", new ShootNoteCommand(shooterSubsystem, ledSubsystem, 80));
         NamedCommands.registerCommand("runShooter", new InstantCommand(() -> shooterSubsystem.setRPM(80), shooterSubsystem));
-        NamedCommands.registerCommand("shootNoteLine", new AutoShootNoteLineCommand(shooterSubsystem, 80));
+        NamedCommands.registerCommand("shootNoteLine", new AutoShootNoteLineCommand(shooterSubsystem, 70));
         NamedCommands.registerCommand("raisePivot26", new InstantCommand(()->bottomWristSubsystem.setPosition(-18.056),bottomWristSubsystem));
         NamedCommands.registerCommand("raisePivotNoteLine", new InstantCommand(()->bottomWristSubsystem.setPosition(-9.722),bottomWristSubsystem));
-        NamedCommands.registerCommand("raisePivot8", new InstantCommand(()->bottomWristSubsystem.setPosition(-3.646),bottomWristSubsystem));
+        NamedCommands.registerCommand("raisePivot8", new InstantCommand(()->bottomWristSubsystem.setPosition(-5.8),bottomWristSubsystem));
         NamedCommands.registerCommand("checkPivot8", new CheckPivotCommand(bottomWristSubsystem, .01));
-        NamedCommands.registerCommand("checkPivot26", new CheckPivotCommand(bottomWristSubsystem, .06));
+        NamedCommands.registerCommand("checkPivot26", new CheckPivotCommand(bottomWristSubsystem, .09));
         NamedCommands.registerCommand("checkPivotNoteLine", new CheckPivotCommand(bottomWristSubsystem, .04)); //needs to be checked
 
         NamedCommands.registerCommand("RunIntake", new RunIntakeCommand(intakeSubsystem, shooterSubsystem, 0.2, 1, false));
         NamedCommands.registerCommand("DropIntake", new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem));
         NamedCommands.registerCommand("SetPivot0", new InstantCommand(()->bottomWristSubsystem.setPosition(-2),bottomWristSubsystem));
         NamedCommands.registerCommand("ZeroPower", new InstantCommand(() -> bottomWristSubsystem.setSpeed(0.0), bottomWristSubsystem));
+
+        NamedCommands.registerCommand("AutoTargeting", new AutoRotateToTargetCommand(s_Swerve, limelightSubsystem));
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
