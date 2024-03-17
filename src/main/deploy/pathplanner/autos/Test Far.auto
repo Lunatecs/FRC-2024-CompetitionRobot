@@ -42,15 +42,22 @@
           }
         },
         {
-          "type": "wait",
+          "type": "race",
           "data": {
-            "waitTime": 0.02
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoTargeting"
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.5
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoTargeting"
+                }
+              }
+            ]
           }
         },
         {
@@ -66,9 +73,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "AutoTargeting"
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.5
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoTargeting"
+                }
+              }
+            ]
           }
         },
         {
