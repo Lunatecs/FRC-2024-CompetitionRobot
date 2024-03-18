@@ -24,7 +24,7 @@ public class ShootNoteCommand extends SequentialCommandGroup {
       new WaitCommand(0.5),
       new InstantCommand(() -> shooter.setFeederSpeed(0.0), shooter),
       new InstantCommand(() -> shooter.setshooterSpeed(0.0), shooter),
-      new InstantCommand(() -> led.set(led.GOLDEN))
+      new InstantCommand(() -> led.set(led.YELLOW))
     );
     addRequirements(shooter);
   }

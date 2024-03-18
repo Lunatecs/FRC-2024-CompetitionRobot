@@ -67,12 +67,12 @@ public class AutoRangePIDCommand extends Command {
 
    targeting.calculateRotation();
 
-   if(targeting.onTarget() && pid.atSetpoint()) {
+   if(targeting.onTarget() && pid.atSetpoint() && shooter.getSensor()) {
     ledSubsystem.set(ledSubsystem.GREEN);
    } else if(shooter.getSensor()) {
     ledSubsystem.set(ledSubsystem.BLUE);
    } else {
-    ledSubsystem.set(ledSubsystem.GOLDEN);
+    ledSubsystem.set(ledSubsystem.YELLOW);
    }
 
   }
