@@ -22,7 +22,7 @@ public class AutoRotateToTargetCommand extends Command {
   public AutoRotateToTargetCommand(Swerve swerveDrive, LimelightSubsystem limelightSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.swerveDrive = swerveDrive;
-    targetingUtil = new TargetingUtil(limelightSubsystem, 1.00, 0.0275);
+    targetingUtil = new TargetingUtil(limelightSubsystem, 1.00, 0.029);
   }
 
   // Called when the command is initially scheduled.

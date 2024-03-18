@@ -69,7 +69,7 @@ public class AutoRangePIDCommand extends Command {
 
    if(targeting.onTarget() && pid.atSetpoint() && shooter.getSensor()) {
     ledSubsystem.set(ledSubsystem.GREEN);
-   } else if(shooter.getSensor()) {
+   } else if(!shooter.getSensor()) {
     ledSubsystem.set(ledSubsystem.BLUE);
    } else {
     ledSubsystem.set(ledSubsystem.YELLOW);
