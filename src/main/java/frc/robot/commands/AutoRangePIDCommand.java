@@ -31,7 +31,7 @@ public class AutoRangePIDCommand extends Command {
     this.ledSubsystem = ledSubsystem;
     this.shooter = shooter;
     pid = new PIDController(10, 0, 0);
-    targeting = new TargetingUtil(limelight);
+    targeting = new TargetingUtil(limelight,1, 0.02);
     addRequirements(bottomWrist);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -67,7 +67,7 @@ public class AutoRangePIDCommand extends Command {
 
    targeting.calculateRotation();
 
-   if(targeting.onTarget() && pid.atSetpoint() && shooter.getSensor()) {
+   if(targeting.onTarget() && pid.atSetpoint() && !shooter.getSensor()) {
     ledSubsystem.set(ledSubsystem.GREEN);
    } else if(!shooter.getSensor()) {
     ledSubsystem.set(ledSubsystem.BLUE);
