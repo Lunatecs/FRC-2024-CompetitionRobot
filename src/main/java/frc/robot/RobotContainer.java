@@ -89,7 +89,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("checkPivotNoteLine", new CheckPivotCommand(bottomWristSubsystem, .04)); //needs to be checked
 
         NamedCommands.registerCommand("RunIntake", new RunIntakeCommand(intakeSubsystem, shooterSubsystem, 0.2, 1, false));
-        NamedCommands.registerCommand("DropIntake", new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem));
+        NamedCommands.registerCommand("DropIntake", new SetIntakeWristPosition(.32, 0, 0, 0.5 , -10.6, true, intakeSubsystem));
         NamedCommands.registerCommand("SetPivot0", new InstantCommand(()->bottomWristSubsystem.setPosition(-2),bottomWristSubsystem));
         NamedCommands.registerCommand("ZeroPower", new InstantCommand(() -> bottomWristSubsystem.setSpeed(0.0), bottomWristSubsystem));
 
@@ -123,7 +123,7 @@ public class RobotContainer {
        // new POVButton(driver, JoystickConstants.POV_UP).onTrue(new RunIntakeFromShooterCommand(shooterSubsystem, -0.1, -.5))
                        //                               .onFalse(new SequentialCommandGroup(new InstantCommand(() -> shooterSubsystem.setshooterSpeed(0)), new InstantCommand(() -> shooterSubsystem.setFeederSpeed(0))));
         
-        new POVButton(driver, JoystickConstants.POV_UP).onTrue(new HumanIntakeCommand(bottomWristSubsystem, intakeSubsystem, shooterSubsystem, elevatorSubsystem));
+        new POVButton(driver, JoystickConstants.POV_UP).onTrue(new HumanIntakeCommand(bottomWristSubsystem, intakeSubsystem, shooterSubsystem, elevatorSubsystem, ledSubsystem));
 
         //new JoystickButton(operator, JoystickConstants.BACK_BUTTON).onTrue(new InstantCommand(()->ledSubsystem.set(0, 0, 255))).onFalse(new InstantCommand(()->ledSubsystem.set(255, 0, 0)));
 

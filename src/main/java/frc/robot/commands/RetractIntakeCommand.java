@@ -18,7 +18,7 @@ public class RetractIntakeCommand extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SetIntakeWristPosition(.5, 0, 0, 0.25 , -0.2, intake), //kp .32
+      new SetIntakeWristPosition(.5, 0, 0, 0.25 , -4, intake), //kp .32
       new LockIntakeWristCommand(new SetPointSupplier(),intake)
     );
     addRequirements(intake);

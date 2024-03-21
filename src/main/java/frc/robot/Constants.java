@@ -150,6 +150,7 @@ public final class Constants {
         public static final int INTAKE_MOTOR = 12; // TO DO FIX MOTOR
         public static final int WRIST_MOTOR = 20; //TO DO FIX MOTOR
         public static final int ABSOLUTE_ENCODER = 0; //TO DO FIX
+        public static final int FEEDER_MOTOR = 30;
 
         public static final double BOTTOM_SETPOINT = -0.2;
         public static final double TOP_SETPOINT = -0.3;

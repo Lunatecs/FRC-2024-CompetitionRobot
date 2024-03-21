@@ -4,6 +4,10 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -17,17 +21,24 @@ public class IntakeSubsystem extends SubsystemBase {
 
   private TalonFXConfiguration intakeMotorConfig= new TalonFXConfiguration();
   private TalonFXConfiguration wristMotorConfig= new TalonFXConfiguration();
+  private TalonSRXConfiguration feederMotorConfig= new TalonSRXConfiguration();
 
   private TalonFX intakeMotor=new TalonFX(IntakeConstants.INTAKE_MOTOR);
   private TalonFX wristMotor=new TalonFX(IntakeConstants.WRIST_MOTOR);
+  private TalonSRX feederMotor=new TalonSRX(IntakeConstants.FEEDER_MOTOR);//Fix
   private DutyCycleEncoder absoluteEncoder = null;//new DutyCycleEncoder(0); // TO DO; fix value
 
   public IntakeSubsystem() {
     intakeMotor.getConfigurator().apply(intakeMotorConfig); 
     wristMotor.getConfigurator().apply(wristMotorConfig);
+    feederMotor.configAllSettings(feederMotorConfig);
+    feederMotor.configPeakCurrentLimit(40);
+    feederMotor.configPeakCurrentDuration(1500);
+    feederMotor.configContinuousCurrentLimit(30);
 
     intakeMotor.setNeutralMode(NeutralModeValue.Brake);
     wristMotor.setNeutralMode(NeutralModeValue.Brake);
+    feederMotor.setNeutralMode(NeutralMode.Coast);
     
     wristMotor.setPosition(0.0);
   }
@@ -40,7 +51,8 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void setIntakeSpeed(double speed){
-    intakeMotor.set(speed);
+    intakeMotor.set(-speed);
+    feederMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void setWristSpeed(double speed){

@@ -21,7 +21,7 @@ public class ExtendAndRunIntakeCommand extends SequentialCommandGroup {
     // Add the deadline command in the super() call. Add other commands using
     // addCommands().
     addCommands(
-      new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intake),
+      new SetIntakeWristPosition(.32, 0, 0, 0.5 , -10.6, true, intake),
       new RunIntakeCommand(intake, shooter, 0.2, 1, false),
       new InstantCommand(() -> led.set(led.BLUE)),
       new RetractIntakeCommand(intake)
