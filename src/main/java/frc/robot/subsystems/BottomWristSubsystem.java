@@ -51,7 +51,7 @@ public class BottomWristSubsystem extends SubsystemBase {
     var slot0configs = talonFXConfigs.Slot0;
     slot0configs.kG = -.19; //-.15;
     slot0configs.kS = -.35; //-.41;//-.3;
-    slot0configs.kV =  .14;//0.15  -old gear ratio  ;//.3178;//2.648;//31.78;//.25;
+    slot0configs.kV =  .1265;//0.15  -old gear ratio  ;//.3178;//2.648;//31.78;//.25;
     slot0configs.kA = 0.0; //.02
     slot0configs.kP = 0.00;
     slot0configs.kI = 0.0;

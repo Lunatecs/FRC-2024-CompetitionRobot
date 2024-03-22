@@ -19,7 +19,7 @@ public class SetTopWristCommand extends PIDCommand {
   public SetTopWristCommand(TopWristSubsystem topWrist, final double postion, boolean end) {
     super(
         // The controller that the command will use
-        new PIDController(2.25, 0, 0),
+        new PIDController(1.5, 0, 0), //2.25
         // This should return the measurement
         () -> topWrist.getEncoder(),
         // This should return the setpoint (can also be a constant)

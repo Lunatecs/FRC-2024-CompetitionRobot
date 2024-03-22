@@ -7,9 +7,12 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdle.LEDStripType;
+import com.ctre.phoenix.led.TwinkleAnimation.TwinklePercent;
 import com.ctre.phoenix.led.CANdleConfiguration;
 import com.ctre.phoenix.led.CANdleFaults;
 import com.ctre.phoenix.led.RainbowAnimation;
+import com.ctre.phoenix.led.StrobeAnimation;
+import com.ctre.phoenix.led.TwinkleAnimation;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,6 +23,8 @@ public class LEDSubsystem extends SubsystemBase {
   private CANdleConfiguration config = new CANdleConfiguration();
   /** Creates a new LEDSubsystem. */
   
+  private int numberOfLEDs=16;
+
   public final Color GOLDEN = new Color(170, 170, 0,0); 
   public final Color YELLOW = new Color(255,255,0,0);
   public final Color BLUE = new Color(0,0,255,4);
@@ -51,7 +56,14 @@ public class LEDSubsystem extends SubsystemBase {
 
   public void set(Color color) {
     setColor=color;
-    set(color.red,color.green,color.blue);
+  //set(color.red,color.green,color.blue);
+    if(color.equals(this.YELLOW)) {
+      candle.animate(new TwinkleAnimation(color.red, color.green, color.blue, 0, .5, numberOfLEDs, TwinklePercent.Percent30));
+    } else if(color.equals(this.BLUE)) {
+      candle.animate(new StrobeAnimation(color.red, color.green, color.blue, 0, .5, numberOfLEDs));
+    } else {
+      set(color.red,color.green,color.blue);
+    }
   }
 
 
@@ -81,6 +93,14 @@ public class LEDSubsystem extends SubsystemBase {
       this.green = green;
       this.blue = blue;
       this.priority = priority;
+    }
+
+    public boolean equals(Color c) {
+      if(this.red==c.red && this.green == c.green && this.blue == c.blue && this.priority == c.priority) {
+        return  true;
+      } else {
+        return false;
+      }
     }
 
   }

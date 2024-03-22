@@ -32,6 +32,12 @@
         {
           "type": "named",
           "data": {
+            "name": "PivotBrake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "shootNote"
           }
         },
