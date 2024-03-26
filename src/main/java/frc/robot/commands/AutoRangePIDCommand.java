@@ -30,7 +30,7 @@ public class AutoRangePIDCommand extends Command {
     this.limelight=limelight;
     this.ledSubsystem = ledSubsystem;
     this.shooter = shooter;
-    pid = new PIDController(10, 0, 0);
+    pid = new PIDController(9.5, 0, 0);
     targeting = new TargetingUtil(limelight,1, 0.02);
     addRequirements(bottomWrist);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -45,10 +45,11 @@ public class AutoRangePIDCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+  limelight.setLedOn();
    double y = limelight.GetTy();
    //double preSetpoint = .000054 * y -.0568;
    //double preSetpoint = .002419 * y - .0778;
-   double preSetpoint = 0.0019 * y - 0.07915;//0.09;//0.0683;
+   double preSetpoint = 0.0019 * y - 0.076;//0.07915;//0.09;//0.0683;
    
    double setpoint = MathUtil.clamp(preSetpoint, -.09, 0);
 
@@ -81,6 +82,7 @@ public class AutoRangePIDCommand extends Command {
   @Override
   public void end(boolean interrupted) {
     bottomWrist.setSpeed(0);
+    limelight.setLedOff();
   }
 
   // Returns true when the command should end.

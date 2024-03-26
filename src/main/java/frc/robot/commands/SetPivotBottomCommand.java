@@ -26,8 +26,8 @@ public class SetPivotBottomCommand extends SequentialCommandGroup {
       //new CheckPivotCommand(bottomWristSubsystem, -.01),
       new ResetBottomWrist(bottomWristSubsystem),
       new InstantCommand(() ->bottomWristSubsystem.setSpeed(0), bottomWristSubsystem),
-      new RetractIntakeCommand(intakeSubsystem),
-      new InstantCommand(() -> bottomWristSubsystem.initializeEncoderToZero(), bottomWristSubsystem)
+      new InstantCommand(() -> bottomWristSubsystem.initializeEncoderToZero(), bottomWristSubsystem),
+      new RetractIntakeCommand(intakeSubsystem)
     );
 
     addRequirements(intakeSubsystem, bottomWristSubsystem);

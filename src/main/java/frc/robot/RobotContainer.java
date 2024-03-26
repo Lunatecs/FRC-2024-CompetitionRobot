@@ -57,6 +57,7 @@ public class RobotContainer {
     private final TopWristSubsystem topWristSubsystem = new TopWristSubsystem();
     private final LimelightSubsystem limelightSubsystem = new LimelightSubsystem();
     private final LEDSubsystem ledSubsystem = new LEDSubsystem(); 
+    private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -84,14 +85,18 @@ public class RobotContainer {
         NamedCommands.registerCommand("shootNoteLine", new AutoShootNoteLineCommand(shooterSubsystem, 70));
         NamedCommands.registerCommand("raisePivot26", new InstantCommand(()->bottomWristSubsystem.setPosition(-18.056),bottomWristSubsystem));
         NamedCommands.registerCommand("raisePivotNoteLine", new InstantCommand(()->bottomWristSubsystem.setPosition(-9.722),bottomWristSubsystem));
-        NamedCommands.registerCommand("raisePivot8", new InstantCommand(()->bottomWristSubsystem.setPosition(-1.5),bottomWristSubsystem)); //-5.8
+        NamedCommands.registerCommand("raisePivot8", new InstantCommand(()->bottomWristSubsystem.setPosition(-4.5),bottomWristSubsystem)); //-5.5 //-5.8 //1.5
         NamedCommands.registerCommand("checkPivot8", new CheckPivotCommand(bottomWristSubsystem, .01));
+        NamedCommands.registerCommand("raisePivotHigh", new InstantCommand(() -> bottomWristSubsystem.setPosition(-20), bottomWristSubsystem));
+        NamedCommands.registerCommand("checkPivotHigh", new CheckPivotCommand(bottomWristSubsystem, .105));
+
+        
         NamedCommands.registerCommand("checkPivot26", new CheckPivotCommand(bottomWristSubsystem, .09));
         NamedCommands.registerCommand("checkPivotNoteLine", new CheckPivotCommand(bottomWristSubsystem, .04)); //needs to be checked
         NamedCommands.registerCommand("PivotBrake", new InstantCommand(() -> bottomWristSubsystem.setNeutralMode(NeutralModeValue.Brake)));
 
         NamedCommands.registerCommand("RunIntake", new RunIntakeCommand(intakeSubsystem, shooterSubsystem, 0.2, 1, false));
-        NamedCommands.registerCommand("DropIntake", new SetIntakeWristPosition(.32, 0, 0, 0.5 , -10.6, true, intakeSubsystem));
+        NamedCommands.registerCommand("DropIntake", new SetIntakeWristPosition(.32, 0, 0, 0.5 , -9.04, true, intakeSubsystem)); //-10.6
         NamedCommands.registerCommand("SetPivot0", new InstantCommand(()->bottomWristSubsystem.setPosition(-2),bottomWristSubsystem));
         NamedCommands.registerCommand("ZeroPower", new InstantCommand(() -> bottomWristSubsystem.setSpeed(0.0), bottomWristSubsystem));
 
@@ -128,6 +133,11 @@ public class RobotContainer {
         
         new POVButton(driver, JoystickConstants.POV_UP).onTrue(new HumanIntakeCommand(bottomWristSubsystem, intakeSubsystem, shooterSubsystem, elevatorSubsystem, ledSubsystem));
 
+        new POVButton(operator, JoystickConstants.POV_LEFT).onTrue(new InstantCommand(() -> climberSubsystem.setSpeed(0.5)))
+                                                            .onFalse(new InstantCommand(() -> climberSubsystem.setSpeed(0)));
+
+        new POVButton(operator, JoystickConstants.POV_RIGHT).onTrue(new InstantCommand(() -> climberSubsystem.setSpeed(-0.5)))
+                                                            .onFalse(new InstantCommand(() -> climberSubsystem.setSpeed(0)));
         //new JoystickButton(operator, JoystickConstants.BACK_BUTTON).onTrue(new InstantCommand(()->ledSubsystem.set(0, 0, 255))).onFalse(new InstantCommand(()->ledSubsystem.set(255, 0, 0)));
 
         //Intake                                                                          
@@ -157,10 +167,14 @@ public class RobotContainer {
 
         /* Operator Controls */
         new JoystickButton(operator, JoystickConstants.YELLOW_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -3.646));//-5.25 old position for old bottom wrist gearing
-        new JoystickButton(operator, JoystickConstants.BLUE_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -9.722));//-14 old position for old bottom wrist gearing
+        //new JoystickButton(operator, JoystickConstants.BLUE_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -9.722));//-14 old position for old bottom wrist gearing
         //new JoystickButton(operator, JoystickConstants.BLUE_BUTTON).onTrue(new InstantCommand(()->bottomWristSubsystem.setPosition(-10),bottomWristSubsystem));
         new JoystickButton(operator, JoystickConstants.GREEN_BUTTON).onTrue(new SetPivotBottomCommand(bottomWristSubsystem, intakeSubsystem));
-        new JoystickButton(operator, JoystickConstants.RED_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -18.056));//-26 old position for old bottom wrist gearing
+        new JoystickButton(operator, JoystickConstants.RED_BUTTON).onTrue(new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -19.5));//-26 old position for old bottom wrist gearing //18.056
+
+        new JoystickButton(operator, JoystickConstants.BLUE_BUTTON).onTrue(new SetTopWristCommand(topWristSubsystem, -.09, false))
+                                                                .onFalse(new SequentialCommandGroup(new SetTopWristCommand(topWristSubsystem, -.02,true), new InstantCommand(() -> topWristSubsystem.setSpeed(0), topWristSubsystem)));
+                                                                    
 
         //new POVButton(operator, JoystickConstants.POV_DOWN).onTrue(new SetPivotBaseCommand(bottomWristSubsystem))
                                          //                   .onFalse(new InstantCommand(() -> bottomWristSubsystem.setSpeed(0),bottomWristSubsystem));

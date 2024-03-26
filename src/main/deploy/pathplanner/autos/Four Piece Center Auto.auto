@@ -20,19 +20,13 @@
         {
           "type": "named",
           "data": {
-            "name": "raisePivot26"
+            "name": "raisePivotHigh"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "checkPivot26"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PivotBrake"
+            "name": "checkPivotHigh"
           }
         },
         {

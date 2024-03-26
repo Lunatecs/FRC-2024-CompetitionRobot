@@ -50,13 +50,25 @@ public class BottomWristSubsystem extends SubsystemBase {
 
     var slot0configs = talonFXConfigs.Slot0;
     slot0configs.kG = -.19; //-.15;
-    slot0configs.kS = -.35; //-.41;//-.3;
-    slot0configs.kV =  .1265;//0.15  -old gear ratio  ;//.3178;//2.648;//31.78;//.25;
+    slot0configs.kS = -.223; //-.35;//-.41;//-.3;
+    slot0configs.kV =  .12;//.118//.12//.11//.1265//0.15  -old gear ratio  ;//.3178;//2.648;//31.78;//.25;
     slot0configs.kA = 0.0; //.02
     slot0configs.kP = 0.00;
     slot0configs.kI = 0.0;
     slot0configs.kD = 0.00;
     slot0configs.GravityType = GravityTypeValue.Arm_Cosine;
+
+
+    var slot1configs = talonFXConfigs.Slot1;
+    slot1configs.kG = -.19; //-.15;
+    slot1configs.kS = -.35; //-.41;//-.3;
+    slot1configs.kV =  .1265;//0.15  -old gear ratio  ;//.3178;//2.648;//31.78;//.25;
+    slot1configs.kA = 0.0; //.02
+    slot1configs.kP = 0.00;
+    slot1configs.kI = 0.0;
+    slot1configs.kD = 0.00;
+    slot1configs.GravityType = GravityTypeValue.Arm_Cosine;
+
 
     var motionMagicConfig = talonFXConfigs.MotionMagic;
     motionMagicConfig.MotionMagicCruiseVelocity = 68;

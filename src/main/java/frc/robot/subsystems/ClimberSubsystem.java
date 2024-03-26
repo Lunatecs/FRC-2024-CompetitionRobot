@@ -10,6 +10,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClimberSubsystem extends SubsystemBase {
@@ -17,7 +18,7 @@ public class ClimberSubsystem extends SubsystemBase {
   private TalonFX climberMotor; 
 
   public ClimberSubsystem() {
-    climberMotor = new TalonFX(0); //add ID later
+    climberMotor = new TalonFX(31); //add ID later
     climberMotor.getConfigurator().apply(new TalonFXConfiguration());
     climberMotor.setNeutralMode(NeutralModeValue.Brake);
     initializeEncoder();
@@ -39,5 +40,6 @@ public class ClimberSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("climber", getEncoder());
   }
 }

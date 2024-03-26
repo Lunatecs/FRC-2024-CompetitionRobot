@@ -16,17 +16,30 @@ public class LimelightSubsystem extends SubsystemBase {
   private NetworkTableEntry NetWorkTx = limelight.getEntry("tx");
   private NetworkTableEntry NetworkTy = limelight.getEntry("ty");
   private NetworkTableEntry NetworkTa = limelight.getEntry("ta");
+  private NetworkTableEntry NetWorkLED = limelight.getEntry("ledMode");
   
   
 
   /** Creates a new LimelightSubsystem. */
   public LimelightSubsystem() {
+
   }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    
+    NetWorkLED.setNumber(3);
 
     SmartDashboard.putNumber("Limelight X", this.GetTx());
+  }
+
+  public void setLedOn() {
+    NetWorkLED.setNumber(3);
+  }
+
+  public void setLedOff() {
+    NetWorkLED.setNumber(1);
   }
 
 // pipeline funnies
@@ -55,6 +68,7 @@ public class LimelightSubsystem extends SubsystemBase {
 public double GetTa(){
         return NetworkTa.getDouble(0.0);
   }
+
 
 
 // April Tag Vars

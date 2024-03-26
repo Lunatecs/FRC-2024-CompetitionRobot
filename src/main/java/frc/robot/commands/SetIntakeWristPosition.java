@@ -41,8 +41,8 @@ public class SetIntakeWristPosition extends Command {
   @Override
   public void execute() {
       double speed = intakeWristPid.calculate(intake.getWristEncoder());
-      if (Math.abs(speed)> 0.25){
-        speed = speed/Math.abs(speed)*.25;
+      if (Math.abs(speed)> 0.4){
+        speed = speed/Math.abs(speed)*.4;
       }
     intake.setWristSpeed(speed);
     if(outtake) {

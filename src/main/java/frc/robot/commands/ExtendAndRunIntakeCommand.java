@@ -6,7 +6,9 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
@@ -21,7 +23,8 @@ public class ExtendAndRunIntakeCommand extends SequentialCommandGroup {
     // Add the deadline command in the super() call. Add other commands using
     // addCommands().
     addCommands(
-      new SetIntakeWristPosition(.32, 0, 0, 0.5 , -10.6, true, intake),
+      new SequentialCommandGroup(new ParallelRaceGroup(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -8.0, true, intake), new WaitCommand(0.7)), new InstantCommand(() -> intake.setWristSpeed(0))),
+      //new SetIntakeWristPosition(.32, 0, 0, 0.5 , -9.04, true, intake), //10.6
       new RunIntakeCommand(intake, shooter, 0.2, 1, false),
       new InstantCommand(() -> led.set(led.BLUE)),
       new RetractIntakeCommand(intake)
