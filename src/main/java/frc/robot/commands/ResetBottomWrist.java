@@ -38,7 +38,7 @@ public class ResetBottomWrist extends Command {
     } else if(count > 0) {
       //do nothing
       count++;
-    } else if(this.bottomWrist.getCurrent() > 2.0) {
+    } else if(this.bottomWrist.getCurrent() > 1.0) {
       count++;
       this.bottomWrist.setSpeed(0);
     } else {

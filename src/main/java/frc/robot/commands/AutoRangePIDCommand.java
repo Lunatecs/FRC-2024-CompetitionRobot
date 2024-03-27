@@ -49,7 +49,7 @@ public class AutoRangePIDCommand extends Command {
    double y = limelight.GetTy();
    //double preSetpoint = .000054 * y -.0568;
    //double preSetpoint = .002419 * y - .0778;
-   double preSetpoint = 0.0019 * y - 0.076;//0.07915;//0.09;//0.0683;
+   double preSetpoint = 0.0019 * y - 0.09;//0.076;//0.07915;//0.09;//0.0683;
    
    double setpoint = MathUtil.clamp(preSetpoint, -.09, 0);
 

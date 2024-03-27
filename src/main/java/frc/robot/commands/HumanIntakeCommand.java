@@ -26,7 +26,8 @@ public class HumanIntakeCommand extends SequentialCommandGroup {
       new CheckPivotCommand(bottomWristSubsystem, -0.07),
       new ParallelDeadlineGroup(new RunIntakeFromShooterCommand(shooterSubsystem, -.1, -.5), new SetElevatorCommand(elevatorSubsystem, 28, false)),
       new InstantCommand(() -> ledSubsystem.set(ledSubsystem.BLUE)),
-      new ParallelDeadlineGroup(new SetPivotBottomCommand(bottomWristSubsystem, intakeSubsystem), new SetElevatorCommand(elevatorSubsystem, 0, true))
+      new SetElevatorCommand(elevatorSubsystem, 0, .07, true),
+      new SetPivotBottomCommand(bottomWristSubsystem, intakeSubsystem)
 
     );
   }

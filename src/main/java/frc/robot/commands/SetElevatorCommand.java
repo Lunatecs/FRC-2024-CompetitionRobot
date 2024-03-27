@@ -14,7 +14,9 @@ import frc.robot.subsystems.ElevatorSubsystem;
 public class SetElevatorCommand extends PIDCommand {
   /** Creates a new SetElevatorCommand. */
   private boolean end;
-  public SetElevatorCommand(ElevatorSubsystem elevator, final double position, boolean end) {
+  private double tolerance;
+
+  public SetElevatorCommand(ElevatorSubsystem elevator, final double position, double tolerance, boolean end) {
     super(
         // The controller that the command will use
         new PIDController(.05, 0, 0),
@@ -32,15 +34,21 @@ public class SetElevatorCommand extends PIDCommand {
         });
         addRequirements(elevator);
         this.end = end;
+        this.tolerance = tolerance;
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
+  }
+
+  public SetElevatorCommand(ElevatorSubsystem elevator, final double position, boolean end) {
+    this(elevator, position, .01, end);
+
   }
 
   @Override
   public void initialize() {
     super.initialize();
     if(end) {
-      this.m_controller.setTolerance(.01);
+      this.m_controller.setTolerance(tolerance);
     }
   }
 
