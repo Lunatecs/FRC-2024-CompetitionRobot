@@ -5,20 +5,23 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class RunIntakeFromShooterCommand extends Command {
   private ShooterSubsystem shooter;
+  private FeederSubsystem feeder; 
   private double feederSpeed;
   private boolean isFinished;
   private double shooterSpeed;
 
-  public RunIntakeFromShooterCommand(ShooterSubsystem shooter, double feederSpeed, double shooterSpeed) {
+  public RunIntakeFromShooterCommand(ShooterSubsystem shooter, double feederSpeed, double shooterSpeed, FeederSubsystem feeder) {
     this.shooter = shooter;
     this.feederSpeed = feederSpeed;
     this.shooterSpeed = shooterSpeed;
+    this.feeder = feeder; 
 
-    addRequirements(shooter);
+    addRequirements(shooter, feeder);
   }
 
   // Called when the command is initially scheduled.
@@ -31,20 +34,20 @@ public class RunIntakeFromShooterCommand extends Command {
   @Override
   public void execute() {
     double feederSpeed = this.feederSpeed;
-    if (!shooter.getSensor()) {
+    if (!feeder.getSensor()) {
       feederSpeed = 0;
       isFinished = true;
     }
 
 
     shooter.setshooterSpeed(shooterSpeed);
-    shooter.setFeederSpeed(feederSpeed);
+    feeder.setSpeed(feederSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.setFeederSpeed(0);
+    feeder.setSpeed(0);
     shooter.setRPM(0);
   }
 

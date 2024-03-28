@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.BottomWristSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -18,13 +19,13 @@ import frc.robot.subsystems.ShooterSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class HumanIntakeCommand extends SequentialCommandGroup {
   /** Creates a new HumanIntakeCommand. */
-  public HumanIntakeCommand(BottomWristSubsystem bottomWristSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem, ElevatorSubsystem elevatorSubsystem, LEDSubsystem ledSubsystem) {
+  public HumanIntakeCommand(BottomWristSubsystem bottomWristSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem, ElevatorSubsystem elevatorSubsystem, LEDSubsystem ledSubsystem, FeederSubsystem feederSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new SetPivotHighCommand(bottomWristSubsystem, intakeSubsystem, -14),
       new CheckPivotCommand(bottomWristSubsystem, -0.07),
-      new ParallelDeadlineGroup(new RunIntakeFromShooterCommand(shooterSubsystem, -.1, -.5), new SetElevatorCommand(elevatorSubsystem, 28, false)),
+      new ParallelDeadlineGroup(new RunIntakeFromShooterCommand(shooterSubsystem, -.1, -.5, feederSubsystem), new SetElevatorCommand(elevatorSubsystem, 28, false)),
       new InstantCommand(() -> ledSubsystem.set(ledSubsystem.BLUE)),
       new SetElevatorCommand(elevatorSubsystem, 0, .07, true),
       new SetPivotBottomCommand(bottomWristSubsystem, intakeSubsystem)

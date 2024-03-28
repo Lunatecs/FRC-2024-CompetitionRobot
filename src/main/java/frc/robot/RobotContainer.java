@@ -58,6 +58,7 @@ public class RobotContainer {
     private final LimelightSubsystem limelightSubsystem = new LimelightSubsystem();
     private final LEDSubsystem ledSubsystem = new LEDSubsystem(); 
     private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+    private final FeederSubsystem feederSubsystem = new FeederSubsystem(); 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -79,10 +80,10 @@ public class RobotContainer {
         configureButtonBindings();
         
         // Auto Configurations
-        NamedCommands.registerCommand("shootNote", new ShootNoteCommand(shooterSubsystem, ledSubsystem, 60));
-        NamedCommands.registerCommand("shootNoteFar", new ShootNoteCommand(shooterSubsystem, ledSubsystem, 80));
+        NamedCommands.registerCommand("shootNote", new ShootNoteCommand(shooterSubsystem, ledSubsystem, 60, feederSubsystem));
+        NamedCommands.registerCommand("shootNoteFar", new ShootNoteCommand(shooterSubsystem, ledSubsystem, 80, feederSubsystem));
         NamedCommands.registerCommand("runShooter", new InstantCommand(() -> shooterSubsystem.setRPM(80), shooterSubsystem));
-        NamedCommands.registerCommand("shootNoteLine", new AutoShootNoteLineCommand(shooterSubsystem, 70));
+        NamedCommands.registerCommand("shootNoteLine", new AutoShootNoteLineCommand(shooterSubsystem, 70, feederSubsystem));
         NamedCommands.registerCommand("raisePivot26", new InstantCommand(()->bottomWristSubsystem.setPosition(-18.056),bottomWristSubsystem));
         NamedCommands.registerCommand("raisePivotNoteLine", new InstantCommand(()->bottomWristSubsystem.setPosition(-9.722),bottomWristSubsystem));
         NamedCommands.registerCommand("raisePivot8", new InstantCommand(()->bottomWristSubsystem.setPosition(-4.5),bottomWristSubsystem)); //-5.5 //-5.8 //1.5
@@ -95,7 +96,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("checkPivotNoteLine", new CheckPivotCommand(bottomWristSubsystem, .04)); //needs to be checked
         NamedCommands.registerCommand("PivotBrake", new InstantCommand(() -> bottomWristSubsystem.setNeutralMode(NeutralModeValue.Brake)));
 
-        NamedCommands.registerCommand("RunIntake", new RunIntakeCommand(intakeSubsystem, shooterSubsystem, 0.2, 1, false));
+        NamedCommands.registerCommand("RunIntake", new RunIntakeCommand(intakeSubsystem, feederSubsystem, 0.2, 1, false));
         NamedCommands.registerCommand("DropIntake", new SetIntakeWristPosition(.32, 0, 0, 0.5 , -9.04, true, intakeSubsystem)); //-10.6
         NamedCommands.registerCommand("SetPivot0", new InstantCommand(()->bottomWristSubsystem.setPosition(-2),bottomWristSubsystem));
         NamedCommands.registerCommand("ZeroPower", new InstantCommand(() -> bottomWristSubsystem.setSpeed(0.0), bottomWristSubsystem));
@@ -112,7 +113,7 @@ public class RobotContainer {
 
     public void teleopInit() {
         bottomWristSubsystem.setSpeed(0.0);
-        shooterSubsystem.setFeederSpeed(0.0);
+        feederSubsystem.setSpeed(0.0);
         shooterSubsystem.setshooterSpeed(0.0);
         intakeSubsystem.setIntakeSpeed(0.0);
         bottomWristSubsystem.setNeutralMode(NeutralModeValue.Coast);
@@ -131,7 +132,7 @@ public class RobotContainer {
        // new POVButton(driver, JoystickConstants.POV_UP).onTrue(new RunIntakeFromShooterCommand(shooterSubsystem, -0.1, -.5))
                        //                               .onFalse(new SequentialCommandGroup(new InstantCommand(() -> shooterSubsystem.setshooterSpeed(0)), new InstantCommand(() -> shooterSubsystem.setFeederSpeed(0))));
         
-        new POVButton(driver, JoystickConstants.POV_UP).onTrue(new HumanIntakeCommand(bottomWristSubsystem, intakeSubsystem, shooterSubsystem, elevatorSubsystem, ledSubsystem));
+        new POVButton(driver, JoystickConstants.POV_UP).onTrue(new HumanIntakeCommand(bottomWristSubsystem, intakeSubsystem, shooterSubsystem, elevatorSubsystem, ledSubsystem, feederSubsystem));
 
         new POVButton(operator, JoystickConstants.POV_LEFT).onTrue(new InstantCommand(() -> climberSubsystem.setSpeed(0.5)))
                                                             .onFalse(new InstantCommand(() -> climberSubsystem.setSpeed(0)));
@@ -141,10 +142,10 @@ public class RobotContainer {
         //new JoystickButton(operator, JoystickConstants.BACK_BUTTON).onTrue(new InstantCommand(()->ledSubsystem.set(0, 0, 255))).onFalse(new InstantCommand(()->ledSubsystem.set(255, 0, 0)));
 
         //Intake                                                                          
-        new Trigger(() -> {return shooterSubsystem.getSensor() && Math.abs(driver.getRawAxis(JoystickConstants.RIGHT_TRIGGER)) > 0.1;}).onTrue(new ExtendAndRunIntakeCommand(intakeSubsystem, shooterSubsystem, ledSubsystem));
+        new Trigger(() -> {return feederSubsystem.getSensor() && Math.abs(driver.getRawAxis(JoystickConstants.RIGHT_TRIGGER)) > 0.1;}).onTrue(new ExtendAndRunIntakeCommand(intakeSubsystem, feederSubsystem, ledSubsystem));
                                                                                                        // .onFalse(new RetractIntakeCommand(intakeSubsystem));
         new JoystickButton(driver, JoystickConstants.RED_BUTTON).onTrue(new RetractIntakeCommand(intakeSubsystem));
-        new Trigger(() -> {return Math.abs(driver.getRawAxis(JoystickConstants.LEFT_TRIGGER)) > 0.1;}).onTrue(new RunIntakeCommand(intakeSubsystem, shooterSubsystem, 0.2, 1, true))  
+        new Trigger(() -> {return Math.abs(driver.getRawAxis(JoystickConstants.LEFT_TRIGGER)) > 0.1;}).onTrue(new RunIntakeCommand(intakeSubsystem, feederSubsystem, 0.2, 1, true))  
                                                                                                 .onFalse(new SequentialCommandGroup(new InstantCommand(() -> intakeSubsystem.setIntakeSpeed(0), intakeSubsystem), new RetractIntakeCommand(intakeSubsystem)));
                                 
         /*Outtake                                                                    
@@ -154,11 +155,11 @@ public class RobotContainer {
         //new JoystickButton(driver, JoystickConstants.GREEN_BUTTON).onTrue(new SetIntakeWristPosition(.32, 0, 0, 0.5, -3.0, intakeSubsystem)); // Down Position
         //new JoystickButton(driver, JoystickConstants.BLUE_BUTTON).onTrue(new RetractIntakeCommand(intakeSubsystem));
         
-        new JoystickButton(driver, JoystickConstants.YELLOW_BUTTON).onTrue(new InstantCommand(() -> shooterSubsystem.setFeederSpeed(-.25), shooterSubsystem))
-                                                                    .onFalse(new InstantCommand(() -> shooterSubsystem.setFeederSpeed(0.0), shooterSubsystem));
+        new JoystickButton(driver, JoystickConstants.YELLOW_BUTTON).onTrue(new InstantCommand(() -> feederSubsystem.setSpeed(-.25), feederSubsystem))
+                                                                    .onFalse(new InstantCommand(() -> feederSubsystem.setSpeed(0.0), feederSubsystem));
 
-        new JoystickButton(driver, JoystickConstants.GREEN_BUTTON).onTrue(new SequentialCommandGroup(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem), new AutoRangePIDCommand(bottomWristSubsystem, limelightSubsystem, ledSubsystem, shooterSubsystem)))
-                                                                    .onFalse(new SequentialCommandGroup( new InstantCommand(() -> { if(!shooterSubsystem.getSensor()) {
+        new JoystickButton(driver, JoystickConstants.GREEN_BUTTON).onTrue(new SequentialCommandGroup(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem), new AutoRangePIDCommand(bottomWristSubsystem, limelightSubsystem, ledSubsystem, feederSubsystem)))
+                                                                    .onFalse(new SequentialCommandGroup( new InstantCommand(() -> { if(!feederSubsystem.getSensor()) {
                                                                                                                                         ledSubsystem.set(ledSubsystem.BLUE);
                                                                                                                                     } else {
                                                                                                                                         ledSubsystem.set(ledSubsystem.YELLOW);
@@ -189,9 +190,9 @@ public class RobotContainer {
         //new POVButton(operator, JoystickConstants.POV_LEFT).onTrue(new SetClimbPositionCommand(intakeSubsystem, bottomWristSubsystem, elevatorSubsystem));
         //new POVButton(operator, JoystickConstants.POV_RIGHT).onTrue(new ClimbCommand(intakeSubsystem, bottomWristSubsystem, elevatorSubsystem));
 
-        new Trigger(() -> {return Math.abs(operator.getRawAxis(JoystickConstants.LEFT_TRIGGER))> 0.1;}).onTrue(new ShootNoteCommand(shooterSubsystem, ledSubsystem, 20));
-        new JoystickButton(operator, JoystickConstants.RIGHT_BUMPER).onTrue(new ShootNoteCommand(shooterSubsystem, ledSubsystem, 60));
-        new JoystickButton(operator, JoystickConstants.LEFT_BUMPER).onTrue(new ShootNoteCommand(shooterSubsystem, ledSubsystem, 90));
+        new Trigger(() -> {return Math.abs(operator.getRawAxis(JoystickConstants.LEFT_TRIGGER))> 0.1;}).onTrue(new ShootNoteCommand(shooterSubsystem, ledSubsystem, 20, feederSubsystem));
+        new JoystickButton(operator, JoystickConstants.RIGHT_BUMPER).onTrue(new ShootNoteCommand(shooterSubsystem, ledSubsystem, 60, feederSubsystem));
+        new JoystickButton(operator, JoystickConstants.LEFT_BUMPER).onTrue(new ShootNoteCommand(shooterSubsystem, ledSubsystem, 90, feederSubsystem));
        // new JoystickButton(operator, JoystickConstants.START_BUTTON).onTrue(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -0.3)); //Up Position
        // new JoystickButton(operator, JoystickConstants.START_BUTTON).onTrue(new SequentialCommandGroup(new SetIntakeWristPosition(.32, 0, 0, 0.5 , -4, true, intakeSubsystem), new AutoRangeCommand(limelightSubsystem, bottomWristSubsystem)));
        new JoystickButton(operator, JoystickConstants.START_BUTTON).onTrue(new SetPivotBaseCommand(bottomWristSubsystem))

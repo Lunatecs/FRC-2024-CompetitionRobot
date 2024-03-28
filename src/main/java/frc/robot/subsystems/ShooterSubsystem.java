@@ -18,8 +18,8 @@ public class ShooterSubsystem extends SubsystemBase {
   /** Creates a new ShooterSubsystem. */
   private TalonFX shooterMotor1;
   private TalonFX shooterMotor2;
-  private TalonFX feederMotor;
-  private DigitalInput proximitySensor;
+ // private TalonFX feederMotor;
+ // private DigitalInput proximitySensor;
   private final VelocityVoltage motorVelocity = new VelocityVoltage(0);
 
   public ShooterSubsystem() {
@@ -28,9 +28,9 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterMotor2 = new TalonFX(Constants.ShooterConstants.SHOOTER_MOTOR2);
     shooterMotor2.setControl(new Follower(shooterMotor1.getDeviceID(), false)); // Check if shooterMotor2 needs to be inverted
 
-    feederMotor = new TalonFX(Constants.ShooterConstants.FEEDER_MOTOR);
+   // feederMotor = new TalonFX(Constants.ShooterConstants.FEEDER_MOTOR);
 
-    proximitySensor = new DigitalInput(Constants.ShooterConstants.PROXIMITY_SENSOR);
+   // proximitySensor = new DigitalInput(Constants.ShooterConstants.PROXIMITY_SENSOR);
 
     var slot0Configs = new Slot0Configs();
     slot0Configs.kV = 0.1214;  //.0598
@@ -42,11 +42,11 @@ public class ShooterSubsystem extends SubsystemBase {
 
     shooterMotor1.setPosition(0);
     shooterMotor2.setPosition(0);
-    feederMotor.setPosition(0);
+   // feederMotor.setPosition(0);
 
     shooterMotor1.setInverted(true);
 
-    feederMotor.setInverted(true);
+   // feederMotor.setInverted(true);
 
   }
 
@@ -54,18 +54,19 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterMotor1.setControl(motorVelocity.withVelocity(rpm));
   }
 
+  /* 
   public void setFeederSpeed(double speed){
     feederMotor.set(speed);
   }
-
+*/
   public void setshooterSpeed(double speed){
     shooterMotor1.set(speed);
   }
-
+/* 
   public boolean getSensor(){
     return proximitySensor.get();
   }
-
+*/
   public double getVoltage() {
     return shooterMotor1.getMotorVoltage().getValueAsDouble();
   }
@@ -79,6 +80,6 @@ public class ShooterSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Shooter Voltage", getVoltage());
     SmartDashboard.putNumber("Shooter Velocity", getVelocity());
-    SmartDashboard.putBoolean("prox sensor", getSensor());
+    
   }
 }

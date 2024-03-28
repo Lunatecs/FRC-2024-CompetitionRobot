@@ -8,28 +8,31 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class RunIntakeCommand extends Command {
   /** Creates a new RunIntakeCommand. */
   private IntakeSubsystem intake;
-  private ShooterSubsystem shooter;
+  //private ShooterSubsystem shooter;
+  private FeederSubsystem feeder; 
   private double feederSpeed;
   private double intakeSpeed;
   private boolean isFinished;
   private boolean outtake;
 
-  public RunIntakeCommand(IntakeSubsystem intake, ShooterSubsystem shooter, double feederSpeed, double intakeSpeed, boolean outtake) {
+  public RunIntakeCommand(IntakeSubsystem intake, FeederSubsystem feeder, double feederSpeed, double intakeSpeed, boolean outtake) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intake = intake;
-    this.shooter = shooter;
+    //this.shooter = shooter;
     this.feederSpeed = feederSpeed;
     this.intakeSpeed = intakeSpeed;
     this.outtake = outtake;
+    this.feeder = feeder; 
 
     addRequirements(intake);
-    addRequirements(shooter);
+    addRequirements(feeder);
   }
 
   // Called when the command is initially scheduled.
@@ -42,7 +45,7 @@ public class RunIntakeCommand extends Command {
   @Override
   public void execute() {
     double feederSpeed = this.feederSpeed;
-    if (!shooter.getSensor()) {
+    if (!feeder.getSensor()) {
       feederSpeed = 0;
       isFinished = true;
     }
@@ -52,8 +55,8 @@ public class RunIntakeCommand extends Command {
       intake.setIntakeSpeed(intakeSpeed);
     }
     
-    shooter.setFeederSpeed(feederSpeed);
-    SmartDashboard.putBoolean("prox sensor", shooter.getSensor());
+    feeder.setSpeed(feederSpeed);
+    SmartDashboard.putBoolean("prox sensor", feeder.getSensor());
 
   }
 
@@ -61,7 +64,7 @@ public class RunIntakeCommand extends Command {
   @Override
   public void end(boolean interrupted) {
     intake.setIntakeSpeed(0);
-    shooter.setFeederSpeed(0);
+    feeder.setSpeed(0);
   }
 
   // Returns true when the command should end.

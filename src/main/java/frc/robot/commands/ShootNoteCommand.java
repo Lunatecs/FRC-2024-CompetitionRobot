@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -15,17 +16,17 @@ import frc.robot.subsystems.ShooterSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ShootNoteCommand extends SequentialCommandGroup {
   /** Creates a new ShootNoteCommand. */
-  public ShootNoteCommand(ShooterSubsystem shooter, LEDSubsystem led, int velocity) {
+  public ShootNoteCommand(ShooterSubsystem shooter, LEDSubsystem led, int velocity, FeederSubsystem feeder) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new RunShooterCommand(shooter, velocity),
-      new InstantCommand(() -> shooter.setFeederSpeed(0.75), shooter),
+      new InstantCommand(() -> feeder.setSpeed(0.75), feeder),
       new WaitCommand(0.5),
-      new InstantCommand(() -> shooter.setFeederSpeed(0.0), shooter),
+      new InstantCommand(() -> feeder.setSpeed(0.0), feeder),
       new InstantCommand(() -> shooter.setshooterSpeed(0.0), shooter),
       new InstantCommand(() -> led.set(led.YELLOW))
     );
-    addRequirements(shooter);
+    addRequirements(shooter, feeder);
   }
 }

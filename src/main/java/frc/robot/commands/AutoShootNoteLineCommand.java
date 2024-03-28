@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -14,15 +15,15 @@ import frc.robot.subsystems.ShooterSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutoShootNoteLineCommand extends SequentialCommandGroup {
   /** Creates a new AutoShootNoteLineCommand. */
-  public AutoShootNoteLineCommand(ShooterSubsystem shooter, int velocity) {
+  public AutoShootNoteLineCommand(ShooterSubsystem shooter, int velocity, FeederSubsystem feeder) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new RunShooterCommand(shooter, velocity),
-      new InstantCommand(() -> shooter.setFeederSpeed(0.75), shooter),
+      new InstantCommand(() -> feeder.setSpeed(0.75), shooter),
       new WaitCommand(0.5),
-      new InstantCommand(() -> shooter.setFeederSpeed(0.0), shooter)
+      new InstantCommand(() -> feeder.setSpeed(0.0), shooter)
     );
-    addRequirements(shooter);
+    addRequirements(shooter, feeder);
   }
 }
